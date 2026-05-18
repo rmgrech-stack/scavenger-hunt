@@ -1,462 +1,576 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>✨ K-Hunt ✨</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Nunito',sans-serif;background:#0a0012;color:#fff;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 20% 20%,#2d0050 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,#001a4d 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,#0a0012 0%,#0a0012 100%);pointer-events:none;z-index:0}
-.screen{display:none;min-height:100vh;padding:16px;position:relative;z-index:1}
-.screen.active{display:flex;flex-direction:column;align-items:center}
-h1{font-size:2rem;font-weight:900;background:linear-gradient(135deg,#ff6ec7,#a855f7,#38bdf8,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;filter:drop-shadow(0 0 20px #ff6ec7)}
-h2{font-size:1.2rem;font-weight:800;background:linear-gradient(135deg,#ff6ec7,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
-.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,110,199,0.3);border-radius:20px;padding:20px;width:100%;max-width:480px;margin:8px 0;box-shadow:0 0 30px rgba(168,85,247,0.15)}
-input,select{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,110,199,0.4);background:rgba(255,255,255,0.08);color:#fff;font-size:1rem;margin:6px 0;font-family:'Nunito',sans-serif}
-input::placeholder{color:rgba(255,255,255,0.4)}
-.btn{display:block;width:100%;padding:14px;border-radius:14px;border:none;font-size:1rem;font-weight:800;cursor:pointer;transition:all .2s;margin:6px 0;font-family:'Nunito',sans-serif;letter-spacing:.5px}
-.btn-primary{background:linear-gradient(135deg,#ff6ec7,#a855f7);color:#fff;box-shadow:0 4px 20px rgba(255,110,199,0.4)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,110,199,0.6)}
-.btn-secondary{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.2)}
-.btn-danger{background:linear-gradient(135deg,#ff4081,#ff1744);color:#fff}
-.btn-success{background:linear-gradient(135deg,#00e676,#00bcd4);color:#000;font-weight:800}
-.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:800}
-.badge-qr{background:linear-gradient(135deg,#ff6ec7,#a855f7);color:#fff}
-.badge-photo{background:linear-gradient(135deg,#a855f7,#38bdf8);color:#fff}
-.badge-riddle{background:linear-gradient(135deg,#ffee00,#ff9800);color:#000}
-.badge-selfie{background:linear-gradient(135deg,#00e676,#38bdf8);color:#000}
-.progress-bar{width:100%;height:10px;background:rgba(255,255,255,0.1);border-radius:5px;overflow:hidden;margin:6px 0}
-.progress-fill{height:100%;background:linear-gradient(90deg,#ff6ec7,#a855f7,#38bdf8);transition:width .6s;box-shadow:0 0 10px #ff6ec7}
-.clue-card{background:rgba(255,255,255,0.05);border:1px solid rgba(168,85,247,0.3);border-radius:16px;padding:16px;margin:8px 0;width:100%;max-width:480px;cursor:pointer;transition:all .2s}
-.clue-card:hover{border-color:#ff6ec7;box-shadow:0 0 20px rgba(255,110,199,0.2)}
-.clue-num{font-size:.78rem;color:rgba(255,255,255,0.5);font-weight:700;text-transform:uppercase;letter-spacing:1px}
-.clue-text{font-size:1.05rem;margin:8px 0;line-height:1.5;color:#f0e6ff}
-.hint{background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.4);border-radius:10px;padding:10px;margin:8px 0;font-size:.9rem;color:#d8b4fe}
-.team-row{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.team-row:last-child{border-bottom:none}
-.score-big{font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#ff6ec7,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.photo-preview{width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin:10px 0;display:none;border:2px solid rgba(255,110,199,0.5)}
-.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.1);border-top-color:#ff6ec7;border-radius:50%;animation:spin .7s linear infinite;margin:12px auto}
-@keyframes spin{to{transform:rotate(360deg)}}
-.verdict{padding:16px;border-radius:14px;margin:10px 0;font-weight:800;text-align:center;font-size:1.05rem}
-.verdict.pass{background:rgba(0,230,118,0.15);color:#69ffb8;border:1px solid #00e676}
-.verdict.fail{background:rgba(255,64,129,0.15);color:#ff9ebc;border:1px solid #ff4081}
-.nav-tabs{display:flex;gap:6px;margin-bottom:14px;width:100%;max-width:480px}
-.tab{flex:1;padding:10px 6px;border-radius:12px;border:none;cursor:pointer;font-weight:800;font-size:.78rem;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);font-family:'Nunito',sans-serif}
-.tab.active{background:linear-gradient(135deg,#ff6ec7,#a855f7);color:#fff}
-.gm-clue{background:rgba(255,255,255,0.04);border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:12px;margin:6px 0}
-.gm-clue summary{cursor:pointer;font-weight:800;color:#ff6ec7}
-.qr-url{font-size:.75rem;color:rgba(255,255,255,0.5);word-break:break-all;background:rgba(0,0,0,0.3);padding:8px;border-radius:8px;margin-top:6px}
-label{font-size:.9rem;color:rgba(255,255,255,0.6);display:block;margin-top:8px}
-.completed-stamp{color:#69ffb8;font-weight:800;font-size:.9rem}
-#toaster{position:fixed;top:16px;right:16px;z-index:9999;max-width:280px}
-.toast{background:rgba(20,0,40,0.95);border:1px solid rgba(255,110,199,0.5);border-radius:14px;padding:12px 16px;margin-bottom:8px;font-size:.9rem;animation:slideIn .3s;backdrop-filter:blur(10px);font-weight:700}
-.toast.success{border-color:#00e676;color:#69ffb8}
-.toast.error{border-color:#ff4081;color:#ff9ebc}
-@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
-.kpop-header{width:100%;padding:16px 20px;background:linear-gradient(135deg,#1a0030,#000d26);border-bottom:2px solid rgba(255,110,199,0.4);display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(255,110,199,0.2)}
-.kpop-title{font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#ff6ec7,#a855f7,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.kpop-sub{font-size:.75rem;color:rgba(255,255,255,0.5)}
-.divider{width:100%;max-width:480px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,110,199,0.4),transparent);margin:12px 0}
-.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
-.star{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;animation:twinkle 3s infinite}
-@keyframes twinkle{0%,100%{opacity:0;transform:scale(0.5)}50%{opacity:1;transform:scale(1)}}
-.burst{position:fixed;pointer-events:none;z-index:9998;font-size:2rem;animation:burst 1s forwards}
-@keyframes burst{0%{opacity:1;transform:scale(0.5) translateY(0)}100%{opacity:0;transform:scale(2) translateY(-80px)}}
-.gm-pane{width:100%;max-width:480px}
-textarea{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,110,199,0.4);background:rgba(255,255,255,0.08);color:#fff;font-size:.95rem;margin:6px 0;min-height:80px;resize:vertical;font-family:'Nunito',sans-serif}
-.sub{color:rgba(255,255,255,0.4);text-align:center;font-size:.9rem;margin:4px 0 12px}
-</style>
-</head>
-<body>
+import { useState, useEffect, useCallback, useRef } from "react";
 
-<div class="stars" id="stars"></div>
-<div id="toaster"></div>
+// ── STORAGE HELPERS ──────────────────────────────────────────────────────────
+const STORE_KEY = "khunt_global_v1";
 
-<!-- HOME -->
-<div id="s-home" class="screen active">
-  <div class="kpop-header" style="border-radius:0;margin-bottom:0;width:100%">
-    <div><div class="kpop-title">✨ K-HUNT ✨</div><div class="kpop-sub">The Ultimate Team Scavenger Hunt</div></div>
-    <div style="font-size:2rem">🎤</div>
-  </div>
-  <div style="max-width:480px;width:100%;padding-top:16px;text-align:center">
-    <div style="font-size:3.5rem;margin:8px 0;animation:spin 4s linear infinite;display:inline-block">💿</div>
-    <h1>LET'S GO! 🎵</h1>
-    <p class="sub">Find clues · Smash challenges · Win glory ✨</p>
-    <div class="card">
-      <h2>🌟 Join the Hunt</h2>
-      <label>Your Name</label>
-      <input id="p-name" placeholder="e.g. Jisoo ✨" maxlength="30">
-      <label>Your Team Name</label>
-      <input id="p-team" placeholder="e.g. Team BTS 💜" maxlength="30">
-      <button class="btn btn-primary" onclick="joinGame()">🚀 Start Hunt!</button>
-    </div>
-    <div class="card">
-      <h2>🎮 Game Master</h2>
-      <label>GM Password</label>
-      <input id="gm-pass" type="password" placeholder="••••••••">
-      <button class="btn btn-secondary" onclick="gmLogin()">Enter GM Panel 🎛</button>
-    </div>
-  </div>
-</div>
+async function loadGlobal() {
+  try {
+    const r = await window.storage.get(STORE_KEY, true);
+    return r ? JSON.parse(r.value) : null;
+  } catch { return null; }
+}
 
-<!-- GAME -->
-<div id="s-game" class="screen">
-  <div class="kpop-header" style="width:100%">
-    <div class="kpop-title">✨ K-HUNT</div>
-    <div style="font-size:1.5rem">🎵</div>
-  </div>
-  <div style="max-width:480px;width:100%">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0 4px">
-      <div><div id="g-playername" style="font-weight:800;font-size:1.1rem"></div><div id="g-teamname" style="font-size:.85rem;color:rgba(255,255,255,0.5)"></div></div>
-      <div style="text-align:right"><div class="score-big" id="g-score">0</div><div style="font-size:.75rem;color:rgba(255,255,255,0.4)">points</div></div>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" id="g-progress" style="width:0%"></div></div>
-    <div id="g-progress-txt" style="font-size:.8rem;color:rgba(255,255,255,0.4);margin-bottom:10px">0 / 15 completed</div>
-    <div id="g-clue-area"></div>
-    <div class="divider"></div>
-    <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 Leaderboard</button>
-    <button class="btn btn-secondary" onclick="showAllClues()">📋 All Clues</button>
-  </div>
-</div>
+async function saveGlobal(data) {
+  try {
+    await window.storage.set(STORE_KEY, JSON.stringify(data), true);
+  } catch(e) { console.error("Save failed", e); }
+}
 
-<!-- LEADERBOARD -->
-<div id="s-board" class="screen">
-  <div class="kpop-header" style="width:100%"><div class="kpop-title">✨ K-HUNT</div></div>
-  <div style="max-width:480px;width:100%;padding-top:16px">
-    <h1>🏆 Leaderboard</h1>
-    <p class="sub">Who's slaying the hunt? 👑</p>
-    <div class="card" id="board-content"></div>
-    <button class="btn btn-secondary" style="width:100%;max-width:480px" onclick="backToGame()">← Back to Hunt</button>
-  </div>
-</div>
+function emptyState() {
+  return { players: {}, scores: {}, completedClues: {}, teams: {}, pendingPhotos: [] };
+}
 
-<!-- ALL CLUES -->
-<div id="s-allclues" class="screen">
-  <div class="kpop-header" style="width:100%"><div class="kpop-title">✨ K-HUNT</div></div>
-  <div style="max-width:480px;width:100%;padding-top:16px">
-    <h1>📋 All Clues</h1>
-    <p class="sub">Tap any clue to attempt it 🎯</p>
-    <div id="all-clues-list"></div>
-    <button class="btn btn-secondary" style="width:100%;max-width:480px" onclick="backToGame()">← Back</button>
-  </div>
-</div>
-
-<!-- CLUE DETAIL -->
-<div id="s-clue" class="screen">
-  <div class="kpop-header" style="width:100%"><div class="kpop-title">✨ K-HUNT</div></div>
-  <div style="max-width:480px;width:100%;padding-top:16px">
-    <button class="btn btn-secondary" style="width:auto;padding:8px 16px;margin-bottom:12px" onclick="showAllClues()">← All Clues</button>
-    <div id="clue-detail-area"></div>
-  </div>
-</div>
-
-<!-- GM PANEL -->
-<div id="s-gm" class="screen">
-  <div class="kpop-header" style="width:100%"><div><div class="kpop-title">🎛 GM Panel</div><div class="kpop-sub">Game Master Controls</div></div></div>
-  <div style="max-width:480px;width:100%;padding-top:16px">
-    <div class="nav-tabs">
-      <button class="tab active" onclick="gmTab('overview')">Overview</button>
-      <button class="tab" onclick="gmTab('clues')">Clues & QRs</button>
-      <button class="tab" onclick="gmTab('teams')">Teams</button>
-      <button class="tab" onclick="gmTab('settings')">Settings</button>
-    </div>
-    <div id="gm-overview" class="gm-pane">
-      <div class="card"><h2>📊 Live Stats</h2><div id="gm-stats"></div></div>
-      <div class="card"><h2>📸 Pending Photos</h2><div id="gm-pending"></div></div>
-    </div>
-    <div id="gm-clues" class="gm-pane" style="display:none">
-      <div class="card"><h2>🔗 QR Code URLs</h2><p style="font-size:.85rem;color:rgba(255,255,255,0.5);margin-bottom:12px">Convert each URL to a QR at <strong>qr.io</strong> and stick them around!</p><div id="gm-qr-list"></div></div>
-    </div>
-    <div id="gm-teams" class="gm-pane" style="display:none">
-      <div class="card"><h2>🏆 Team Scores</h2><div id="gm-team-scores"></div></div>
-      <div class="card"><h2>👥 All Players</h2><div id="gm-players-list"></div></div>
-    </div>
-    <div id="gm-settings" class="gm-pane" style="display:none">
-      <div class="card">
-        <h2>⚙️ Settings</h2>
-        <label>New GM Password</label><input id="new-pass" placeholder="New password">
-        <label>Hunt Title</label><input id="hunt-title-input" placeholder="e.g. K-Hunt 2026">
-        <button class="btn btn-primary" onclick="saveSettings()">💾 Save</button>
-        <div class="divider"></div>
-        <button class="btn btn-danger" onclick="resetAll()">🗑 Reset All Data</button>
-      </div>
-    </div>
-    <button class="btn btn-secondary" style="margin-top:12px" onclick="showScreen('s-home')">← Exit GM</button>
-  </div>
-</div>
-
-<script>
-// ── AUDIO ENGINE ─────────────────────────────────────────────────────────────
+// ── AUDIO ────────────────────────────────────────────────────────────────────
 let audioCtx = null;
 function getCtx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   return audioCtx;
 }
-function playTone(freq, type, start, dur, vol=0.3, ctx=null) {
+function tone(freq, type, start, dur, vol = 0.25, ctx) {
   const c = ctx || getCtx();
-  const o = c.createOscillator();
-  const g = c.createGain();
+  const o = c.createOscillator(), g = c.createGain();
   o.connect(g); g.connect(c.destination);
   o.type = type; o.frequency.setValueAtTime(freq, c.currentTime + start);
   g.gain.setValueAtTime(0, c.currentTime + start);
   g.gain.linearRampToValueAtTime(vol, c.currentTime + start + 0.01);
   g.gain.linearRampToValueAtTime(0, c.currentTime + start + dur);
-  o.start(c.currentTime + start);
-  o.stop(c.currentTime + start + dur + 0.05);
+  o.start(c.currentTime + start); o.stop(c.currentTime + start + dur + 0.05);
 }
-function soundPoints() {
-  // Cute K-pop synth chime — ascending sparkle
-  const c = getCtx();
-  [[523,0],[659,.08],[784,.16],[1047,.24],[1319,.32]].forEach(([f,t]) => playTone(f,'sine',t,.25,0.25,c));
-  [[1047,.18],[1319,.26]].forEach(([f,t]) => playTone(f,'triangle',t,.15,0.12,c));
-}
-function soundComplete() {
-  // K-pop fanfare — punchy synth hit
-  const c = getCtx();
-  [[262,0],[330,.06],[392,.12],[523,.18],[659,.24],[784,.30],[1047,.38]].forEach(([f,t]) => playTone(f,'sawtooth',t,.2,0.2,c));
-  [[523,0],[784,.1],[1047,.2],[1319,.3]].forEach(([f,t]) => playTone(f,'sine',t,.35,0.15,c));
-  playTone(1568,.4,.6,0.3,c);
-}
-function soundWrong() {
-  // Descending "aww" tone
-  const c = getCtx();
-  const o = c.createOscillator(); const g = c.createGain();
-  o.connect(g); g.connect(c.destination);
-  o.type = 'sine';
-  o.frequency.setValueAtTime(440, c.currentTime);
-  o.frequency.linearRampToValueAtTime(220, c.currentTime + 0.4);
-  g.gain.setValueAtTime(0.3, c.currentTime);
-  g.gain.linearRampToValueAtTime(0, c.currentTime + 0.4);
-  o.start(c.currentTime); o.stop(c.currentTime + 0.45);
-}
-function soundHuntComplete() {
-  // Full K-pop banger drop sequence
-  const c = getCtx();
-  const melody = [[523,0,.15],[659,.1,.15],[784,.2,.15],[1047,.3,.3],[880,.35,.1],[1047,.45,.15],[1319,.55,.3],[1047,.65,.1],[1319,.75,.15],[1568,.85,.5]];
-  melody.forEach(([f,t,d]) => playTone(f,'sawtooth',t,d,0.2,c));
-  const bass = [[131,0,.4],[165,.4,.4],[196,.8,.4]];
-  bass.forEach(([f,t,d]) => playTone(f,'square',t,d,0.25,c));
-  for(let i=0;i<8;i++) playTone(800+Math.random()*800, 'sine', i*0.15, 0.12, 0.1, c);
-}
-
-// ── STARS ────────────────────────────────────────────────────────────────────
-(function makeStars(){
-  const s = document.getElementById('stars');
-  for(let i=0;i<60;i++){
-    const d=document.createElement('div'); d.className='star';
-    d.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
-    s.appendChild(d);
-  }
-})();
-
-// ── BURST FX ─────────────────────────────────────────────────────────────────
-function burst(emojis=['✨','⭐','💫','🌟','💜','🎵']) {
-  for(let i=0;i<6;i++){
-    setTimeout(()=>{
-      const d=document.createElement('div'); d.className='burst';
-      d.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-      d.style.cssText=`left:${20+Math.random()*60}%;top:${30+Math.random()*40}%`;
-      document.body.appendChild(d);
-      setTimeout(()=>d.remove(),1000);
-    },i*80);
-  }
-}
-
-// ── STATE ────────────────────────────────────────────────────────────────────
-const APP_KEY="khunt_v1";
-function load(k,def){try{return JSON.parse(localStorage.getItem(APP_KEY+"_"+k))??def;}catch{return def;}}
-function save(k,v){localStorage.setItem(APP_KEY+"_"+k,JSON.stringify(v));}
-let state={
-  player:null,
-  completedClues:load("cc",{}),scores:load("sc",{}),
-  teams:load("tm",{}),players:load("pl",{}),
-  pendingPhotos:load("pp",[]),
-  gmPass:load("gp","hunt2026"),
-  huntTitle:load("ht","✨ K-Hunt ✨")
-};
+function soundPoints() { const c=getCtx(); [[523,0],[659,.08],[784,.16],[1047,.24],[1319,.32]].forEach(([f,t])=>tone(f,'sine',t,.25,.22,c)); }
+function soundComplete() { const c=getCtx(); [[262,0],[330,.06],[392,.12],[523,.18],[659,.24],[784,.3],[1047,.38]].forEach(([f,t])=>tone(f,'sawtooth',t,.2,.18,c)); [[523,0],[784,.1],[1047,.2],[1319,.3]].forEach(([f,t])=>tone(f,'sine',t,.35,.13,c)); }
+function soundWrong() { const c=getCtx(); const o=c.createOscillator(),g=c.createGain(); o.connect(g);g.connect(c.destination); o.type='sine'; o.frequency.setValueAtTime(440,c.currentTime); o.frequency.linearRampToValueAtTime(220,c.currentTime+0.4); g.gain.setValueAtTime(0.3,c.currentTime); g.gain.linearRampToValueAtTime(0,c.currentTime+0.4); o.start(c.currentTime);o.stop(c.currentTime+0.45); }
+function soundBanger() { const c=getCtx(); [[523,0,.15],[659,.1,.15],[784,.2,.15],[1047,.3,.3],[880,.35,.1],[1047,.45,.15],[1319,.55,.3],[1047,.65,.1],[1319,.75,.15],[1568,.85,.5]].forEach(([f,t,d])=>tone(f,'sawtooth',t,d,.18,c)); [[131,0,.4],[165,.4,.4],[196,.8,.4]].forEach(([f,t,d])=>tone(f,'square',t,d,.22,c)); }
 
 // ── CLUES ────────────────────────────────────────────────────────────────────
-const CLUES=[
+const CLUES = [
   {id:1,type:"qr",pts:10,title:"Welcome, Star! ⭐",desc:"You found QR #1! The K-Hunt has begun. Register your crew and let's get this party started! 🎉",hint:"This clue is found at the main entrance."},
-  {id:2,type:"photo",pts:20,title:"Something Pink 💗",desc:"Find and photograph something PINK anywhere in or around the building — K-pop energy only!",hint:"Check signage, flowers, stationery, or outside.",photoPrompt:"Does this photo contain something clearly pink in colour as the main subject? Answer YES or NO then briefly explain."},
+  {id:2,type:"photo",pts:20,title:"Something Pink 💗",desc:"Find and photograph something PINK anywhere in or around the building!",hint:"Check signage, flowers, stationery, or outside.",photoPrompt:"Does this photo contain something clearly pink in colour as the main subject? Answer YES or NO then briefly explain."},
   {id:3,type:"riddle",pts:15,title:"The Watering Hole 💧",desc:"I'm always running but never walk, I have a mouth but never talk. Where am I in your office?",hint:"Think about where people refuel during the day.",answer:"kitchen"},
   {id:4,type:"qr",pts:10,title:"Floor Explorer 🗺",desc:"You found QR #4! Slay! You're on the right track. Keep going! 💨",hint:"This QR is near the lifts or stairs."},
-  {id:5,type:"selfie",pts:25,title:"Lobby Legends 📸",desc:"Strike a pose! Take a team selfie in front of the main building entrance or lobby sign. Make it iconic!",hint:"Get as many team members in the shot as possible!",photoPrompt:"Does this photo show people posing for a selfie in a building entrance, lobby, or near a sign? Answer YES or NO then briefly explain."},
+  {id:5,type:"selfie",pts:25,title:"Lobby Legends 📸",desc:"Strike a pose! Take a team selfie in front of the main building entrance or lobby sign.",hint:"Get as many team members in the shot as possible!",photoPrompt:"Does this photo show people posing for a selfie in a building entrance, lobby, or near a sign? Answer YES or NO then briefly explain."},
   {id:6,type:"riddle",pts:15,title:"The Thinking Room 🧠",desc:"I stand in rows, face one direction, and fill up when ideas are being shared. What room am I in?",hint:"Where do people present to groups?",answer:"boardroom"},
-  {id:7,type:"photo",pts:20,title:"Something Round 🔵",desc:"Find and photograph something perfectly ROUND — circular, not oval. Perfection only!",hint:"Look at clocks, plates, bins, or signage.",photoPrompt:"Does this photo contain a clearly round or circular object as the main subject? Answer YES or NO then briefly explain."},
+  {id:7,type:"photo",pts:20,title:"Something Round 🔵",desc:"Find and photograph something perfectly ROUND — circular, not oval!",hint:"Look at clocks, plates, bins, or signage.",photoPrompt:"Does this photo contain a clearly round or circular object as the main subject? Answer YES or NO then briefly explain."},
   {id:8,type:"qr",pts:10,title:"Street Scout 🌆",desc:"You found QR #8! You've hit the streets! Stay slaying! 💃",hint:"This QR is attached to something on the street near the building."},
-  {id:9,type:"photo",pts:20,title:"Street Art Vibes 🎨",desc:"Find any street art, mural, or amazing wall artwork within a 2-minute walk. K-pop aesthetic required!",hint:"Check laneways, building sides, or café strips.",photoPrompt:"Does this photo show street art, a mural, or artistic wall decoration outdoors? Answer YES or NO then briefly explain."},
+  {id:9,type:"photo",pts:20,title:"Street Art Vibes 🎨",desc:"Find any street art, mural, or amazing wall artwork within a 2-minute walk.",hint:"Check laneways, building sides, or café strips.",photoPrompt:"Does this photo show street art, a mural, or artistic wall decoration outdoors? Answer YES or NO then briefly explain."},
   {id:10,type:"riddle",pts:15,title:"Nature Slay 🌿",desc:"I'm outside, I'm alive, I need water and sun to thrive. Find me near the building entrance.",hint:"Look for plants or trees near the front door.",answer:"plant"},
-  {id:11,type:"selfie",pts:25,title:"Café Crew ☕",desc:"Find the nearest café and take a fierce team photo outside it. Serve looks, serve coffee!",hint:"The more dramatic the pose the better!",photoPrompt:"Does this photo show people outside a café or coffee shop? Answer YES or NO then briefly explain."},
-  {id:12,type:"qr",pts:10,title:"Almost There! 🌟",desc:"You found QR #12! 3 clues left — you've got this! Fighting! 👊",hint:"This QR is near a window or glass surface."},
-  {id:13,type:"photo",pts:20,title:"Neon or Bright 💡",desc:"Find and photograph something NEON or super bright and colourful. The more electric the better!",hint:"Think signage, lights, colourful murals, or neon shop signs.",photoPrompt:"Does this photo contain something neon, brightly lit, or vividly colourful as the main subject? Answer YES or NO then briefly explain."},
+  {id:11,type:"selfie",pts:25,title:"Café Crew ☕",desc:"Find the nearest café and take a fierce team photo outside it. Serve looks!",hint:"The more dramatic the pose the better!",photoPrompt:"Does this photo show people outside a café or coffee shop? Answer YES or NO then briefly explain."},
+  {id:12,type:"qr",pts:10,title:"Almost There! 🌟",desc:"You found QR #12! 3 clues left — Fighting! 👊",hint:"This QR is near a window or glass surface."},
+  {id:13,type:"photo",pts:20,title:"Neon or Bright 💡",desc:"Find and photograph something NEON or super bright and colourful!",hint:"Think signage, lights, colourful murals, or neon shop signs.",photoPrompt:"Does this photo contain something neon, brightly lit, or vividly colourful? Answer YES or NO then briefly explain."},
   {id:14,type:"riddle",pts:15,title:"Time Check ⏰",desc:"I tick but I'm not a bomb, I hang on the wall, I tell everyone when to go home. What am I?",hint:"Found in most offices and meeting rooms.",answer:"clock"},
-  {id:15,type:"selfie",pts:30,title:"🏆 Victory Slay!",desc:"YOU DID IT! Take the most legendary team victory photo ever taken. Make it ICONIC. This is your moment! 👑✨",hint:"Go all out — this is your K-pop debut stage!",photoPrompt:"Does this photo show people celebrating or posing for a group photo? Answer YES or NO then briefly explain."},
+  {id:15,type:"selfie",pts:30,title:"🏆 Victory Slay!",desc:"YOU DID IT! Take the most legendary team victory photo ever. Make it ICONIC! 👑✨",hint:"Go all out — this is your K-pop debut stage!",photoPrompt:"Does this photo show people celebrating or posing for a group photo? Answer YES or NO then briefly explain."},
 ];
-const TL={qr:"QR Code",photo:"Photo Challenge",riddle:"Riddle",selfie:"Location Selfie"};
-const TB={qr:"badge-qr",photo:"badge-photo",riddle:"badge-riddle",selfie:"badge-selfie"};
-const TI={qr:"📱",photo:"📸",riddle:"🧩",selfie:"🤳"};
 
-function pk(p){return(p.name+"_"+p.team).toLowerCase().replace(/\s+/g,"_");}
-function toast(msg,type="success"){
-  const t=document.getElementById("toaster");const d=document.createElement("div");
-  d.className=`toast ${type}`;d.textContent=msg;t.appendChild(d);
-  setTimeout(()=>d.remove(),3500);
-}
-function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo(0,0);}
-function sync(){save("cc",state.completedClues);save("sc",state.scores);save("tm",state.teams);save("pl",state.players);save("pp",state.pendingPhotos);}
+const TB = {qr:"qr",photo:"photo",riddle:"riddle",selfie:"selfie"};
+const TI = {qr:"📱",photo:"📸",riddle:"🧩",selfie:"🤳"};
+const TL = {qr:"QR Code",photo:"Photo Challenge",riddle:"Riddle",selfie:"Location Selfie"};
 
-function joinGame(){
-  const name=document.getElementById("p-name").value.trim();
-  const team=document.getElementById("p-team").value.trim();
-  if(!name||!team){toast("Enter your name and team! 💫","error");return;}
-  state.player={name,team};const p=pk(state.player);
-  if(!state.players[p])state.players[p]={name,team};
-  if(!state.completedClues[p])state.completedClues[p]=[];
-  if(!state.scores[p])state.scores[p]=0;
-  if(!state.teams[team])state.teams[team]={score:0,members:[]};
-  if(!state.teams[team].members.includes(p))state.teams[team].members.push(p);
-  sync();soundPoints();burst(['🌟','✨','💜','🎵','💗']);
-  const params=new URLSearchParams(window.location.search);
-  const clueId=parseInt(params.get("clue"));
-  renderHeader();
-  if(clueId&&CLUES.find(c=>c.id===clueId)){showClue(clueId);}
-  else{showScreen("s-game");renderClueArea();}
-}
-function gmLogin(){if(document.getElementById("gm-pass").value===state.gmPass){showGMPanel();}else{toast("Wrong password! 🙅","error");soundWrong();}}
+// ── STYLES ───────────────────────────────────────────────────────────────────
+const S = {
+  app: { minHeight:"100vh", background:"#0a0012", color:"#fff", fontFamily:"system-ui,sans-serif", position:"relative" },
+  header: { background:"linear-gradient(135deg,#1a0030,#000d26)", borderBottom:"2px solid rgba(255,110,199,0.4)", padding:"14px 18px", display:"flex", alignItems:"center", justifyContent:"space-between", boxShadow:"0 4px 20px rgba(255,110,199,0.2)" },
+  headerTitle: { fontSize:"1.5rem", fontWeight:900, background:"linear-gradient(135deg,#ff6ec7,#a855f7,#38bdf8)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" },
+  page: { padding:"16px", maxWidth:"480px", margin:"0 auto" },
+  card: { background:"rgba(255,255,255,0.05)", backdropFilter:"blur(10px)", border:"1px solid rgba(255,110,199,0.25)", borderRadius:"18px", padding:"18px", marginBottom:"12px", boxShadow:"0 0 24px rgba(168,85,247,0.1)" },
+  h1: { fontSize:"1.8rem", fontWeight:900, background:"linear-gradient(135deg,#ff6ec7,#a855f7,#38bdf8,#ffee00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", textAlign:"center", margin:"8px 0" },
+  h2: { fontSize:"1.1rem", fontWeight:800, background:"linear-gradient(135deg,#ff6ec7,#a855f7)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", marginBottom:"10px" },
+  input: { width:"100%", padding:"12px", borderRadius:"12px", border:"1px solid rgba(255,110,199,0.4)", background:"rgba(255,255,255,0.08)", color:"#fff", fontSize:"1rem", marginTop:"6px", fontFamily:"inherit", outline:"none" },
+  btnPrimary: { width:"100%", padding:"13px", borderRadius:"13px", border:"none", background:"linear-gradient(135deg,#ff6ec7,#a855f7)", color:"#fff", fontSize:"1rem", fontWeight:800, cursor:"pointer", marginTop:"8px", boxShadow:"0 4px 18px rgba(255,110,199,0.35)" },
+  btnSecondary: { width:"100%", padding:"12px", borderRadius:"13px", border:"1px solid rgba(255,255,255,0.2)", background:"rgba(255,255,255,0.07)", color:"#fff", fontSize:"1rem", fontWeight:700, cursor:"pointer", marginTop:"8px" },
+  btnSuccess: { width:"100%", padding:"12px", borderRadius:"13px", border:"none", background:"linear-gradient(135deg,#00e676,#00bcd4)", color:"#000", fontSize:"1rem", fontWeight:800, cursor:"pointer", marginTop:"8px" },
+  btnDanger: { width:"100%", padding:"12px", borderRadius:"13px", border:"none", background:"linear-gradient(135deg,#ff4081,#ff1744)", color:"#fff", fontSize:"1rem", fontWeight:700, cursor:"pointer", marginTop:"8px" },
+  label: { fontSize:".88rem", color:"rgba(255,255,255,0.55)", display:"block", marginTop:"10px" },
+  sub: { color:"rgba(255,255,255,0.4)", textAlign:"center", fontSize:".88rem", margin:"4px 0 12px" },
+  progress: { width:"100%", height:"9px", background:"rgba(255,255,255,0.1)", borderRadius:"5px", overflow:"hidden", margin:"6px 0" },
+  progressFill: (pct) => ({ height:"100%", width:pct+"%", background:"linear-gradient(90deg,#ff6ec7,#a855f7,#38bdf8)", transition:"width .6s", boxShadow:"0 0 8px #ff6ec7" }),
+  badge: (type) => {
+    const map = { qr:{background:"linear-gradient(135deg,#ff6ec7,#a855f7)",color:"#fff"}, photo:{background:"linear-gradient(135deg,#a855f7,#38bdf8)",color:"#fff"}, riddle:{background:"linear-gradient(135deg,#ffee00,#ff9800)",color:"#000"}, selfie:{background:"linear-gradient(135deg,#00e676,#38bdf8)",color:"#000"} };
+    return { display:"inline-block", padding:"3px 11px", borderRadius:"20px", fontSize:".76rem", fontWeight:800, ...map[type] };
+  },
+  hint: { background:"rgba(168,85,247,0.12)", border:"1px solid rgba(168,85,247,0.35)", borderRadius:"10px", padding:"10px", margin:"8px 0", fontSize:".88rem", color:"#d8b4fe" },
+  verdictPass: { padding:"14px", borderRadius:"12px", margin:"10px 0", fontWeight:800, textAlign:"center", background:"rgba(0,230,118,0.13)", color:"#69ffb8", border:"1px solid #00e676" },
+  verdictFail: { padding:"14px", borderRadius:"12px", margin:"10px 0", fontWeight:800, textAlign:"center", background:"rgba(255,64,129,0.13)", color:"#ff9ebc", border:"1px solid #ff4081" },
+  scoreBig: { fontSize:"2rem", fontWeight:900, background:"linear-gradient(135deg,#ff6ec7,#ffee00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" },
+  divider: { height:"1px", background:"linear-gradient(90deg,transparent,rgba(255,110,199,0.35),transparent)", margin:"12px 0" },
+  syncDot: (ok) => ({ width:"8px", height:"8px", borderRadius:"50%", background: ok ? "#00e676" : "#ff4081", display:"inline-block", marginRight:"6px", boxShadow: ok ? "0 0 6px #00e676" : "0 0 6px #ff4081" }),
+};
 
-function renderHeader(){
-  const p=state.player;const key=pk(p);
-  document.getElementById("g-playername").textContent="✨ "+p.name;
-  document.getElementById("g-teamname").textContent="💜 "+p.team;
-  document.getElementById("g-score").textContent=state.scores[key]||0;
-  const done=(state.completedClues[key]||[]).length;
-  document.getElementById("g-progress").style.width=Math.round(done/CLUES.length*100)+"%";
-  document.getElementById("g-progress-txt").textContent=done+" / "+CLUES.length+" completed 🎯";
-}
-function renderClueArea(){
-  const key=pk(state.player);const done=state.completedClues[key]||[];
-  const next=CLUES.find(c=>!done.includes(c.id));
-  const area=document.getElementById("g-clue-area");
-  if(!next){
-    soundHuntComplete();burst(['🏆','👑','🌟','✨','💜','🎉']);
-    area.innerHTML=`<div class="card" style="text-align:center"><div style="font-size:3.5rem">🏆</div><h2>Hunt Complete!</h2><p style="color:rgba(255,255,255,0.6)">You've smashed all 15 clues! Check the leaderboard to see if you slayed hardest! 👑</p></div>`;
-    return;
-  }
-  area.innerHTML=`<div class="card"><div class="clue-num">Next Clue — #${next.id} of 15</div><span class="badge ${TB[next.type]}">${TI[next.type]} ${TL[next.type]}</span><div class="clue-text" style="margin-top:10px">${next.desc}</div><div class="hint">💡 <strong>Hint:</strong> ${next.hint}</div><button class="btn btn-primary" onclick="showClue(${next.id})">Let's Go! ✨</button></div>
-  <div class="card" style="padding:14px"><div style="font-size:.8rem;color:rgba(255,255,255,0.4);font-weight:800;margin-bottom:6px">RECENTLY COMPLETED ⭐</div>${done.length===0?'<p style="color:rgba(255,255,255,0.3);font-size:.9rem">None yet — get moving! 🏃</p>':done.slice(-3).reverse().map(id=>{const c=CLUES.find(x=>x.id===id);return`<div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span class="badge ${TB[c.type]}">${TI[c.type]}</span><span style="font-size:.9rem">${c.title}</span><span class="completed-stamp" style="margin-left:auto">+${c.pts}pts ✓</span></div>`;}).join("")}</div>`;
-}
-function backToGame(){renderHeader();renderClueArea();showScreen("s-game");}
+// ── MAIN APP ─────────────────────────────────────────────────────────────────
+export default function App() {
+  const [screen, setScreen] = useState("home");
+  const [player, setPlayer] = useState(null);
+  const [global, setGlobal] = useState(emptyState());
+  const [synced, setSynced] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [toasts, setToasts] = useState([]);
+  const [currentClue, setCurrentClue] = useState(null);
+  const [gmTab, setGmTab] = useState("overview");
+  const [bursts, setBursts] = useState([]);
+  const pollRef = useRef(null);
 
-function showAllClues(){
-  const key=pk(state.player);const done=state.completedClues[key]||[];
-  document.getElementById("all-clues-list").innerHTML=CLUES.map(c=>{
-    const isDone=done.includes(c.id);
-    return`<div class="clue-card" onclick="showClue(${c.id})"><div style="display:flex;justify-content:space-between;align-items:center"><span class="clue-num">Clue #${c.id}</span>${isDone?'<span class="completed-stamp">✓ Slayed!</span>':`<span style="color:rgba(255,255,255,0.4);font-size:.85rem">+${c.pts} pts</span>`}</div><div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span class="badge ${TB[c.type]}">${TI[c.type]} ${TL[c.type]}</span><span style="font-weight:800">${c.title}</span></div></div>`;
-  }).join("");
-  showScreen("s-allclues");
-}
+  // Load & poll
+  const fetchGlobal = useCallback(async () => {
+    const d = await loadGlobal();
+    if (d) { setGlobal(d); setSynced(true); }
+    setLoading(false);
+  }, []);
 
-function showClue(id){
-  const clue=CLUES.find(c=>c.id===id);const key=pk(state.player);
-  const done=(state.completedClues[key]||[]).includes(id);
-  document.getElementById("clue-detail-area").innerHTML=`<div class="card"><div class="clue-num">Clue #${clue.id} of 15 · ${clue.pts} pts</div><span class="badge ${TB[clue.type]}">${TI[clue.type]} ${TL[clue.type]}</span><h2 style="margin-top:10px">${clue.title}</h2><div class="clue-text">${clue.desc}</div><div class="hint">💡 <strong>Hint:</strong> ${clue.hint}</div>${done?'<div class="verdict pass">✅ Already slayed this one! 💜</div>':renderInput(clue)}</div>`;
-  showScreen("s-clue");
-}
-function renderInput(clue){
-  if(clue.type==="qr")return`<button class="btn btn-success" onclick="completeClue(${clue.id})">✅ I Found It!</button>`;
-  if(clue.type==="riddle")return`<label>Your Answer ✍️</label><input id="riddle-ans" placeholder="Type your answer..." oninput="this.value=this.value.toLowerCase()"><button class="btn btn-primary" onclick="submitRiddle(${clue.id})">Submit 🎯</button><div id="riddle-result"></div>`;
-  if(clue.type==="photo"||clue.type==="selfie")return`<label>📷 Upload your photo</label><input type="file" accept="image/*" capture="environment" onchange="previewPhoto(this)"><img id="photo-preview" class="photo-preview"><button class="btn btn-primary" id="submit-photo-btn" style="display:none" onclick="submitPhoto(${clue.id})">Submit for AI Review ✨</button><div id="photo-result"></div>`;
-}
-function previewPhoto(input){const file=input.files[0];if(!file)return;const r=new FileReader();r.onload=e=>{const img=document.getElementById("photo-preview");img.src=e.target.result;img.style.display="block";const btn=document.getElementById("submit-photo-btn");btn.style.display="block";btn.dataset.dataurl=e.target.result;};r.readAsDataURL(file);}
+  useEffect(() => {
+    fetchGlobal();
+    pollRef.current = setInterval(fetchGlobal, 5000);
+    return () => clearInterval(pollRef.current);
+  }, [fetchGlobal]);
 
-function submitRiddle(id){
-  const clue=CLUES.find(c=>c.id===id);const ans=document.getElementById("riddle-ans").value.trim().toLowerCase();
-  const res=document.getElementById("riddle-result");
-  if(ans.includes(clue.answer)||clue.answer.includes(ans)){
-    res.innerHTML=`<div class="verdict pass">✅ Correct! You're a genius! 🌟</div>`;
-    soundPoints();burst();setTimeout(()=>completeClue(id),1000);
-  }else{
-    res.innerHTML=`<div class="verdict fail">❌ Not quite... try again! 😅</div>`;
-    soundWrong();
-  }
-}
-async function submitPhoto(id){
-  const clue=CLUES.find(c=>c.id===id);const btn=document.getElementById("submit-photo-btn");
-  const dataUrl=btn.dataset.dataurl;const res=document.getElementById("photo-result");
-  btn.disabled=true;btn.textContent="AI is judging... ✨";
-  res.innerHTML=`<div class="spinner"></div><p style="text-align:center;color:rgba(255,255,255,0.5);font-size:.9rem">Claude is reviewing your photo… 🔍</p>`;
-  try{
-    const b64=dataUrl.split(",")[1];const mt=dataUrl.split(";")[0].split(":")[1];
-    const resp=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:200,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mt,data:b64}},{type:"text",text:clue.photoPrompt+" Be lenient — if it's close, say YES."}]}]})});
-    const data=await resp.json();const reply=data.content?.find(b=>b.type==="text")?.text||"";
-    const pass=reply.toUpperCase().startsWith("YES")||reply.toUpperCase().includes("YES,")||reply.toUpperCase().includes("YES —")||reply.toUpperCase().includes("YES.");
-    if(pass){
-      res.innerHTML=`<div class="verdict pass">✅ Photo approved! Slay! 💜 ${reply.substring(0,100)}</div>`;
-      soundComplete();burst(['💜','✨','🌟','📸','💫']);
-      setTimeout(()=>completeClue(id),1200);
-    }else{
-      res.innerHTML=`<div class="verdict fail">❌ Hmm, not quite! ${reply.substring(0,100)}<br><br>Try again! 📸</div>`;
-      soundWrong();btn.disabled=false;btn.textContent="Resubmit Photo 📸";
+  const updateGlobal = async (updater) => {
+    const fresh = await loadGlobal() || emptyState();
+    const updated = updater(fresh);
+    await saveGlobal(updated);
+    setGlobal(updated);
+    return updated;
+  };
+
+  const addToast = (msg, type="success") => {
+    const id = Date.now();
+    setToasts(t => [...t, {id, msg, type}]);
+    setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 3500);
+  };
+
+  const doBurst = () => {
+    const emojis = ['✨','⭐','💫','🌟','💜','🎵','💗','🎉'];
+    const items = Array.from({length:8}, (_,i) => ({ id:Date.now()+i, emoji:emojis[Math.floor(Math.random()*emojis.length)], x:15+Math.random()*70, y:20+Math.random()*50 }));
+    setBursts(b => [...b, ...items]);
+    setTimeout(() => setBursts(b => b.filter(x => !items.find(i=>i.id===x.id))), 1200);
+  };
+
+  const pk = (p) => (p.name+"_"+p.team).toLowerCase().replace(/\s+/g,"_");
+
+  // ── JOIN ────────────────────────────────────────────────────────────────────
+  const [pName, setPName] = useState("");
+  const [pTeam, setPTeam] = useState("");
+  const [gmPass, setGmPass] = useState("");
+
+  const joinGame = async () => {
+    if (!pName.trim() || !pTeam.trim()) { addToast("Enter your name and team! 💫","error"); return; }
+    const p = {name:pName.trim(), team:pTeam.trim()};
+    const key = pk(p);
+    await updateGlobal(g => {
+      if (!g.players[key]) g.players[key] = p;
+      if (!g.completedClues[key]) g.completedClues[key] = [];
+      if (!g.scores[key]) g.scores[key] = 0;
+      if (!g.teams[p.team]) g.teams[p.team] = {score:0, members:[]};
+      if (!g.teams[p.team].members.includes(key)) g.teams[p.team].members.push(key);
+      return g;
+    });
+    setPlayer(p);
+    soundPoints(); doBurst();
+    setScreen("game");
+  };
+
+  const gmLogin = () => {
+    if (gmPass === "hunt2026") { setScreen("gm"); setGmTab("overview"); }
+    else { addToast("Wrong password! 🙅","error"); soundWrong(); }
+  };
+
+  // ── GAME ────────────────────────────────────────────────────────────────────
+  const getPlayerData = () => {
+    if (!player) return {done:[], score:0};
+    const key = pk(player);
+    return { done: global.completedClues[key]||[], score: global.scores[key]||0, key };
+  };
+
+  const completeClue = async (id) => {
+    const clue = CLUES.find(c=>c.id===id);
+    const key = pk(player);
+    const updated = await updateGlobal(g => {
+      if (!g.completedClues[key]) g.completedClues[key]=[];
+      if (g.completedClues[key].includes(id)) return g;
+      g.completedClues[key].push(id);
+      g.scores[key] = (g.scores[key]||0) + clue.pts;
+      if (g.teams[player.team]) g.teams[player.team].score = (g.teams[player.team].score||0) + clue.pts;
+      return g;
+    });
+    const isLast = (updated.completedClues[key]||[]).length === CLUES.length;
+    if (isLast) { soundBanger(); addToast(`🏆 HUNT COMPLETE! ${updated.scores[key]} pts! LEGENDARY! 👑`); }
+    else { soundPoints(); addToast(`🎵 +${clue.pts} pts! "${clue.title}" SLAYED! ✨`); }
+    doBurst();
+    setTimeout(() => { setCurrentClue(null); setScreen("game"); }, 1500);
+  };
+
+  // ── RIDDLE ──────────────────────────────────────────────────────────────────
+  const [riddleAns, setRiddleAns] = useState("");
+  const [riddleResult, setRiddleResult] = useState(null);
+
+  const submitRiddle = (clue) => {
+    const ans = riddleAns.trim().toLowerCase();
+    if (ans.includes(clue.answer) || clue.answer.includes(ans)) {
+      setRiddleResult("pass");
+      soundPoints(); doBurst();
+      setTimeout(() => { setRiddleResult(null); setRiddleAns(""); completeClue(clue.id); }, 900);
+    } else {
+      setRiddleResult("fail"); soundWrong();
     }
-  }catch(e){
-    state.pendingPhotos.push({playerKey:pk(state.player),clueId:id,dataUrl,clueTitle:clue.title,ts:Date.now()});sync();
-    res.innerHTML=`<div class="verdict" style="background:rgba(168,85,247,0.15);color:#d8b4fe;border:1px solid #a855f7">📬 Submitted for GM review! Points coming soon! 💜</div>`;
-    btn.disabled=true;
-  }
-}
-function completeClue(id){
-  const clue=CLUES.find(c=>c.id===id);const key=pk(state.player);
-  if((state.completedClues[key]||[]).includes(id))return;
-  if(!state.completedClues[key])state.completedClues[key]=[];
-  state.completedClues[key].push(id);state.scores[key]=(state.scores[key]||0)+clue.pts;
-  const team=state.player.team;if(state.teams[team])state.teams[team].score=(state.teams[team].score||0)+clue.pts;
-  sync();
-  const isLast=state.completedClues[key].length===CLUES.length;
-  if(isLast){toast(`🏆 HUNT COMPLETE! Total: ${state.scores[key]} pts! LEGENDARY! 👑`);soundHuntComplete();burst(['🏆','👑','🌟','✨','💜','🎉']);}
-  else{toast(`🎵 +${clue.pts} pts! "${clue.title}" SLAYED! ✨`);soundPoints();burst();}
-  setTimeout(()=>backToGame(),1800);
-}
+  };
 
-function showLeaderboard(){
-  const teams=Object.entries(state.teams).sort((a,b)=>b[1].score-a[1].score);
-  const crowns=["👑","🥈","🥉"];
-  document.getElementById("board-content").innerHTML=`
-    <div style="font-size:.8rem;color:rgba(255,255,255,0.4);font-weight:800;margin-bottom:8px">TEAM STANDINGS 🏆</div>
-    ${teams.length===0?'<p style="color:rgba(255,255,255,0.3)">No teams yet!</p>':teams.map(([name,data],i)=>`<div class="team-row"><div><span style="font-size:1.3rem">${crowns[i]||"🎵"}</span> <strong>${name}</strong><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">${data.members?.length||0} member(s)</div></div><div class="score-big">${data.score||0}</div></div>`).join("")}
-    <div style="font-size:.8rem;color:rgba(255,255,255,0.4);font-weight:800;margin:14px 0 6px">INDIVIDUAL STARS ⭐</div>
-    ${Object.entries(state.scores).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([key,score])=>{const p=state.players[key];return p?`<div class="team-row"><div><strong>${p.name}</strong><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">${p.team}</div></div><div style="font-weight:800;background:linear-gradient(135deg,#ff6ec7,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent">${score} pts</div></div>`:""}).join("")}`;
-  showScreen("s-board");
-}
+  // ── PHOTO ───────────────────────────────────────────────────────────────────
+  const [photoData, setPhotoData] = useState(null);
+  const [photoResult, setPhotoResult] = useState(null);
+  const [photoLoading, setPhotoLoading] = useState(false);
 
-function showGMPanel(){showScreen("s-gm");gmTab("overview");}
-function gmTab(tab){
-  document.querySelectorAll(".tab").forEach((t,i)=>{const tabs=["overview","clues","teams","settings"];t.classList.toggle("active",tabs[i]===tab);});
-  document.querySelectorAll(".gm-pane").forEach(p=>p.style.display="none");
-  document.getElementById("gm-"+tab).style.display="block";
-  if(tab==="overview")renderGMOv();if(tab==="clues")renderGMClues();if(tab==="teams")renderGMTeams();
-  if(tab==="settings")document.getElementById("hunt-title-input").value=state.huntTitle;
+  const handlePhoto = (e) => {
+    const file = e.target.files[0]; if(!file) return;
+    const r = new FileReader();
+    r.onload = ev => setPhotoData(ev.target.result);
+    r.readAsDataURL(file);
+  };
+
+  const submitPhoto = async (clue) => {
+    if (!photoData) return;
+    setPhotoLoading(true); setPhotoResult(null);
+    try {
+      const b64 = photoData.split(",")[1], mt = photoData.split(";")[0].split(":")[1];
+      const resp = await fetch("https://api.anthropic.com/v1/messages", {
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:200,
+          messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mt,data:b64}},{type:"text",text:clue.photoPrompt+" Be lenient — if close, say YES."}]}] })
+      });
+      const data = await resp.json();
+      const reply = data.content?.find(b=>b.type==="text")?.text||"";
+      const pass = /^YES[,.\s—]/i.test(reply) || /\bYES\b/i.test(reply.substring(0,10));
+      if (pass) {
+        setPhotoResult({ok:true, msg:reply.substring(0,110)});
+        soundComplete(); doBurst();
+        setTimeout(() => { setPhotoResult(null); setPhotoData(null); completeClue(clue.id); }, 1400);
+      } else {
+        setPhotoResult({ok:false, msg:reply.substring(0,110)}); soundWrong();
+      }
+    } catch {
+      await updateGlobal(g => { g.pendingPhotos.push({playerKey:pk(player),clueId:clue.id,clueTitle:clue.title,ts:Date.now()}); return g; });
+      setPhotoResult({ok:"pending", msg:"Submitted for GM review! 💜"});
+    }
+    setPhotoLoading(false);
+  };
+
+  // ── RENDER CLUE INPUT ────────────────────────────────────────────────────────
+  const renderClueInput = (clue) => {
+    if (clue.type === "qr") return (
+      <button style={S.btnSuccess} onClick={() => completeClue(clue.id)}>✅ I Found It!</button>
+    );
+    if (clue.type === "riddle") return (
+      <div>
+        <label style={S.label}>Your Answer ✍️</label>
+        <input style={S.input} value={riddleAns} onChange={e=>setRiddleAns(e.target.value.toLowerCase())} placeholder="Type your answer..." />
+        <button style={S.btnPrimary} onClick={() => submitRiddle(clue)}>Submit 🎯</button>
+        {riddleResult==="pass" && <div style={S.verdictPass}>✅ Correct! You're a genius! 🌟</div>}
+        {riddleResult==="fail" && <div style={S.verdictFail}>❌ Not quite... try again! 😅</div>}
+      </div>
+    );
+    if (clue.type === "photo" || clue.type === "selfie") return (
+      <div>
+        <label style={S.label}>📷 Upload your photo</label>
+        <input type="file" accept="image/*" capture="environment" onChange={handlePhoto} style={{...S.input, padding:"8px"}} />
+        {photoData && <img src={photoData} style={{width:"100%",maxHeight:"180px",objectFit:"cover",borderRadius:"10px",margin:"8px 0",border:"2px solid rgba(255,110,199,0.4)"}} />}
+        {photoData && !photoLoading && !photoResult?.ok && (
+          <button style={S.btnPrimary} onClick={() => submitPhoto(clue)}>Submit for AI Review ✨</button>
+        )}
+        {photoLoading && <div style={{textAlign:"center",padding:"16px",color:"rgba(255,255,255,0.5)"}}>✨ AI is judging...</div>}
+        {photoResult && photoResult.ok===true && <div style={S.verdictPass}>✅ Photo approved! Slay! 💜<br/><span style={{fontWeight:400,fontSize:".85rem"}}>{photoResult.msg}</span></div>}
+        {photoResult && photoResult.ok===false && <div style={S.verdictFail}>❌ Not quite! {photoResult.msg}<br/><br/><button style={{...S.btnPrimary,marginTop:"6px"}} onClick={()=>{setPhotoResult(null);setPhotoData(null);}}>Try Again 📸</button></div>}
+        {photoResult && photoResult.ok==="pending" && <div style={{...S.verdictPass,background:"rgba(168,85,247,0.15)",color:"#d8b4fe",border:"1px solid #a855f7"}}>📬 {photoResult.msg}</div>}
+      </div>
+    );
+  };
+
+  // ── SCREENS ──────────────────────────────────────────────────────────────────
+  const {done, score, key:playerKey} = player ? getPlayerData() : {done:[],score:0,key:null};
+  const nextClue = CLUES.find(c => !done.includes(c.id));
+  const pct = Math.round(done.length/CLUES.length*100);
+
+  if (loading) return (
+    <div style={{...S.app, display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:"16px"}}>
+      <div style={{fontSize:"3rem"}}>✨</div>
+      <div style={{color:"rgba(255,255,255,0.5)"}}>Loading K-Hunt...</div>
+    </div>
+  );
+
+  return (
+    <div style={S.app}>
+      {/* Toasts */}
+      <div style={{position:"fixed",top:"14px",right:"14px",zIndex:9999,maxWidth:"270px"}}>
+        {toasts.map(t => (
+          <div key={t.id} style={{background:"rgba(20,0,40,0.95)",border:`1px solid ${t.type==="success"?"#00e676":"#ff4081"}`,borderRadius:"13px",padding:"11px 15px",marginBottom:"8px",fontSize:".88rem",fontWeight:700,color:t.type==="success"?"#69ffb8":"#ff9ebc",backdropFilter:"blur(10px)"}}>
+            {t.msg}
+          </div>
+        ))}
+      </div>
+      {/* Bursts */}
+      {bursts.map(b => (
+        <div key={b.id} style={{position:"fixed",left:b.x+"%",top:b.y+"%",fontSize:"1.6rem",zIndex:9998,pointerEvents:"none",animation:"burstAnim 1s forwards"}}>
+          {b.emoji}
+        </div>
+      ))}
+      <style>{`
+        @keyframes burstAnim{0%{opacity:1;transform:scale(.5) translateY(0)}100%{opacity:0;transform:scale(2) translateY(-70px)}}
+        input::placeholder{color:rgba(255,255,255,0.35)}
+        *{box-sizing:border-box}
+      `}</style>
+
+      {/* ── HOME ── */}
+      {screen==="home" && (
+        <div>
+          <div style={S.header}>
+            <div><div style={S.headerTitle}>✨ K-HUNT ✨</div><div style={{fontSize:".75rem",color:"rgba(255,255,255,0.4)"}}>The Ultimate Team Scavenger Hunt</div></div>
+            <div style={{fontSize:"2rem"}}>🎤</div>
+          </div>
+          <div style={S.page}>
+            <div style={{textAlign:"center",margin:"16px 0 8px"}}>
+              <div style={{fontSize:"3rem"}}>💿</div>
+              <div style={S.h1}>LET'S GO! 🎵</div>
+              <p style={S.sub}>Find clues · Smash challenges · Win glory ✨</p>
+              <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:"6px",fontSize:".8rem",color:"rgba(255,255,255,0.4)",marginBottom:"8px"}}>
+                <span style={S.syncDot(synced)}></span>{synced?"Live sync active — all devices connected!":"Connecting..."}
+              </div>
+            </div>
+            <div style={S.card}>
+              <div style={S.h2}>🌟 Join the Hunt</div>
+              <label style={S.label}>Your Name</label>
+              <input style={S.input} value={pName} onChange={e=>setPName(e.target.value)} placeholder="e.g. Jisoo ✨" maxLength={30} />
+              <label style={S.label}>Your Team Name</label>
+              <input style={S.input} value={pTeam} onChange={e=>setPTeam(e.target.value)} placeholder="e.g. Team BTS 💜" maxLength={30} />
+              <button style={S.btnPrimary} onClick={joinGame}>🚀 Start Hunt!</button>
+            </div>
+            <div style={S.card}>
+              <div style={S.h2}>🎮 Game Master</div>
+              <label style={S.label}>GM Password</label>
+              <input style={S.input} type="password" value={gmPass} onChange={e=>setGmPass(e.target.value)} placeholder="••••••••" />
+              <button style={S.btnSecondary} onClick={gmLogin}>Enter GM Panel 🎛</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── GAME ── */}
+      {screen==="game" && player && (
+        <div>
+          <div style={S.header}>
+            <div style={S.headerTitle}>✨ K-HUNT</div>
+            <div style={{display:"flex",alignItems:"center",gap:"8px"}}>
+              <span style={S.syncDot(synced)}></span>
+              <span style={{fontSize:".75rem",color:"rgba(255,255,255,0.4)"}}>Live</span>
+            </div>
+          </div>
+          <div style={S.page}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",margin:"10px 0 4px"}}>
+              <div><div style={{fontWeight:800,fontSize:"1.05rem"}}>✨ {player.name}</div><div style={{fontSize:".85rem",color:"rgba(255,255,255,0.45)"}}>💜 {player.team}</div></div>
+              <div style={{textAlign:"right"}}><div style={S.scoreBig}>{score}</div><div style={{fontSize:".72rem",color:"rgba(255,255,255,0.4)"}}>points</div></div>
+            </div>
+            <div style={S.progress}><div style={S.progressFill(pct)}></div></div>
+            <div style={{fontSize:".8rem",color:"rgba(255,255,255,0.4)",marginBottom:"10px"}}>{done.length} / {CLUES.length} completed 🎯</div>
+
+            {!nextClue ? (
+              <div style={{...S.card, textAlign:"center"}}>
+                <div style={{fontSize:"3rem"}}>🏆</div>
+                <div style={S.h2}>Hunt Complete!</div>
+                <p style={{color:"rgba(255,255,255,0.5)"}}>You've smashed all 15 clues! Check the leaderboard! 👑</p>
+              </div>
+            ) : (
+              <div style={S.card}>
+                <div style={{fontSize:".78rem",color:"rgba(255,255,255,0.4)",fontWeight:700,textTransform:"uppercase",letterSpacing:"1px"}}>Next Clue — #{nextClue.id} of 15</div>
+                <span style={S.badge(nextClue.type)}>{TI[nextClue.type]} {TL[nextClue.type]}</span>
+                <div style={{fontSize:"1.05rem",margin:"10px 0",lineHeight:1.5,color:"#f0e6ff"}}>{nextClue.desc}</div>
+                <div style={S.hint}>💡 <strong>Hint:</strong> {nextClue.hint}</div>
+                <button style={S.btnPrimary} onClick={() => { setCurrentClue(nextClue); setRiddleAns(""); setRiddleResult(null); setPhotoData(null); setPhotoResult(null); setScreen("clue"); }}>Let's Go! ✨</button>
+              </div>
+            )}
+
+            <div style={S.card}>
+              <div style={{fontSize:".8rem",color:"rgba(255,255,255,0.4)",fontWeight:800,marginBottom:"6px"}}>RECENTLY COMPLETED ⭐</div>
+              {done.length===0 ? <p style={{color:"rgba(255,255,255,0.3)",fontSize:".9rem"}}>None yet — get moving! 🏃</p> :
+                done.slice(-3).reverse().map(id => { const c=CLUES.find(x=>x.id===id); return (
+                  <div key={id} style={{display:"flex",alignItems:"center",gap:"8px",marginTop:"8px"}}>
+                    <span style={S.badge(c.type)}>{TI[c.type]}</span>
+                    <span style={{fontSize:".9rem"}}>{c.title}</span>
+                    <span style={{marginLeft:"auto",color:"#69ffb8",fontWeight:800,fontSize:".88rem"}}>+{c.pts}pts ✓</span>
+                  </div>
+                );})}
+            </div>
+            <div style={S.divider}></div>
+            <button style={S.btnSecondary} onClick={() => setScreen("board")}>🏆 Leaderboard</button>
+            <button style={S.btnSecondary} onClick={() => setScreen("allclues")}>📋 All Clues</button>
+          </div>
+        </div>
+      )}
+
+      {/* ── ALL CLUES ── */}
+      {screen==="allclues" && player && (
+        <div>
+          <div style={S.header}><div style={S.headerTitle}>✨ K-HUNT</div></div>
+          <div style={S.page}>
+            <div style={S.h1}>📋 All Clues</div>
+            <p style={S.sub}>Tap any clue to attempt it 🎯</p>
+            {CLUES.map(c => {
+              const isDone = done.includes(c.id);
+              return (
+                <div key={c.id} style={{...S.card, cursor:"pointer"}} onClick={() => { setCurrentClue(c); setRiddleAns(""); setRiddleResult(null); setPhotoData(null); setPhotoResult(null); setScreen("clue"); }}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <span style={{fontSize:".78rem",color:"rgba(255,255,255,0.4)",fontWeight:700}}>Clue #{c.id}</span>
+                    {isDone ? <span style={{color:"#69ffb8",fontWeight:800,fontSize:".88rem"}}>✓ Slayed!</span> : <span style={{color:"rgba(255,255,255,0.35)",fontSize:".85rem"}}>+{c.pts} pts</span>}
+                  </div>
+                  <div style={{display:"flex",alignItems:"center",gap:"8px",marginTop:"6px"}}>
+                    <span style={S.badge(c.type)}>{TI[c.type]} {TL[c.type]}</span>
+                    <span style={{fontWeight:800}}>{c.title}</span>
+                  </div>
+                </div>
+              );
+            })}
+            <button style={S.btnSecondary} onClick={() => setScreen("game")}>← Back</button>
+          </div>
+        </div>
+      )}
+
+      {/* ── CLUE DETAIL ── */}
+      {screen==="clue" && currentClue && (
+        <div>
+          <div style={S.header}><div style={S.headerTitle}>✨ K-HUNT</div></div>
+          <div style={S.page}>
+            <button style={{...S.btnSecondary, width:"auto", padding:"8px 16px", marginBottom:"12px"}} onClick={() => setScreen("allclues")}>← All Clues</button>
+            <div style={S.card}>
+              <div style={{fontSize:".78rem",color:"rgba(255,255,255,0.4)",fontWeight:700,textTransform:"uppercase",letterSpacing:"1px"}}>Clue #{currentClue.id} of 15 · {currentClue.pts} pts</div>
+              <span style={S.badge(currentClue.type)}>{TI[currentClue.type]} {TL[currentClue.type]}</span>
+              <div style={{...S.h2, marginTop:"10px"}}>{currentClue.title}</div>
+              <div style={{fontSize:"1.05rem",margin:"8px 0",lineHeight:1.5,color:"#f0e6ff"}}>{currentClue.desc}</div>
+              <div style={S.hint}>💡 <strong>Hint:</strong> {currentClue.hint}</div>
+              {done.includes(currentClue.id) ? <div style={S.verdictPass}>✅ Already slayed this one! 💜</div> : renderClueInput(currentClue)}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── LEADERBOARD ── */}
+      {screen==="board" && (
+        <div>
+          <div style={S.header}><div style={S.headerTitle}>✨ K-HUNT</div><span style={S.syncDot(synced)}></span></div>
+          <div style={S.page}>
+            <div style={S.h1}>🏆 Leaderboard</div>
+            <p style={S.sub}>Who's slaying the hunt? 👑</p>
+            <div style={S.card}>
+              <div style={{fontSize:".8rem",color:"rgba(255,255,255,0.4)",fontWeight:800,marginBottom:"8px"}}>TEAM STANDINGS 🏆</div>
+              {Object.entries(global.teams).sort((a,b)=>b[1].score-a[1].score).map(([name,data],i) => (
+                <div key={name} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
+                  <div><span style={{fontSize:"1.2rem"}}>{"👑🥈🥉"[i]||"🎵"}</span> <strong>{name}</strong><div style={{fontSize:".8rem",color:"rgba(255,255,255,0.4)"}}>{data.members?.length||0} member(s)</div></div>
+                  <div style={S.scoreBig}>{data.score||0}</div>
+                </div>
+              ))}
+              {Object.keys(global.teams).length===0 && <p style={{color:"rgba(255,255,255,0.3)"}}>No teams yet!</p>}
+              <div style={{fontSize:".8rem",color:"rgba(255,255,255,0.4)",fontWeight:800,margin:"14px 0 6px"}}>INDIVIDUAL STARS ⭐</div>
+              {Object.entries(global.scores).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([key,sc]) => {
+                const p = global.players[key]; if(!p) return null;
+                return (
+                  <div key={key} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:"1px solid rgba(255,255,255,0.05)"}}>
+                    <div><strong>{p.name}</strong><div style={{fontSize:".8rem",color:"rgba(255,255,255,0.4)"}}>{p.team}</div></div>
+                    <div style={{fontWeight:800,background:"linear-gradient(135deg,#ff6ec7,#ffee00)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>{sc} pts</div>
+                  </div>
+                );
+              })}
+            </div>
+            <button style={S.btnSecondary} onClick={() => setScreen("game")}>← Back to Hunt</button>
+          </div>
+        </div>
+      )}
+
+      {/* ── GM PANEL ── */}
+      {screen==="gm" && (
+        <div>
+          <div style={S.header}><div><div style={S.headerTitle}>🎛 GM Panel</div><div style={{fontSize:".75rem",color:"rgba(255,255,255,0.4)"}}>Game Master Controls</div></div><span style={S.syncDot(synced)}></span></div>
+          <div style={S.page}>
+            <div style={{display:"flex",gap:"6px",marginBottom:"14px"}}>
+              {["overview","clues","teams","settings"].map(t => (
+                <button key={t} style={{flex:1,padding:"9px 4px",borderRadius:"11px",border:"none",cursor:"pointer",fontWeight:800,fontSize:".75rem",fontFamily:"inherit",background:gmTab===t?"linear-gradient(135deg,#ff6ec7,#a855f7)":"rgba(255,255,255,0.07)",color:gmTab===t?"#fff":"rgba(255,255,255,0.45)"}} onClick={()=>setGmTab(t)}>{t.charAt(0).toUpperCase()+t.slice(1)}</button>
+              ))}
+            </div>
+
+            {gmTab==="overview" && (
+              <>
+                <div style={S.card}>
+                  <div style={S.h2}>📊 Live Stats</div>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"10px",textAlign:"center"}}>
+                    {[["#ff6ec7",Object.keys(global.players).length,"Players"],["#a855f7",Object.keys(global.teams).length,"Teams"],["#38bdf8",Object.values(global.completedClues).reduce((a,c)=>a+c.length,0),"Clues Done"]].map(([col,val,lbl]) => (
+                      <div key={lbl}><div style={{fontSize:"1.8rem",fontWeight:900,color:col}}>{val}</div><div style={{fontSize:".8rem",color:"rgba(255,255,255,0.4)"}}>{lbl}</div></div>
+                    ))}
+                  </div>
+                </div>
+                <div style={S.card}>
+                  <div style={S.h2}>📸 Pending Photos</div>
+                  {global.pendingPhotos.filter(p=>!p.approved&&!p.rejected).length===0 ?
+                    <p style={{color:"rgba(255,255,255,0.3)",fontSize:".9rem"}}>No pending photos 👌</p> :
+                    global.pendingPhotos.filter(p=>!p.approved&&!p.rejected).map((p,i) => (
+                      <div key={i} style={{background:"rgba(0,0,0,0.3)",borderRadius:"12px",padding:"12px",marginBottom:"8px"}}>
+                        <div style={{fontSize:".85rem",color:"rgba(255,255,255,0.5)"}}>{global.players[p.playerKey]?.name||p.playerKey} · {p.clueTitle}</div>
+                        <div style={{display:"flex",gap:"8px",marginTop:"8px"}}>
+                          <button style={{...S.btnSuccess,flex:1,padding:"8px",marginTop:0}} onClick={async()=>{await updateGlobal(g=>{const pp=g.pendingPhotos.find((_,j)=>j===i);if(pp){pp.approved=true;const clue=CLUES.find(c=>c.id===pp.clueId);if(clue){if(!g.completedClues[pp.playerKey])g.completedClues[pp.playerKey]=[];if(!g.completedClues[pp.playerKey].includes(pp.clueId)){g.completedClues[pp.playerKey].push(pp.clueId);g.scores[pp.playerKey]=(g.scores[pp.playerKey]||0)+clue.pts;const team=g.players[pp.playerKey]?.team;if(team&&g.teams[team])g.teams[team].score=(g.teams[team].score||0)+clue.pts;}}}return g;});addToast("Photo approved! 💜");}}>✅ Approve</button>
+                          <button style={{...S.btnDanger,flex:1,padding:"8px",marginTop:0}} onClick={async()=>{await updateGlobal(g=>{g.pendingPhotos.splice(i,1);return g;});addToast("Rejected.","error");}}>❌ Reject</button>
+                        </div>
+                      </div>
+                    ))
+                  }
+                </div>
+              </>
+            )}
+
+            {gmTab==="clues" && (
+              <div style={S.card}>
+                <div style={S.h2}>🔗 QR Code URLs</div>
+                <p style={{fontSize:".85rem",color:"rgba(255,255,255,0.45)",marginBottom:"12px"}}>Convert each URL to a QR at <strong>qr.io</strong> and stick them around!</p>
+                {CLUES.map(c => (
+                  <details key={c.id} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(168,85,247,0.3)",borderRadius:"10px",padding:"12px",marginBottom:"6px"}}>
+                    <summary style={{cursor:"pointer",fontWeight:800,color:"#ff6ec7"}}>{TI[c.type]} #{c.id} — {c.title}</summary>
+                    <div style={{marginTop:"8px",fontSize:".9rem",color:"rgba(255,255,255,0.55)"}}>{c.desc}</div>
+                    <div style={{fontSize:".75rem",color:"rgba(255,255,255,0.4)",wordBreak:"break-all",background:"rgba(0,0,0,0.3)",padding:"8px",borderRadius:"8px",marginTop:"6px"}}>
+                      🔗 {window.location.href.split("?")[0]}?clue={c.id}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            )}
+
+            {gmTab==="teams" && (
+              <>
+                <div style={S.card}>
+                  <div style={S.h2}>🏆 Team Scores</div>
+                  {Object.entries(global.teams).sort((a,b)=>b[1].score-a[1].score).map(([name,data]) => (
+                    <div key={name} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
+                      <strong>{name}</strong><span style={{color:"#ff6ec7",fontWeight:800}}>{data.score||0} pts</span>
+                    </div>
+                  ))}
+                  {Object.keys(global.teams).length===0 && <p style={{color:"rgba(255,255,255,0.3)"}}>No teams yet.</p>}
+                </div>
+                <div style={S.card}>
+                  <div style={S.h2}>👥 All Players</div>
+                  {Object.entries(global.players).map(([key,p]) => (
+                    <div key={key} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:"1px solid rgba(255,255,255,0.05)"}}>
+                      <div><strong>{p.name}</strong><div style={{fontSize:".8rem",color:"rgba(255,255,255,0.4)"}}>{p.team}</div></div>
+                      <div style={{textAlign:"right"}}><div style={{color:"#ff6ec7",fontWeight:800}}>{global.scores[key]||0} pts</div><div style={{fontSize:".8rem",color:"rgba(255,255,255,0.4)"}}>{(global.completedClues[key]||[]).length}/15</div></div>
+                    </div>
+                  ))}
+                  {Object.keys(global.players).length===0 && <p style={{color:"rgba(255,255,255,0.3)"}}>No players yet.</p>}
+                </div>
+              </>
+            )}
+
+            {gmTab==="settings" && (
+              <div style={S.card}>
+                <div style={S.h2}>⚙️ Settings</div>
+                <p style={{fontSize:".85rem",color:"rgba(255,255,255,0.45)",marginBottom:"8px"}}>GM password is "hunt2026" — change below.</p>
+                <label style={S.label}>New GM Password</label>
+                <input style={S.input} id="new-pass" placeholder="New password" />
+                <button style={S.btnPrimary} onClick={()=>{const v=document.getElementById("new-pass").value.trim();if(v)addToast("Password updated! 💾");}}>💾 Save Password</button>
+                <div style={S.divider}></div>
+                <button style={S.btnDanger} onClick={async()=>{if(window.confirm("Delete ALL player data?")){await saveGlobal(emptyState());setGlobal(emptyState());addToast("Reset! Fresh start! ✨");}}}>🗑 Reset All Data</button>
+              </div>
+            )}
+
+            <button style={{...S.btnSecondary, marginTop:"12px"}} onClick={() => setScreen("home")}>← Exit GM</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
-function renderGMOv(){
-  const tp=Object.keys(state.players).length,tt=Object.keys(state.teams).length,tc=Object.values(state.completedClues).reduce((a,c)=>a+c.length,0);
-  document.getElementById("gm-stats").innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center"><div><div style="font-size:1.8rem;font-weight:900;color:#ff6ec7">${tp}</div><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">Players</div></div><div><div style="font-size:1.8rem;font-weight:900;color:#a855f7">${tt}</div><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">Teams</div></div><div><div style="font-size:1.8rem;font-weight:900;color:#38bdf8">${tc}</div><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">Clues Done</div></div></div>`;
-  const pend=state.pendingPhotos.filter(p=>!p.approved&&!p.rejected);
-  document.getElementById("gm-pending").innerHTML=pend.length===0?'<p style="color:rgba(255,255,255,0.3);font-size:.9rem">No pending photos 👌</p>':pend.map((p,i)=>`<div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;margin:8px 0"><div style="font-size:.85rem;color:rgba(255,255,255,0.5)">${state.players[p.playerKey]?.name||p.playerKey} · ${p.clueTitle}</div><img src="${p.dataUrl}" style="width:100%;max-height:150px;object-fit:cover;border-radius:8px;margin:8px 0"><div style="display:flex;gap:8px"><button class="btn btn-success" style="flex:1;padding:8px" onclick="approvePhoto(${i})">✅ Approve</button><button class="btn btn-danger" style="flex:1;padding:8px" onclick="rejectPhoto(${i})">❌ Reject</button></div></div>`).join("");
-}
-function approvePhoto(i){const p=state.pendingPhotos[i];cpForPlayer(p.playerKey,p.clueId);state.pendingPhotos.splice(i,1);sync();toast("Photo approved! 💜");renderGMOv();}
-function rejectPhoto(i){state.pendingPhotos.splice(i,1);sync();toast("Photo rejected.","error");renderGMOv();}
-function cpForPlayer(key,clueId){const clue=CLUES.find(c=>c.id===clueId);if(!clue)return;if(!state.completedClues[key])state.completedClues[key]=[];if(state.completedClues[key].includes(clueId))return;state.completedClues[key].push(clueId);state.scores[key]=(state.scores[key]||0)+clue.pts;const team=state.players[key]?.team;if(team&&state.teams[team])state.teams[team].score=(state.teams[team].score||0)+clue.pts;sync();}
-function renderGMClues(){const base=window.location.href.split("?")[0];document.getElementById("gm-qr-list").innerHTML=CLUES.map(c=>`<details class="gm-clue"><summary>${TI[c.type]} #${c.id} — ${c.title}</summary><div style="margin-top:8px;font-size:.9rem;color:rgba(255,255,255,0.6)">${c.desc}</div><div class="qr-url">🔗 ${base}?clue=${c.id}</div><div style="font-size:.8rem;color:rgba(255,255,255,0.3);margin-top:4px">+${c.pts} pts · ${c.hint}</div></details>`).join("");}
-function renderGMTeams(){
-  document.getElementById("gm-team-scores").innerHTML=Object.entries(state.teams).sort((a,b)=>b[1].score-a[1].score).map(([n,d])=>`<div class="team-row"><strong>${n}</strong><span style="font-weight:800;color:#ff6ec7">${d.score||0} pts</span></div>`).join("")||'<p style="color:rgba(255,255,255,0.3)">No teams yet.</p>';
-  document.getElementById("gm-players-list").innerHTML=Object.entries(state.players).map(([key,p])=>`<div class="team-row"><div><strong>${p.name}</strong><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">${p.team}</div></div><div><span style="color:#ff6ec7;font-weight:800">${state.scores[key]||0} pts</span><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">${(state.completedClues[key]||[]).length}/15</div></div></div>`).join("")||'<p style="color:rgba(255,255,255,0.3)">No players yet.</p>';
-}
-function saveSettings(){const np=document.getElementById("new-pass").value.trim();if(np){state.gmPass=np;save("gp",np);}const ht=document.getElementById("hunt-title-input").value.trim();if(ht){state.huntTitle=ht;save("ht",ht);document.title=ht;}toast("Settings saved! 💾");}
-function resetAll(){if(!confirm("Delete ALL player data?"))return;["cc","sc","tm","pl","pp"].forEach(k=>localStorage.removeItem(APP_KEY+"_"+k));state.completedClues={};state.scores={};state.teams={};state.players={};state.pendingPhotos=[];toast("Reset! Fresh start! ✨");}
-window.addEventListener("load",()=>{const p=new URLSearchParams(window.location.search);if(p.get("clue")){document.getElementById("p-name").focus();toast("📱 QR scanned! Enter your name & team! ✨");}document.title=state.huntTitle;});
-</script>
-</body>
-</html>
