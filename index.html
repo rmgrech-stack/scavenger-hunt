@@ -363,7 +363,7 @@ const TL={qr:"QR Code",photo:"Photo Challenge",riddle:"Riddle",selfie:"Location 
 const TC={qr:"b-qr",photo:"b-photo",riddle:"b-riddle",selfie:"b-selfie"};
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
-let player=null,currentClueId=null,currentScreen='s-home';
+let player=null,currentClueId=null,currentScreen='s-home',scannedClueId=null;
 function pk(p){return(p.name+'_'+p.team).toLowerCase().replace(/\s+/g,'_');}
 
 // ── UI HELPERS ────────────────────────────────────────────────────────────────
@@ -444,8 +444,12 @@ function openClue(id){
     buyBtns+=`<button class="btn btn-skip" style="flex:1;padding:10px;margin-top:0;font-size:.85rem;${!canSkip?'opacity:.4;pointer-events:none':''}" onclick="skipClue(${id})">⏭ Skip<span class="cost cost-red">-${SKIP_COST}pts</span></button>`;
     buyBtns+=`</div>`;
 
-    if(clue.type==='qr'){input=`<button class="btn btn-ok" onclick="completeClue(${id})">✅ I Found It!</button>${buyBtns}`;}
-    else if(clue.type==='riddle'){input=`<label>Your Answer ✍️</label><input id="riddle-ans" placeholder="Type your answer..."><button class="btn btn-p" onclick="submitRiddle(${id})">Submit 🎯</button><div id="riddle-result"></div>${buyBtns}`;}
+  if(clue.type==='qr'){
+    const arrivedViaQR = scannedClueId===id;
+    input=arrivedViaQR
+      ? `<button class="btn btn-ok" onclick="completeClue(${id})">✅ I Found It!</button>${buyBtns}`
+      : `<div class="verdict-w" style="text-align:center">🔒 You must <strong>scan the QR code</strong> at the location to unlock this clue!<br><br><span style="font-size:.85rem;opacity:.7">Find the QR code hidden at the location to continue.</span></div>${buyBtns}`;
+  }    else if(clue.type==='riddle'){input=`<label>Your Answer ✍️</label><input id="riddle-ans" placeholder="Type your answer..."><button class="btn btn-p" onclick="submitRiddle(${id})">Submit 🎯</button><div id="riddle-result"></div>${buyBtns}`;}
     else{input=`<label>📷 Upload your photo</label><input type="file" accept="image/*" capture="environment" onchange="previewPhoto(this)"><img id="photo-prev" class="photo-preview"><button class="btn btn-p" id="photo-btn" style="display:none" onclick="submitPhoto(${id})">Submit for AI Review ✨</button><div id="photo-result"></div>${buyBtns}`;}
   }
 
@@ -596,7 +600,11 @@ async function resetAll(){
 // ── INIT ──────────────────────────────────────────────────────────────────────
 loadG().then(()=>{
   const p=new URLSearchParams(window.location.search);
-  if(p.get('clue'))toast('📱 QR scanned! Enter your name & team to continue ✨');
+  const clueParam = p.get('clue');
+  if(clueParam){
+    scannedClueId = parseInt(clueParam);
+    toast('📱 QR scanned! Enter your name & team to continue ✨');
+  }
   if(G.timerActive&&G.timerEnd&&G.timerEnd>Date.now())startLocalTimer();
 });
 </script>
