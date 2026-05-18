@@ -358,9 +358,21 @@ function playIntroJingle(){
 
 function introTap(){
   document.getElementById('intro-tap').style.display='none';
-  playIntroJingle();
+  // Create AudioContext fresh inside user gesture — iOS requirement
+  actx = new(window.AudioContext || window.webkitAudioContext)();
+  actx.resume().then(()=>{
+    playIntroJingle();
+  });
   setTimeout(skipIntro, 4000);
 }
+
+// Unlock audio on ANY tap for subsequent sounds
+function unlockAudio(){
+  if(!actx) actx = new(window.AudioContext || window.webkitAudioContext)();
+  if(actx.state === 'suspended') actx.resume();
+}
+document.addEventListener('touchstart', unlockAudio, {once:true});
+document.addEventListener('click', unlockAudio, {once:true});
 
 function skipIntro(){
   const el=document.getElementById('intro-screen');
@@ -369,8 +381,8 @@ function skipIntro(){
 }
 
 (function runIntro(){
-  // Play intro jingle on first touch (iOS requires gesture)
-  const startJingle=()=>{playIntroJingle();document.removeEventListener('touchstart',startJingle);document.removeEventListener('click',startJingle);};
+// Unlock audio on first user tap (iOS requires gesture)
+  const startJingle=()=>{document.removeEventListener('touchstart',startJingle);document.removeEventListener('click',startJingle);};
   document.addEventListener('touchstart',startJingle,{once:true});
   document.addEventListener('click',startJingle,{once:true});
   // Floating stars
