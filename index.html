@@ -3,62 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔍 Scavenger Hunt</title>
+<title>NAB Team Hunt</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#000;color:#fff;min-height:100vh}
   .screen{display:none;min-height:100vh;padding:20px}
   .screen.active{display:flex;flex-direction:column;align-items:center}
-  h1{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center}
-  h2{font-size:1.3rem;font-weight:700;color:#38bdf8;margin-bottom:12px}
-  .card{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:20px;width:100%;max-width:480px;margin:10px 0}
-  input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569;background:#0f172a;color:#f1f5f9;font-size:1rem;margin:8px 0}
-  .btn{display:block;width:100%;padding:14px;border-radius:12px;border:none;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;margin:8px 0}
-  .btn-primary{background:linear-gradient(135deg,#38bdf8,#818cf8);color:#0f172a}
-  .btn-primary:hover{opacity:.9;transform:translateY(-1px)}
-  .btn-secondary{background:#334155;color:#f1f5f9}
-  .btn-danger{background:#ef4444;color:#fff}
-  .btn-success{background:#22c55e;color:#fff}
+  h1{font-size:2rem;font-weight:800;color:#CC0000;text-align:center}
+  h2{font-size:1.2rem;font-weight:700;color:#CC0000;margin-bottom:12px}
+  .card{background:#1a1a1a;border:1px solid #333;border-radius:16px;padding:20px;width:100%;max-width:480px;margin:10px 0}
+  input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #444;background:#111;color:#fff;font-size:1rem;margin:8px 0}
+  .btn{display:block;width:100%;padding:14px;border-radius:10px;border:none;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;margin:8px 0}
+  .btn-primary{background:#CC0000;color:#fff}
+  .btn-primary:hover{background:#aa0000;transform:translateY(-1px)}
+  .btn-secondary{background:#222;color:#fff;border:1px solid #444}
+  .btn-danger{background:#CC0000;color:#fff}
+  .btn-success{background:#1a7a1a;color:#fff}
   .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:700}
-  .badge-qr{background:#0ea5e9;color:#fff}
-  .badge-photo{background:#a855f7;color:#fff}
-  .badge-riddle{background:#f59e0b;color:#0f172a}
-  .badge-selfie{background:#22c55e;color:#fff}
-  .progress-bar{width:100%;height:10px;background:#334155;border-radius:5px;overflow:hidden;margin:8px 0}
-  .progress-fill{height:100%;background:linear-gradient(90deg,#38bdf8,#818cf8);transition:width .5s}
-  .clue-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:16px;margin:8px 0;width:100%;max-width:480px}
-  .clue-num{font-size:.8rem;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:1px}
-  .clue-text{font-size:1.1rem;margin:8px 0;line-height:1.5}
-  .hint{background:#1e3a5f;border:1px solid #1d4ed8;border-radius:8px;padding:10px;margin:8px 0;font-size:.9rem;color:#93c5fd}
-  .team-row{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #334155}
+  .badge-qr{background:#CC0000;color:#fff}
+  .badge-photo{background:#555;color:#fff}
+  .badge-riddle{background:#333;color:#fff;border:1px solid #666}
+  .badge-selfie{background:#1a5c1a;color:#fff}
+  .progress-bar{width:100%;height:8px;background:#333;border-radius:4px;overflow:hidden;margin:8px 0}
+  .progress-fill{height:100%;background:#CC0000;transition:width .5s}
+  .clue-card{background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:16px;margin:8px 0;width:100%;max-width:480px}
+  .clue-num{font-size:.8rem;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+  .clue-text{font-size:1.05rem;margin:8px 0;line-height:1.5;color:#eee}
+  .hint{background:#1a0000;border:1px solid #CC0000;border-radius:8px;padding:10px;margin:8px 0;font-size:.9rem;color:#ff9999}
+  .team-row{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #2a2a2a}
   .team-row:last-child{border-bottom:none}
-  .score-big{font-size:2rem;font-weight:800;color:#38bdf8}
+  .score-big{font-size:2rem;font-weight:800;color:#CC0000}
   .medal{font-size:1.4rem}
   .photo-preview{width:100%;max-height:200px;object-fit:cover;border-radius:10px;margin:10px 0;display:none}
-  .spinner{width:32px;height:32px;border:3px solid #334155;border-top-color:#38bdf8;border-radius:50%;animation:spin .8s linear infinite;margin:10px auto}
+  .spinner{width:32px;height:32px;border:3px solid #333;border-top-color:#CC0000;border-radius:50%;animation:spin .8s linear infinite;margin:10px auto}
   @keyframes spin{to{transform:rotate(360deg)}}
-  .verdict{padding:16px;border-radius:12px;margin:10px 0;font-weight:700;text-align:center;font-size:1.1rem}
-  .verdict.pass{background:#14532d;color:#86efac;border:1px solid #22c55e}
-  .verdict.fail{background:#450a0a;color:#fca5a5;border:1px solid #ef4444}
+  .verdict{padding:16px;border-radius:12px;margin:10px 0;font-weight:700;text-align:center;font-size:1.05rem}
+  .verdict.pass{background:#0a2a0a;color:#88ff88;border:1px solid #1a7a1a}
+  .verdict.fail{background:#2a0000;color:#ff8888;border:1px solid #CC0000}
   .nav-tabs{display:flex;gap:8px;margin-bottom:16px}
-  .tab{flex:1;padding:10px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-size:.85rem;background:#334155;color:#94a3b8}
-  .tab.active{background:linear-gradient(135deg,#38bdf8,#818cf8);color:#0f172a}
-  .gm-clue{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:12px;margin:6px 0}
-  .gm-clue summary{cursor:pointer;font-weight:700;color:#38bdf8}
-  details[open] summary{color:#818cf8}
-  .qr-url{font-size:.75rem;color:#64748b;word-break:break-all;background:#0f172a;padding:8px;border-radius:6px;margin-top:6px}
-  label{font-size:.9rem;color:#94a3b8;display:block;margin-top:8px}
-  .completed-stamp{color:#22c55e;font-weight:700;font-size:.9rem}
-  .locked{opacity:.5;pointer-events:none}
+  .tab{flex:1;padding:10px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-size:.8rem;background:#222;color:#888}
+  .tab.active{background:#CC0000;color:#fff}
+  .gm-clue{background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:12px;margin:6px 0}
+  .gm-clue summary{cursor:pointer;font-weight:700;color:#CC0000}
+  .qr-url{font-size:.75rem;color:#888;word-break:break-all;background:#111;padding:8px;border-radius:6px;margin-top:6px}
+  label{font-size:.9rem;color:#aaa;display:block;margin-top:8px}
+  .completed-stamp{color:#88cc88;font-weight:700;font-size:.9rem}
   #toaster{position:fixed;top:20px;right:20px;z-index:9999}
-  .toast{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:12px 18px;margin-bottom:8px;font-size:.9rem;animation:fadeIn .3s}
-  .toast.success{border-color:#22c55e;color:#86efac}
-  .toast.error{border-color:#ef4444;color:#fca5a5}
+  .toast{background:#1a1a1a;border:1px solid #444;border-radius:10px;padding:12px 18px;margin-bottom:8px;font-size:.9rem;animation:fadeIn .3s}
+  .toast.success{border-color:#1a7a1a;color:#88ff88}
+  .toast.error{border-color:#CC0000;color:#ff8888}
   @keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-  .logo{font-size:3rem;margin-bottom:8px}
-  .sub{color:#64748b;text-align:center;font-size:.9rem;margin:4px 0 16px}
-  .divider{width:100%;max-width:480px;height:1px;background:#334155;margin:12px 0}
-  textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #475569;background:#0f172a;color:#f1f5f9;font-size:.95rem;margin:8px 0;min-height:80px;resize:vertical}
+  .nab-header{background:#CC0000;width:100%;padding:16px 20px;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .nab-logo{font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:2px}
+  .nab-tagline{font-size:.8rem;color:#ffaaaa}
+  .divider{width:100%;max-width:480px;height:1px;background:#2a2a2a;margin:12px 0}
+  textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #444;background:#111;color:#fff;font-size:.95rem;margin:8px 0;min-height:80px;resize:vertical}
+  .sub{color:#666;text-align:center;font-size:.9rem;margin:4px 0 16px}
 </style>
 </head>
 <body>
@@ -66,16 +66,21 @@
 
 <!-- SCREEN: HOME -->
 <div id="s-home" class="screen active">
-  <div style="max-width:480px;width:100%;padding-top:40px;text-align:center">
-    <div class="logo">🔍</div>
-    <h1>Scavenger Hunt</h1>
+  <div class="nab-header" style="width:100%;max-width:100%;border-radius:0">
+    <div>
+      <div class="nab-logo">NAB</div>
+      <div class="nab-tagline">Team Scavenger Hunt</div>
+    </div>
+  </div>
+  <div style="max-width:480px;width:100%;padding-top:16px;text-align:center">
+    <h1>🔍 Team Hunt</h1>
     <p class="sub">Find clues. Solve challenges. Win.</p>
     <div class="card">
-      <h2>Join as Player</h2>
+      <h2>Join the Hunt</h2>
       <label>Your Name</label>
-      <input id="p-name" placeholder="e.g. Alex" maxlength="30">
+      <input id="p-name" placeholder="e.g. Alex Smith" maxlength="30">
       <label>Your Team</label>
-      <input id="p-team" placeholder="e.g. Team Rocket" maxlength="30">
+      <input id="p-team" placeholder="e.g. Team Red" maxlength="30">
       <button class="btn btn-primary" onclick="joinGame()">🚀 Start Hunt</button>
     </div>
     <div class="card">
@@ -89,19 +94,22 @@
 
 <!-- SCREEN: PLAYER GAME -->
 <div id="s-game" class="screen">
+  <div class="nab-header" style="width:100%;max-width:100%">
+    <div class="nab-logo">NAB</div>
+  </div>
   <div style="max-width:480px;width:100%">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
       <div>
         <div id="g-playername" style="font-weight:700;font-size:1.1rem"></div>
-        <div id="g-teamname" style="font-size:.85rem;color:#64748b"></div>
+        <div id="g-teamname" style="font-size:.85rem;color:#888"></div>
       </div>
       <div style="text-align:right">
         <div class="score-big" id="g-score">0</div>
-        <div style="font-size:.75rem;color:#64748b">points</div>
+        <div style="font-size:.75rem;color:#888">points</div>
       </div>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="g-progress" style="width:0%"></div></div>
-    <div id="g-progress-txt" style="font-size:.8rem;color:#64748b;margin-bottom:12px">0 / 15 completed</div>
+    <div id="g-progress-txt" style="font-size:.8rem;color:#888;margin-bottom:12px">0 / 15 completed</div>
     <div id="g-clue-area"></div>
     <div class="divider"></div>
     <button class="btn btn-secondary" style="margin-top:8px" onclick="showLeaderboard()">🏆 Leaderboard</button>
@@ -111,7 +119,8 @@
 
 <!-- SCREEN: LEADERBOARD -->
 <div id="s-board" class="screen">
-  <div style="max-width:480px;width:100%;padding-top:20px">
+  <div class="nab-header" style="width:100%;max-width:100%"><div class="nab-logo">NAB</div></div>
+  <div style="max-width:480px;width:100%;padding-top:16px">
     <h1 style="margin-bottom:4px">🏆 Leaderboard</h1>
     <p class="sub">Live standings</p>
     <div class="card" id="board-content"></div>
@@ -121,7 +130,8 @@
 
 <!-- SCREEN: ALL CLUES LIST -->
 <div id="s-allclues" class="screen">
-  <div style="max-width:480px;width:100%;padding-top:20px">
+  <div class="nab-header" style="width:100%;max-width:100%"><div class="nab-logo">NAB</div></div>
+  <div style="max-width:480px;width:100%;padding-top:16px">
     <h1 style="margin-bottom:4px">📋 All Clues</h1>
     <p class="sub">Tap a clue to attempt it</p>
     <div id="all-clues-list"></div>
@@ -131,6 +141,7 @@
 
 <!-- SCREEN: CLUE DETAIL -->
 <div id="s-clue" class="screen">
+  <div class="nab-header" style="width:100%;max-width:100%"><div class="nab-logo">NAB</div></div>
   <div style="max-width:480px;width:100%;padding-top:16px">
     <button class="btn btn-secondary" style="width:auto;padding:8px 16px;margin-bottom:12px" onclick="showAllClues()">← All Clues</button>
     <div id="clue-detail-area"></div>
@@ -139,9 +150,11 @@
 
 <!-- SCREEN: GM PANEL -->
 <div id="s-gm" class="screen">
+  <div class="nab-header" style="width:100%;max-width:100%">
+    <div><div class="nab-logo">NAB</div><div class="nab-tagline">Game Master Panel</div></div>
+  </div>
   <div style="max-width:600px;width:100%;padding-top:16px">
     <h1>🎮 Game Master</h1>
-    <p class="sub">Manage the hunt</p>
     <div class="nav-tabs">
       <button class="tab active" onclick="gmTab('overview')">Overview</button>
       <button class="tab" onclick="gmTab('clues')">Clues & QRs</button>
@@ -161,7 +174,7 @@
     <div id="gm-clues" class="gm-pane" style="display:none">
       <div class="card">
         <h2>🔗 QR Code URLs</h2>
-        <p style="font-size:.85rem;color:#64748b;margin-bottom:12px">Print each URL as a QR code at <strong>qr.io</strong> or <strong>qrcode-monkey.com</strong>. Stick them around the office/street!</p>
+        <p style="font-size:.85rem;color:#888;margin-bottom:12px">Print each URL as a QR code at <strong>qr.io</strong> or <strong>qrcode-monkey.com</strong> and stick them around the office!</p>
         <div id="gm-qr-list"></div>
       </div>
     </div>
@@ -192,459 +205,159 @@
 </div>
 
 <script>
-// ─── STATE ───────────────────────────────────────────────────────────────────
 const GM_DEFAULT_PASS = "hunt2026";
 const APP_KEY = "scav_hunt_v1";
-
-function load(k, def) {
-  try { return JSON.parse(localStorage.getItem(APP_KEY + "_" + k)) ?? def; } catch { return def; }
-}
-function save(k, v) { localStorage.setItem(APP_KEY + "_" + k, JSON.stringify(v)); }
-
-let state = {
-  player: null, // {name, team}
-  completedClues: load("completedClues", {}), // {playerKey: [clueIds]}
-  scores: load("scores", {}), // {playerKey: number}
-  teams: load("teams", {}), // {teamName: {score, members}}
-  players: load("players", {}), // {playerKey: {name, team}}
-  pendingPhotos: load("pendingPhotos", []), // [{playerKey, clueId, dataUrl, clueTitle, ts}]
-  gmPass: load("gmPass", GM_DEFAULT_PASS),
-  huntTitle: load("huntTitle", "🔍 Office Scavenger Hunt"),
-  currentClueId: null
+function load(k,def){try{return JSON.parse(localStorage.getItem(APP_KEY+"_"+k))??def;}catch{return def;}}
+function save(k,v){localStorage.setItem(APP_KEY+"_"+k,JSON.stringify(v));}
+let state={
+  player:null,
+  completedClues:load("completedClues",{}),
+  scores:load("scores",{}),
+  teams:load("teams",{}),
+  players:load("players",{}),
+  pendingPhotos:load("pendingPhotos",[]),
+  gmPass:load("gmPass",GM_DEFAULT_PASS),
+  huntTitle:load("huntTitle","NAB Team Hunt"),
+  currentClueId:null
 };
-
-// ─── CLUE DATA ────────────────────────────────────────────────────────────────
-const CLUES = [
-  { id:1,  type:"qr",     pts:10, title:"Welcome to the Hunt",      desc:"You found QR #1! The adventure begins. Scan the code and register your team.", hint:"This clue is found at the main entrance." },
-  { id:2,  type:"photo",  pts:20, title:"Something Purple",         desc:"Find and photograph something PURPLE anywhere in or around the building.", hint:"Check meeting rooms, artwork, or outside signage.", photoPrompt:"Does this photo contain something clearly purple in colour? Answer YES or NO then briefly explain." },
-  { id:3,  type:"riddle", pts:15, title:"The Watering Hole",        desc:"I'm always running but never walk, I have a mouth but never talk. Where am I in your office?", hint:"Think about where people refuel during the day.", answer:"kitchen" },
-  { id:4,  type:"qr",     pts:10, title:"Floor Explorer",           desc:"You found QR #4! You're on the right track. Head to the next clue.", hint:"This QR is near the lifts or stairs." },
-  { id:5,  type:"selfie", pts:25, title:"Landmark Selfie",          desc:"Take a team selfie in front of the main building entrance or lobby sign.", hint:"Get as many team members in the shot as possible!", photoPrompt:"Does this photo show people posing for a selfie in a building entrance, lobby, or near a sign? Answer YES or NO then briefly explain." },
-  { id:6,  type:"riddle", pts:15, title:"The Thinking Chair",       desc:"I stand in rows, face one direction, and fill up when ideas are being shared. What room am I in?", hint:"Where do people present to groups?", answer:"boardroom" },
-  { id:7,  type:"photo",  pts:20, title:"Something Round",          desc:"Find and photograph something perfectly ROUND — it must be circular, not oval.", hint:"Look at clocks, plates, bins, or signage.", photoPrompt:"Does this photo contain a clearly round or circular object as the main subject? Answer YES or NO then briefly explain." },
-  { id:8,  type:"qr",     pts:10, title:"Street Scout",             desc:"You found QR #8! You've made it outside. Keep your eyes peeled.", hint:"This QR is attached to something on the street near the building." },
-  { id:9,  type:"photo",  pts:20, title:"Street Art or Mural",      desc:"Find any street art, mural, or interesting wall artwork within a 2-minute walk.", hint:"Check laneways, building sides, or cafe strips.", photoPrompt:"Does this photo show street art, a mural, or artistic wall decoration outdoors? Answer YES or NO then briefly explain." },
-  { id:10, type:"riddle", pts:15, title:"The Green Machine",        desc:"I'm outside, I'm alive, I need water and sun to thrive. Find me near the building entrance.", hint:"Look for plants or trees near the front door.", answer:"plant" },
-  { id:11, type:"selfie", pts:25, title:"Café Crew",                desc:"Find the nearest café to your office and take a team photo outside it.", hint:"Bonus points for style! ☕", photoPrompt:"Does this photo show people outside a café or coffee shop? Answer YES or NO then briefly explain." },
-  { id:12, type:"qr",     pts:10, title:"Hidden in Plain Sight",    desc:"You found QR #12! Almost there — only 3 to go.", hint:"This QR is near a window or glass surface." },
-  { id:13, type:"photo",  pts:20, title:"Something Blue",           desc:"Find and photograph something BLUE — the bigger or brighter the better.", hint:"Think signage, furniture, stationery, or the sky!", photoPrompt:"Does this photo contain something clearly blue as the main subject? Answer YES or NO then briefly explain." },
-  { id:14, type:"riddle", pts:15, title:"The Final Countdown",      desc:"I tick but I'm not a bomb, I hang on the wall, I tell everyone when to go home. What am I?", hint:"Found in most offices and meeting rooms.", answer:"clock" },
-  { id:15, type:"selfie", pts:30, title:"🏆 Victory Shot",          desc:"You've completed the hunt! Take a triumphant team photo — anywhere you like — to claim your final points!", hint:"Make it epic. This is your victory lap!", photoPrompt:"Does this photo show people celebrating or posing for a group photo? Answer YES or NO then briefly explain." },
+const CLUES=[
+  {id:1,type:"qr",pts:10,title:"Welcome to the Hunt",desc:"You found QR #1! The adventure begins. Register your team and let's go.",hint:"This clue is found at the main entrance."},
+  {id:2,type:"photo",pts:20,title:"Something Red",desc:"Find and photograph something RED anywhere in or around the building — the brighter the better!",hint:"NAB red counts! Check signage, stationery, or outside.",photoPrompt:"Does this photo contain something clearly red in colour as the main subject? Answer YES or NO then briefly explain."},
+  {id:3,type:"riddle",pts:15,title:"The Watering Hole",desc:"I'm always running but never walk, I have a mouth but never talk. Where am I in your office?",hint:"Think about where people refuel during the day.",answer:"kitchen"},
+  {id:4,type:"qr",pts:10,title:"Floor Explorer",desc:"You found QR #4! You're on the right track. Keep moving.",hint:"This QR is near the lifts or stairs."},
+  {id:5,type:"selfie",pts:25,title:"Lobby Legends",desc:"Take a team selfie in front of the main building entrance or lobby sign.",hint:"Get as many team members in the shot as possible!",photoPrompt:"Does this photo show people posing for a selfie in a building entrance, lobby, or near a sign? Answer YES or NO then briefly explain."},
+  {id:6,type:"riddle",pts:15,title:"The Thinking Chair",desc:"I stand in rows, face one direction, and fill up when ideas are being shared. What room am I in?",hint:"Where do people present to groups?",answer:"boardroom"},
+  {id:7,type:"photo",pts:20,title:"Something Round",desc:"Find and photograph something perfectly ROUND — it must be circular, not oval.",hint:"Look at clocks, plates, bins, or signage.",photoPrompt:"Does this photo contain a clearly round or circular object as the main subject? Answer YES or NO then briefly explain."},
+  {id:8,type:"qr",pts:10,title:"Street Scout",desc:"You found QR #8! You've made it outside. Keep your eyes peeled.",hint:"This QR is attached to something on the street near the building."},
+  {id:9,type:"photo",pts:20,title:"Street Art or Mural",desc:"Find any street art, mural, or interesting wall artwork within a 2-minute walk.",hint:"Check laneways, building sides, or café strips.",photoPrompt:"Does this photo show street art, a mural, or artistic wall decoration outdoors? Answer YES or NO then briefly explain."},
+  {id:10,type:"riddle",pts:15,title:"The Green Machine",desc:"I'm outside, I'm alive, I need water and sun to thrive. Find me near the building entrance.",hint:"Look for plants or trees near the front door.",answer:"plant"},
+  {id:11,type:"selfie",pts:25,title:"Café Crew",desc:"Find the nearest café to the office and take a team photo outside it.",hint:"Bonus points for style! ☕",photoPrompt:"Does this photo show people outside a café or coffee shop? Answer YES or NO then briefly explain."},
+  {id:12,type:"qr",pts:10,title:"Hidden in Plain Sight",desc:"You found QR #12! Almost there — only 3 to go.",hint:"This QR is near a window or glass surface."},
+  {id:13,type:"photo",pts:20,title:"Something Black & White",desc:"Find and photograph something that is purely black and white — no colour.",hint:"Think signage, newspapers, zebra crossings, or artwork.",photoPrompt:"Does this photo contain something that is clearly black and white as the main subject? Answer YES or NO then briefly explain."},
+  {id:14,type:"riddle",pts:15,title:"The Final Countdown",desc:"I tick but I'm not a bomb, I hang on the wall, I tell everyone when to go home. What am I?",hint:"Found in most offices and meeting rooms.",answer:"clock"},
+  {id:15,type:"selfie",pts:30,title:"🏆 Victory Shot",desc:"Hunt complete! Take a triumphant team photo anywhere you like to claim your final points!",hint:"Make it epic. This is your victory lap!",photoPrompt:"Does this photo show people celebrating or posing for a group photo? Answer YES or NO then briefly explain."},
 ];
-
-const TYPE_LABELS = { qr:"QR Code", photo:"Photo Challenge", riddle:"Riddle", selfie:"Location Selfie" };
-const TYPE_BADGE  = { qr:"badge-qr", photo:"badge-photo", riddle:"badge-riddle", selfie:"badge-selfie" };
-const TYPE_ICONS  = { qr:"📱", photo:"📸", riddle:"🧩", selfie:"🤳" };
-
-// ─── UTILS ───────────────────────────────────────────────────────────────────
-function playerKey(p) { return (p.name + "_" + p.team).toLowerCase().replace(/\s+/g,"_"); }
-function toast(msg, type="success") {
-  const t = document.getElementById("toaster");
-  const d = document.createElement("div");
-  d.className = `toast ${type}`;
-  d.textContent = msg;
-  t.appendChild(d);
-  setTimeout(()=>d.remove(), 3500);
-}
-function showScreen(id) {
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  window.scrollTo(0,0);
-}
-function syncStorage() {
-  save("completedClues", state.completedClues);
-  save("scores", state.scores);
-  save("teams", state.teams);
-  save("players", state.players);
-  save("pendingPhotos", state.pendingPhotos);
-}
-
-// ─── HOME / JOIN ──────────────────────────────────────────────────────────────
-function joinGame() {
-  const name = document.getElementById("p-name").value.trim();
-  const team = document.getElementById("p-team").value.trim();
-  if (!name || !team) { toast("Enter your name and team!", "error"); return; }
-  state.player = { name, team };
-  const pk = playerKey(state.player);
-  if (!state.players[pk]) state.players[pk] = { name, team };
-  if (!state.completedClues[pk]) state.completedClues[pk] = [];
-  if (!state.scores[pk]) state.scores[pk] = 0;
-  if (!state.teams[team]) state.teams[team] = { score:0, members:[] };
-  if (!state.teams[team].members.includes(pk)) state.teams[team].members.push(pk);
+const TYPE_LABELS={qr:"QR Code",photo:"Photo Challenge",riddle:"Riddle",selfie:"Location Selfie"};
+const TYPE_BADGE={qr:"badge-qr",photo:"badge-photo",riddle:"badge-riddle",selfie:"badge-selfie"};
+const TYPE_ICONS={qr:"📱",photo:"📸",riddle:"🧩",selfie:"🤳"};
+function playerKey(p){return(p.name+"_"+p.team).toLowerCase().replace(/\s+/g,"_");}
+function toast(msg,type="success"){const t=document.getElementById("toaster");const d=document.createElement("div");d.className=`toast ${type}`;d.textContent=msg;t.appendChild(d);setTimeout(()=>d.remove(),3500);}
+function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo(0,0);}
+function syncStorage(){save("completedClues",state.completedClues);save("scores",state.scores);save("teams",state.teams);save("players",state.players);save("pendingPhotos",state.pendingPhotos);}
+function joinGame(){
+  const name=document.getElementById("p-name").value.trim();
+  const team=document.getElementById("p-team").value.trim();
+  if(!name||!team){toast("Enter your name and team!","error");return;}
+  state.player={name,team};
+  const pk=playerKey(state.player);
+  if(!state.players[pk])state.players[pk]={name,team};
+  if(!state.completedClues[pk])state.completedClues[pk]=[];
+  if(!state.scores[pk])state.scores[pk]=0;
+  if(!state.teams[team])state.teams[team]={score:0,members:[]};
+  if(!state.teams[team].members.includes(pk))state.teams[team].members.push(pk);
   syncStorage();
-  // Check URL for direct clue link
-  const params = new URLSearchParams(window.location.search);
-  const clueId = parseInt(params.get("clue"));
+  const params=new URLSearchParams(window.location.search);
+  const clueId=parseInt(params.get("clue"));
   renderGameHeader();
-  if (clueId && CLUES.find(c=>c.id===clueId)) {
-    showClue(clueId);
-  } else {
-    showScreen("s-game");
-    renderGameClueArea();
-  }
+  if(clueId&&CLUES.find(c=>c.id===clueId)){showClue(clueId);}
+  else{showScreen("s-game");renderGameClueArea();}
 }
-
-function gmLogin() {
-  const pass = document.getElementById("gm-pass").value;
-  if (pass === state.gmPass) { showGMPanel(); }
-  else { toast("Wrong password!", "error"); }
+function gmLogin(){const pass=document.getElementById("gm-pass").value;if(pass===state.gmPass){showGMPanel();}else{toast("Wrong password!","error");}}
+function renderGameHeader(){
+  const p=state.player;const pk=playerKey(p);
+  document.getElementById("g-playername").textContent="👤 "+p.name;
+  document.getElementById("g-teamname").textContent="🏷 "+p.team;
+  document.getElementById("g-score").textContent=state.scores[pk]||0;
+  const done=(state.completedClues[pk]||[]).length;
+  const pct=Math.round(done/CLUES.length*100);
+  document.getElementById("g-progress").style.width=pct+"%";
+  document.getElementById("g-progress-txt").textContent=done+" / "+CLUES.length+" completed";
 }
-
-// ─── GAME SCREEN ─────────────────────────────────────────────────────────────
-function renderGameHeader() {
-  const p = state.player;
-  const pk = playerKey(p);
-  document.getElementById("g-playername").textContent = "👤 " + p.name;
-  document.getElementById("g-teamname").textContent = "🏷 " + p.team;
-  document.getElementById("g-score").textContent = state.scores[pk] || 0;
-  const done = (state.completedClues[pk] || []).length;
-  const pct = Math.round(done / CLUES.length * 100);
-  document.getElementById("g-progress").style.width = pct + "%";
-  document.getElementById("g-progress-txt").textContent = done + " / " + CLUES.length + " completed";
+function renderGameClueArea(){
+  const pk=playerKey(state.player);
+  const done=state.completedClues[pk]||[];
+  const next=CLUES.find(c=>!done.includes(c.id));
+  const area=document.getElementById("g-clue-area");
+  if(!next){area.innerHTML=`<div class="card" style="text-align:center"><div style="font-size:3rem">🎉</div><h2>Hunt Complete!</h2><p style="color:#888">You've completed all 15 clues. Check the leaderboard!</p></div>`;return;}
+  area.innerHTML=`<div class="card"><div class="clue-num">Next Clue — #${next.id} of 15</div><span class="badge ${TYPE_BADGE[next.type]}">${TYPE_ICONS[next.type]} ${TYPE_LABELS[next.type]}</span><div class="clue-text" style="margin-top:10px">${next.desc}</div><div class="hint">💡 <strong>Hint:</strong> ${next.hint}</div><button class="btn btn-primary" onclick="showClue(${next.id})">Attempt This Clue →</button></div>
+  <div class="card" style="padding:14px"><div style="font-size:.85rem;color:#888;font-weight:700">RECENTLY COMPLETED</div>${done.length===0?'<p style="color:#555;font-size:.9rem">None yet — get started!</p>':done.slice(-3).reverse().map(id=>{const c=CLUES.find(x=>x.id===id);return`<div style="display:flex;align-items:center;gap:8px;margin-top:8px"><span class="badge ${TYPE_BADGE[c.type]}">${TYPE_ICONS[c.type]}</span><span style="font-size:.9rem">${c.title}</span><span class="completed-stamp" style="margin-left:auto">+${c.pts}pts ✓</span></div>`;}).join("")}</div>`;
 }
-
-function renderGameClueArea() {
-  const pk = playerKey(state.player);
-  const done = state.completedClues[pk] || [];
-  const next = CLUES.find(c => !done.includes(c.id));
-  const area = document.getElementById("g-clue-area");
-  if (!next) {
-    area.innerHTML = `<div class="card" style="text-align:center">
-      <div style="font-size:3rem">🎉</div>
-      <h2>Hunt Complete!</h2>
-      <p style="color:#64748b">You've completed all 15 clues. Check the leaderboard!</p>
-    </div>`;
-    return;
-  }
-  area.innerHTML = `
-    <div class="card">
-      <div class="clue-num">Next Clue — #${next.id} of 15</div>
-      <span class="badge ${TYPE_BADGE[next.type]}">${TYPE_ICONS[next.type]} ${TYPE_LABELS[next.type]}</span>
-      <div class="clue-text" style="margin-top:10px">${next.desc}</div>
-      <div class="hint">💡 <strong>Hint:</strong> ${next.hint}</div>
-      <button class="btn btn-primary" onclick="showClue(${next.id})">Attempt This Clue →</button>
-    </div>
-    <div class="card" style="padding:14px">
-      <div style="font-size:.85rem;color:#64748b;font-weight:700">RECENTLY COMPLETED</div>
-      ${done.length === 0 ? '<p style="color:#475569;font-size:.9rem">None yet — get started!</p>' :
-        done.slice(-3).reverse().map(id => {
-          const c = CLUES.find(x=>x.id===id);
-          return `<div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-            <span class="badge ${TYPE_BADGE[c.type]}">${TYPE_ICONS[c.type]}</span>
-            <span style="font-size:.9rem">${c.title}</span>
-            <span class="completed-stamp" style="margin-left:auto">+${c.pts}pts ✓</span>
-          </div>`;
-        }).join("")
-      }
-    </div>`;
-}
-
-function backToGame() {
-  renderGameHeader();
-  renderGameClueArea();
-  showScreen("s-game");
-}
-
-// ─── ALL CLUES ────────────────────────────────────────────────────────────────
-function showAllClues() {
-  const pk = playerKey(state.player);
-  const done = state.completedClues[pk] || [];
-  const list = document.getElementById("all-clues-list");
-  list.innerHTML = CLUES.map(c => {
-    const isDone = done.includes(c.id);
-    return `<div class="clue-card" onclick="showClue(${c.id})" style="cursor:pointer">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span class="clue-num">Clue #${c.id}</span>
-        ${isDone ? '<span class="completed-stamp">✓ Done</span>' : `<span style="color:#64748b;font-size:.85rem">+${c.pts} pts</span>`}
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
-        <span class="badge ${TYPE_BADGE[c.type]}">${TYPE_ICONS[c.type]} ${TYPE_LABELS[c.type]}</span>
-        <span style="font-weight:700">${c.title}</span>
-      </div>
-    </div>`;
-  }).join("");
+function backToGame(){renderGameHeader();renderGameClueArea();showScreen("s-game");}
+function showAllClues(){
+  const pk=playerKey(state.player);const done=state.completedClues[pk]||[];
+  document.getElementById("all-clues-list").innerHTML=CLUES.map(c=>{const isDone=done.includes(c.id);return`<div class="clue-card" onclick="showClue(${c.id})" style="cursor:pointer"><div style="display:flex;justify-content:space-between;align-items:center"><span class="clue-num">Clue #${c.id}</span>${isDone?'<span class="completed-stamp">✓ Done</span>':`<span style="color:#888;font-size:.85rem">+${c.pts} pts</span>`}</div><div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span class="badge ${TYPE_BADGE[c.type]}">${TYPE_ICONS[c.type]} ${TYPE_LABELS[c.type]}</span><span style="font-weight:700">${c.title}</span></div></div>`;}).join("");
   showScreen("s-allclues");
 }
-
-// ─── CLUE DETAIL ──────────────────────────────────────────────────────────────
-function showClue(id) {
-  state.currentClueId = id;
-  const clue = CLUES.find(c=>c.id===id);
-  const pk = playerKey(state.player);
-  const done = (state.completedClues[pk] || []).includes(id);
-  const area = document.getElementById("clue-detail-area");
-  area.innerHTML = `
-    <div class="card">
-      <div class="clue-num">Clue #${clue.id} of 15 · ${clue.pts} pts</div>
-      <span class="badge ${TYPE_BADGE[clue.type]}">${TYPE_ICONS[clue.type]} ${TYPE_LABELS[clue.type]}</span>
-      <h2 style="margin-top:10px">${clue.title}</h2>
-      <div class="clue-text">${clue.desc}</div>
-      <div class="hint">💡 <strong>Hint:</strong> ${clue.hint}</div>
-      ${done ? `<div class="verdict pass">✅ You already completed this clue!</div>` : renderClueInput(clue)}
-    </div>`;
+function showClue(id){
+  state.currentClueId=id;
+  const clue=CLUES.find(c=>c.id===id);
+  const pk=playerKey(state.player);
+  const done=(state.completedClues[pk]||[]).includes(id);
+  document.getElementById("clue-detail-area").innerHTML=`<div class="card"><div class="clue-num">Clue #${clue.id} of 15 · ${clue.pts} pts</div><span class="badge ${TYPE_BADGE[clue.type]}">${TYPE_ICONS[clue.type]} ${TYPE_LABELS[clue.type]}</span><h2 style="margin-top:10px">${clue.title}</h2><div class="clue-text">${clue.desc}</div><div class="hint">💡 <strong>Hint:</strong> ${clue.hint}</div>${done?'<div class="verdict pass">✅ You already completed this clue!</div>':renderClueInput(clue)}</div>`;
   showScreen("s-clue");
 }
-
-function renderClueInput(clue) {
-  if (clue.type === "qr") {
-    return `<button class="btn btn-success" onclick="completeClue(${clue.id})">✅ Mark as Found</button>`;
-  }
-  if (clue.type === "riddle") {
-    return `<label>Your Answer</label>
-    <input id="riddle-ans" placeholder="Type your answer..." oninput="this.value=this.value.toLowerCase()">
-    <button class="btn btn-primary" onclick="submitRiddle(${clue.id})">Submit Answer</button>
-    <div id="riddle-result"></div>`;
-  }
-  if (clue.type === "photo" || clue.type === "selfie") {
-    return `<label>📷 Upload your photo</label>
-    <input type="file" accept="image/*" capture="environment" onchange="previewPhoto(this)" style="margin:8px 0">
-    <img id="photo-preview" class="photo-preview">
-    <button class="btn btn-primary" id="submit-photo-btn" style="display:none" onclick="submitPhoto(${clue.id})">Submit Photo for AI Review</button>
-    <div id="photo-result"></div>`;
-  }
+function renderClueInput(clue){
+  if(clue.type==="qr")return`<button class="btn btn-success" onclick="completeClue(${clue.id})">✅ Mark as Found</button>`;
+  if(clue.type==="riddle")return`<label>Your Answer</label><input id="riddle-ans" placeholder="Type your answer..." oninput="this.value=this.value.toLowerCase()"><button class="btn btn-primary" onclick="submitRiddle(${clue.id})">Submit Answer</button><div id="riddle-result"></div>`;
+  if(clue.type==="photo"||clue.type==="selfie")return`<label>📷 Upload your photo</label><input type="file" accept="image/*" capture="environment" onchange="previewPhoto(this)" style="margin:8px 0"><img id="photo-preview" class="photo-preview"><button class="btn btn-primary" id="submit-photo-btn" style="display:none" onclick="submitPhoto(${clue.id})">Submit Photo for AI Review</button><div id="photo-result"></div>`;
 }
-
-function previewPhoto(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = document.getElementById("photo-preview");
-    img.src = e.target.result;
-    img.style.display = "block";
-    document.getElementById("submit-photo-btn").style.display = "block";
-    document.getElementById("submit-photo-btn").dataset.dataurl = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-function submitRiddle(id) {
-  const clue = CLUES.find(c=>c.id===id);
-  const ans = document.getElementById("riddle-ans").value.trim().toLowerCase();
-  const correct = clue.answer.toLowerCase();
-  const res = document.getElementById("riddle-result");
-  if (ans.includes(correct) || correct.includes(ans)) {
-    res.innerHTML = `<div class="verdict pass">✅ Correct! "${clue.answer}" is right!</div>`;
-    setTimeout(()=>completeClue(id), 1000);
-  } else {
-    res.innerHTML = `<div class="verdict fail">❌ Not quite. Try again!</div>`;
+function previewPhoto(input){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=e=>{const img=document.getElementById("photo-preview");img.src=e.target.result;img.style.display="block";const btn=document.getElementById("submit-photo-btn");btn.style.display="block";btn.dataset.dataurl=e.target.result;};reader.readAsDataURL(file);}
+function submitRiddle(id){const clue=CLUES.find(c=>c.id===id);const ans=document.getElementById("riddle-ans").value.trim().toLowerCase();const correct=clue.answer.toLowerCase();const res=document.getElementById("riddle-result");if(ans.includes(correct)||correct.includes(ans)){res.innerHTML=`<div class="verdict pass">✅ Correct! "${clue.answer}" is right!</div>`;setTimeout(()=>completeClue(id),1000);}else{res.innerHTML=`<div class="verdict fail">❌ Not quite. Try again!</div>`;}}
+async function submitPhoto(id){
+  const clue=CLUES.find(c=>c.id===id);const btn=document.getElementById("submit-photo-btn");const dataUrl=btn.dataset.dataurl;const res=document.getElementById("photo-result");
+  btn.disabled=true;btn.textContent="Analysing with AI...";
+  res.innerHTML=`<div class="spinner"></div><p style="text-align:center;color:#888;font-size:.9rem">Claude is reviewing your photo…</p>`;
+  try{
+    const base64=dataUrl.split(",")[1];const mediaType=dataUrl.split(";")[0].split(":")[1];
+    const response=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:200,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mediaType,data:base64}},{type:"text",text:clue.photoPrompt+" Be lenient — if it's close, say YES."}]}]})});
+    const data=await response.json();const reply=data.content?.find(b=>b.type==="text")?.text||"";
+    const passed=reply.toUpperCase().startsWith("YES")||reply.toUpperCase().includes("YES,")||reply.toUpperCase().includes("YES —")||reply.toUpperCase().includes("YES.");
+    if(passed){res.innerHTML=`<div class="verdict pass">✅ Photo approved! ${reply.substring(0,120)}</div>`;setTimeout(()=>completeClue(id),1200);}
+    else{res.innerHTML=`<div class="verdict fail">❌ Not quite right. ${reply.substring(0,120)}<br><br>Try a different photo!</div>`;btn.disabled=false;btn.textContent="Resubmit Photo";}
+  }catch(e){
+    state.pendingPhotos.push({playerKey:playerKey(state.player),clueId:id,dataUrl,clueTitle:clue.title,ts:Date.now()});syncStorage();
+    res.innerHTML=`<div class="verdict" style="background:#1a0a00;color:#ffaa88;border:1px solid #CC0000">📬 Photo submitted for GM review! You'll earn points once approved.</div>`;btn.disabled=true;
   }
 }
-
-async function submitPhoto(id) {
-  const clue = CLUES.find(c=>c.id===id);
-  const btn = document.getElementById("submit-photo-btn");
-  const dataUrl = btn.dataset.dataurl;
-  const res = document.getElementById("photo-result");
-  btn.disabled = true;
-  btn.textContent = "Analysing with AI...";
-  res.innerHTML = `<div class="spinner"></div><p style="text-align:center;color:#64748b;font-size:.9rem">Claude is reviewing your photo…</p>`;
-  try {
-    const base64 = dataUrl.split(",")[1];
-    const mediaType = dataUrl.split(";")[0].split(":")[1];
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        model:"claude-sonnet-4-20250514",
-        max_tokens:200,
-        messages:[{
-          role:"user",
-          content:[
-            { type:"image", source:{ type:"base64", media_type:mediaType, data:base64 }},
-            { type:"text",  text: clue.photoPrompt + " Be lenient — if it's close, say YES." }
-          ]
-        }]
-      })
-    });
-    const data = await response.json();
-    const reply = data.content?.find(b=>b.type==="text")?.text || "";
-    const passed = reply.toUpperCase().startsWith("YES") || reply.toUpperCase().includes("YES,") || reply.toUpperCase().includes("YES —") || reply.toUpperCase().includes("YES.");
-    if (passed) {
-      res.innerHTML = `<div class="verdict pass">✅ Photo approved! ${reply.substring(0,120)}</div>`;
-      setTimeout(()=>completeClue(id), 1200);
-    } else {
-      res.innerHTML = `<div class="verdict fail">❌ Not quite right. ${reply.substring(0,120)}<br><br>Try a different photo!</div>`;
-      btn.disabled = false;
-      btn.textContent = "Resubmit Photo";
-    }
-  } catch(e) {
-    // Fallback: send to GM queue
-    state.pendingPhotos.push({ playerKey: playerKey(state.player), clueId:id, dataUrl, clueTitle:clue.title, ts:Date.now() });
-    syncStorage();
-    res.innerHTML = `<div class="verdict" style="background:#1e3a5f;color:#93c5fd;border:1px solid #1d4ed8">📬 Photo submitted for GM review! You'll earn points once approved.</div>`;
-    btn.disabled = true;
-  }
+function completeClue(id){
+  const clue=CLUES.find(c=>c.id===id);const pk=playerKey(state.player);
+  if((state.completedClues[pk]||[]).includes(id))return;
+  if(!state.completedClues[pk])state.completedClues[pk]=[];
+  state.completedClues[pk].push(id);state.scores[pk]=(state.scores[pk]||0)+clue.pts;
+  const team=state.player.team;if(state.teams[team])state.teams[team].score=(state.teams[team].score||0)+clue.pts;
+  syncStorage();toast(`🎉 +${clue.pts} points! "${clue.title}" complete!`);setTimeout(()=>backToGame(),1600);
 }
-
-function completeClue(id) {
-  const clue = CLUES.find(c=>c.id===id);
-  const pk = playerKey(state.player);
-  if ((state.completedClues[pk] || []).includes(id)) return;
-  if (!state.completedClues[pk]) state.completedClues[pk] = [];
-  state.completedClues[pk].push(id);
-  state.scores[pk] = (state.scores[pk] || 0) + clue.pts;
-  // Update team score
-  const team = state.player.team;
-  if (state.teams[team]) state.teams[team].score = (state.teams[team].score || 0) + clue.pts;
-  syncStorage();
-  toast(`🎉 +${clue.pts} points! "${clue.title}" complete!`);
-  setTimeout(()=>backToGame(), 1600);
-}
-
-// ─── LEADERBOARD ──────────────────────────────────────────────────────────────
-function showLeaderboard() {
-  const teams = Object.entries(state.teams).sort((a,b)=>b[1].score - a[1].score);
-  const medals = ["🥇","🥈","🥉"];
-  document.getElementById("board-content").innerHTML = `
-    <div style="font-size:.85rem;color:#64748b;font-weight:700;margin-bottom:8px">TEAM STANDINGS</div>
-    ${teams.length === 0 ? '<p style="color:#475569">No teams yet.</p>' :
-      teams.map(([ name, data ], i) => `
-        <div class="team-row">
-          <div>
-            <span class="medal">${medals[i] || "🏅"}</span>
-            <strong>${name}</strong>
-            <div style="font-size:.8rem;color:#64748b">${data.members?.length || 0} member(s)</div>
-          </div>
-          <div class="score-big">${data.score || 0}</div>
-        </div>`).join("")
-    }
-    <div style="font-size:.85rem;color:#64748b;font-weight:700;margin:16px 0 8px">INDIVIDUAL SCORES</div>
-    ${Object.entries(state.scores).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([pk, score]) => {
-      const p = state.players[pk];
-      return p ? `<div class="team-row">
-        <div><strong>${p.name}</strong><div style="font-size:.8rem;color:#64748b">${p.team}</div></div>
-        <div style="font-weight:700;color:#38bdf8">${score} pts</div>
-      </div>` : "";
-    }).join("")}`;
+function showLeaderboard(){
+  const teams=Object.entries(state.teams).sort((a,b)=>b[1].score-a[1].score);const medals=["🥇","🥈","🥉"];
+  document.getElementById("board-content").innerHTML=`<div style="font-size:.85rem;color:#888;font-weight:700;margin-bottom:8px">TEAM STANDINGS</div>${teams.length===0?'<p style="color:#555">No teams yet.</p>':teams.map(([name,data],i)=>`<div class="team-row"><div><span class="medal">${medals[i]||"🏅"}</span> <strong>${name}</strong><div style="font-size:.8rem;color:#888">${data.members?.length||0} member(s)</div></div><div class="score-big">${data.score||0}</div></div>`).join("")}<div style="font-size:.85rem;color:#888;font-weight:700;margin:16px 0 8px">INDIVIDUAL SCORES</div>${Object.entries(state.scores).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([pk,score])=>{const p=state.players[pk];return p?`<div class="team-row"><div><strong>${p.name}</strong><div style="font-size:.8rem;color:#888">${p.team}</div></div><div style="font-weight:700;color:#CC0000">${score} pts</div></div>`:""}).join("")}`;
   showScreen("s-board");
 }
-
-// ─── GM PANEL ─────────────────────────────────────────────────────────────────
-function showGMPanel() {
-  showScreen("s-gm");
-  gmTab("overview");
-}
-
-function gmTab(tab) {
-  document.querySelectorAll(".tab").forEach((t,i)=>{
-    const tabs=["overview","clues","teams","settings"];
-    t.classList.toggle("active", tabs[i]===tab);
-  });
+function showGMPanel(){showScreen("s-gm");gmTab("overview");}
+function gmTab(tab){
+  document.querySelectorAll(".tab").forEach((t,i)=>{const tabs=["overview","clues","teams","settings"];t.classList.toggle("active",tabs[i]===tab);});
   document.querySelectorAll(".gm-pane").forEach(p=>p.style.display="none");
   document.getElementById("gm-"+tab).style.display="block";
-  if (tab==="overview") renderGMOverview();
-  if (tab==="clues") renderGMClues();
-  if (tab==="teams") renderGMTeams();
-  if (tab==="settings") {
-    document.getElementById("hunt-title-input").value = state.huntTitle;
-  }
+  if(tab==="overview")renderGMOverview();if(tab==="clues")renderGMClues();if(tab==="teams")renderGMTeams();
+  if(tab==="settings")document.getElementById("hunt-title-input").value=state.huntTitle;
 }
-
-function renderGMOverview() {
-  const totalPlayers = Object.keys(state.players).length;
-  const totalTeams = Object.keys(state.teams).length;
-  const completions = Object.values(state.completedClues).reduce((a,c)=>a+c.length,0);
-  document.getElementById("gm-stats").innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
-      <div><div style="font-size:1.8rem;font-weight:800;color:#38bdf8">${totalPlayers}</div><div style="font-size:.8rem;color:#64748b">Players</div></div>
-      <div><div style="font-size:1.8rem;font-weight:800;color:#818cf8">${totalTeams}</div><div style="font-size:.8rem;color:#64748b">Teams</div></div>
-      <div><div style="font-size:1.8rem;font-weight:800;color:#22c55e">${completions}</div><div style="font-size:.8rem;color:#64748b">Clues Done</div></div>
-    </div>`;
-  const pending = state.pendingPhotos.filter(p=>!p.approved && !p.rejected);
-  document.getElementById("gm-pending").innerHTML = pending.length === 0 ?
-    '<p style="color:#475569;font-size:.9rem">No pending photos 👌</p>' :
-    pending.map((p,i) => `
-      <div style="background:#0f172a;border-radius:10px;padding:12px;margin:8px 0">
-        <div style="font-size:.85rem;color:#64748b">${state.players[p.playerKey]?.name || p.playerKey} · ${p.clueTitle}</div>
-        <img src="${p.dataUrl}" style="width:100%;max-height:150px;object-fit:cover;border-radius:8px;margin:8px 0">
-        <div style="display:flex;gap:8px">
-          <button class="btn btn-success" style="flex:1;padding:8px" onclick="approvePhoto(${i})">✅ Approve</button>
-          <button class="btn btn-danger" style="flex:1;padding:8px" onclick="rejectPhoto(${i})">❌ Reject</button>
-        </div>
-      </div>`).join("");
+function renderGMOverview(){
+  const totalPlayers=Object.keys(state.players).length;const totalTeams=Object.keys(state.teams).length;const completions=Object.values(state.completedClues).reduce((a,c)=>a+c.length,0);
+  document.getElementById("gm-stats").innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center"><div><div style="font-size:1.8rem;font-weight:800;color:#CC0000">${totalPlayers}</div><div style="font-size:.8rem;color:#888">Players</div></div><div><div style="font-size:1.8rem;font-weight:800;color:#CC0000">${totalTeams}</div><div style="font-size:.8rem;color:#888">Teams</div></div><div><div style="font-size:1.8rem;font-weight:800;color:#CC0000">${completions}</div><div style="font-size:.8rem;color:#888">Clues Done</div></div></div>`;
+  const pending=state.pendingPhotos.filter(p=>!p.approved&&!p.rejected);
+  document.getElementById("gm-pending").innerHTML=pending.length===0?'<p style="color:#555;font-size:.9rem">No pending photos 👌</p>':pending.map((p,i)=>`<div style="background:#111;border-radius:10px;padding:12px;margin:8px 0"><div style="font-size:.85rem;color:#888">${state.players[p.playerKey]?.name||p.playerKey} · ${p.clueTitle}</div><img src="${p.dataUrl}" style="width:100%;max-height:150px;object-fit:cover;border-radius:8px;margin:8px 0"><div style="display:flex;gap:8px"><button class="btn btn-success" style="flex:1;padding:8px" onclick="approvePhoto(${i})">✅ Approve</button><button class="btn btn-danger" style="flex:1;padding:8px" onclick="rejectPhoto(${i})">❌ Reject</button></div></div>`).join("");
 }
-
-function approvePhoto(i) {
-  const p = state.pendingPhotos[i];
-  completeClueForPlayer(p.playerKey, p.clueId);
-  state.pendingPhotos.splice(i,1);
-  syncStorage();
-  toast("Photo approved! Points awarded.");
-  renderGMOverview();
+function approvePhoto(i){const p=state.pendingPhotos[i];completeClueForPlayer(p.playerKey,p.clueId);state.pendingPhotos.splice(i,1);syncStorage();toast("Photo approved!");renderGMOverview();}
+function rejectPhoto(i){state.pendingPhotos.splice(i,1);syncStorage();toast("Photo rejected.","error");renderGMOverview();}
+function completeClueForPlayer(pk,clueId){const clue=CLUES.find(c=>c.id===clueId);if(!clue)return;if(!state.completedClues[pk])state.completedClues[pk]=[];if(state.completedClues[pk].includes(clueId))return;state.completedClues[pk].push(clueId);state.scores[pk]=(state.scores[pk]||0)+clue.pts;const team=state.players[pk]?.team;if(team&&state.teams[team])state.teams[team].score=(state.teams[team].score||0)+clue.pts;syncStorage();}
+function renderGMClues(){const baseUrl=window.location.href.split("?")[0];document.getElementById("gm-qr-list").innerHTML=CLUES.map(c=>`<details class="gm-clue"><summary>${TYPE_ICONS[c.type]} #${c.id} — ${c.title}</summary><div style="margin-top:8px;font-size:.9rem;color:#aaa">${c.desc}</div><div class="qr-url">🔗 ${baseUrl}?clue=${c.id}</div><div style="font-size:.8rem;color:#666;margin-top:4px">Points: ${c.pts} · Hint: ${c.hint}</div></details>`).join("");}
+function renderGMTeams(){
+  const teams=Object.entries(state.teams).sort((a,b)=>b[1].score-a[1].score);
+  document.getElementById("gm-team-scores").innerHTML=teams.length===0?'<p style="color:#555">No teams yet.</p>':teams.map(([name,data])=>`<div class="team-row"><strong>${name}</strong><span style="color:#CC0000;font-weight:700">${data.score||0} pts</span></div>`).join("");
+  document.getElementById("gm-players-list").innerHTML=Object.entries(state.players).map(([pk,p])=>`<div class="team-row"><div><strong>${p.name}</strong><div style="font-size:.8rem;color:#888">${p.team}</div></div><div><span style="color:#CC0000;font-weight:700">${state.scores[pk]||0} pts</span><div style="font-size:.8rem;color:#888">${(state.completedClues[pk]||[]).length}/15 clues</div></div></div>`).join("")||'<p style="color:#555">No players yet.</p>';
 }
-function rejectPhoto(i) {
-  state.pendingPhotos.splice(i,1);
-  syncStorage();
-  toast("Photo rejected.", "error");
-  renderGMOverview();
-}
-function completeClueForPlayer(pk, clueId) {
-  const clue = CLUES.find(c=>c.id===clueId);
-  if (!clue) return;
-  if (!state.completedClues[pk]) state.completedClues[pk]=[];
-  if (state.completedClues[pk].includes(clueId)) return;
-  state.completedClues[pk].push(clueId);
-  state.scores[pk] = (state.scores[pk]||0) + clue.pts;
-  const team = state.players[pk]?.team;
-  if (team && state.teams[team]) state.teams[team].score = (state.teams[team].score||0) + clue.pts;
-  syncStorage();
-}
-
-function renderGMClues() {
-  const baseUrl = window.location.href.split("?")[0];
-  document.getElementById("gm-qr-list").innerHTML = CLUES.map(c => `
-    <details class="gm-clue">
-      <summary>${TYPE_ICONS[c.type]} #${c.id} — ${c.title} <span class="badge ${TYPE_BADGE[c.type]}" style="margin-left:6px">${TYPE_LABELS[c.type]}</span></summary>
-      <div style="margin-top:8px;font-size:.9rem;color:#94a3b8">${c.desc}</div>
-      <div class="qr-url">🔗 QR URL: ${baseUrl}?clue=${c.id}</div>
-      <div style="font-size:.8rem;color:#64748b;margin-top:4px">Points: ${c.pts} · Hint: ${c.hint}</div>
-    </details>`).join("");
-}
-
-function renderGMTeams() {
-  const teams = Object.entries(state.teams).sort((a,b)=>b[1].score-a[1].score);
-  document.getElementById("gm-team-scores").innerHTML = teams.length === 0 ?
-    '<p style="color:#475569">No teams yet.</p>' :
-    teams.map(([name, data]) => `
-      <div class="team-row">
-        <strong>${name}</strong>
-        <span style="color:#38bdf8;font-weight:700">${data.score||0} pts</span>
-      </div>`).join("");
-  document.getElementById("gm-players-list").innerHTML = Object.entries(state.players).map(([pk, p]) => `
-    <div class="team-row">
-      <div><strong>${p.name}</strong><div style="font-size:.8rem;color:#64748b">${p.team}</div></div>
-      <div>
-        <span style="color:#38bdf8;font-weight:700">${state.scores[pk]||0} pts</span>
-        <div style="font-size:.8rem;color:#64748b">${(state.completedClues[pk]||[]).length}/15 clues</div>
-      </div>
-    </div>`).join("") || '<p style="color:#475569">No players yet.</p>';
-}
-
-function saveSettings() {
-  const np = document.getElementById("new-pass").value.trim();
-  if (np) { state.gmPass = np; save("gmPass", np); }
-  const ht = document.getElementById("hunt-title-input").value.trim();
-  if (ht) { state.huntTitle = ht; save("huntTitle", ht); document.title = ht; }
-  toast("Settings saved!");
-}
-
-function resetAll() {
-  if (!confirm("This will delete ALL player data. Are you sure?")) return;
-  ["completedClues","scores","teams","players","pendingPhotos"].forEach(k=>localStorage.removeItem(APP_KEY+"_"+k));
-  state.completedClues={}; state.scores={}; state.teams={}; state.players={}; state.pendingPhotos=[];
-  toast("All data reset.");
-}
-
-// ─── URL PARAM CHECK (for QR code links) ─────────────────────────────────────
-window.addEventListener("load", () => {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("clue")) {
-    document.getElementById("p-name").focus();
-    toast("📱 QR Code scanned! Enter your name & team to continue.");
-  }
-  document.title = state.huntTitle;
-});
+function saveSettings(){const np=document.getElementById("new-pass").value.trim();if(np){state.gmPass=np;save("gmPass",np);}const ht=document.getElementById("hunt-title-input").value.trim();if(ht){state.huntTitle=ht;save("huntTitle",ht);document.title=ht;}toast("Settings saved!");}
+function resetAll(){if(!confirm("This will delete ALL player data. Are you sure?"))return;["completedClues","scores","teams","players","pendingPhotos"].forEach(k=>localStorage.removeItem(APP_KEY+"_"+k));state.completedClues={};state.scores={};state.teams={};state.players={};state.pendingPhotos=[];toast("All data reset.");}
+window.addEventListener("load",()=>{const params=new URLSearchParams(window.location.search);if(params.get("clue")){document.getElementById("p-name").focus();toast("📱 QR Code scanned! Enter your name & team to continue.");}document.title=state.huntTitle;});
 </script>
 </body>
 </html>
