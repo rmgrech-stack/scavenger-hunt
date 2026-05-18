@@ -79,6 +79,35 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
 .game-over-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9990;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
 .game-over-overlay.active{display:flex}
 
+/* INTRO SCREEN */
+#intro-screen{position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;transition:opacity .6s ease}
+#intro-screen.fade-out{opacity:0;pointer-events:none}
+.intro-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 50% 50%,#1a0030 0%,#000 70%);z-index:0}
+.stage-light{position:absolute;width:3px;height:60%;background:linear-gradient(to bottom,rgba(255,110,199,0.8),transparent);transform-origin:top center;animation:sweepLight 1.2s ease-in-out infinite alternate}
+.stage-light:nth-child(1){left:15%;top:0;animation-delay:0s;background:linear-gradient(to bottom,rgba(255,110,199,0.9),transparent)}
+.stage-light:nth-child(2){left:35%;top:0;animation-delay:.15s;background:linear-gradient(to bottom,rgba(168,85,247,0.9),transparent)}
+.stage-light:nth-child(3){left:50%;top:0;animation-delay:.05s;background:linear-gradient(to bottom,rgba(56,189,248,0.9),transparent)}
+.stage-light:nth-child(4){left:65%;top:0;animation-delay:.2s;background:linear-gradient(to bottom,rgba(168,85,247,0.9),transparent)}
+.stage-light:nth-child(5){left:85%;top:0;animation-delay:.1s;background:linear-gradient(to bottom,rgba(255,110,199,0.9),transparent)}
+@keyframes sweepLight{0%{transform:rotate(-15deg);opacity:.6}100%{transform:rotate(15deg);opacity:1}}
+.intro-content{position:relative;z-index:10;padding:20px}
+.intro-year{font-size:1rem;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:6px;text-transform:uppercase;animation:fadeSlideUp .4s ease forwards;opacity:0;animation-delay:.2s}
+.intro-domain{font-size:.85rem;font-weight:800;color:#a855f7;letter-spacing:3px;text-transform:uppercase;animation:fadeSlideUp .4s ease forwards;opacity:0;animation-delay:.5s;margin-bottom:12px}
+.intro-title{font-size:1.9rem;font-weight:900;line-height:1.15;animation:fadeSlideUp .5s ease forwards;opacity:0;animation-delay:.7s;margin-bottom:16px}
+.intro-title span{background:linear-gradient(135deg,#ff6ec7,#a855f7,#38bdf8,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,110,199,0.8))}
+.intro-glitch{animation:glitch 3s infinite;display:inline-block}
+@keyframes glitch{0%,90%,100%{transform:translate(0);filter:none}91%{transform:translate(-2px,1px);filter:hue-rotate(90deg)}93%{transform:translate(2px,-1px);filter:hue-rotate(-90deg)}95%{transform:translate(-1px,2px);filter:hue-rotate(180deg)}97%{transform:translate(1px,-2px);filter:none}}
+.intro-subtitle{font-size:1rem;color:rgba(255,255,255,0.7);font-weight:700;animation:fadeSlideUp .4s ease forwards;opacity:0;animation-delay:1s;margin-bottom:20px}
+.intro-emoji-row{font-size:1.6rem;animation:fadeSlideUp .4s ease forwards;opacity:0;animation-delay:1.2s;letter-spacing:6px}
+.intro-bar{width:0%;height:3px;background:linear-gradient(90deg,#ff6ec7,#a855f7,#38bdf8,#ffee00);border-radius:2px;animation:loadBar 3.5s ease forwards;animation-delay:.5s;box-shadow:0 0 10px #ff6ec7;position:absolute;bottom:60px;left:0}
+@keyframes loadBar{to{width:100%}}
+.intro-skip{position:absolute;bottom:20px;right:20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);border-radius:20px;padding:6px 14px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif}
+.floating-star{position:absolute;font-size:1.2rem;animation:floatStar linear infinite;opacity:0}
+@keyframes floatStar{0%{opacity:0;transform:translateY(100vh) rotate(0deg)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateY(-20px) rotate(360deg)}}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.countdown-flash{position:absolute;font-size:8rem;font-weight:900;color:rgba(255,110,199,0.15);animation:countFlash .5s ease forwards;z-index:1}
+@keyframes countFlash{0%{opacity:0;transform:scale(2)}50%{opacity:1}100%{opacity:0;transform:scale(0.5)}}
+
 /* VENUE REVEAL */
 .venue-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:9995;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
 .venue-overlay.active{display:flex}
@@ -95,6 +124,32 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
 </head>
 <body>
 <div id="toaster"></div>
+<!-- INTRO SCREEN -->
+<div id="intro-screen">
+  <div class="intro-bg"></div>
+  <!-- Stage lights -->
+  <div class="stage-light"></div>
+  <div class="stage-light"></div>
+  <div class="stage-light"></div>
+  <div class="stage-light"></div>
+  <div class="stage-light"></div>
+  <!-- Floating stars injected by JS -->
+  <div class="intro-content">
+    <div class="intro-year">2026</div>
+    <div class="intro-domain">C&IB Transformation Domain · Sydney</div>
+    <div class="intro-title">
+      <span class="intro-glitch">✨ Welcome to the ✨</span><br>
+      <span style="font-size:1.3rem">Corporate &amp; Institutional Banking</span><br>
+      <span style="color:#ffee00;font-size:1.1rem;-webkit-text-fill-color:#ffee00;filter:drop-shadow(0 0 12px #ffee00)">Transformation Domain</span><br>
+      <span style="font-size:1.5rem">Sydney Scavenger Hunt</span>
+    </div>
+    <div class="intro-subtitle">🎤 K-Hunt 2026 🎤</div>
+    <div class="intro-emoji-row">💜 ✨ 🎵 ⭐ 💗</div>
+  </div>
+  <div class="intro-bar"></div>
+  <button class="intro-skip" onclick="skipIntro()">Skip ›</button>
+</div>
+
 <!-- VENUE REVEAL -->
 <div class="venue-overlay" id="venue-reveal">
   <div style="font-size:3rem;margin-bottom:8px">🍹✨</div>
@@ -242,6 +297,36 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
 </div>
 
 <script>
+// ── INTRO ─────────────────────────────────────────────────────────────────────
+function skipIntro(){
+  const el=document.getElementById('intro-screen');
+  el.classList.add('fade-out');
+  setTimeout(()=>el.style.display='none',600);
+}
+
+(function runIntro(){
+  // Floating stars
+  const intro=document.getElementById('intro-screen');
+  const starEmojis=['✨','⭐','💫','🌟','💜','🎵','💗','🎤'];
+  for(let i=0;i<20;i++){
+    const d=document.createElement('div');d.className='floating-star';
+    d.textContent=starEmojis[Math.floor(Math.random()*starEmojis.length)];
+    d.style.cssText=`left:${Math.random()*100}%;animation-duration:${3+Math.random()*4}s;animation-delay:${Math.random()*2}s`;
+    intro.appendChild(d);
+  }
+  // Countdown flash numbers
+  const nums=['3','2','1','GO!'];
+  nums.forEach((n,i)=>{
+    setTimeout(()=>{
+      const d=document.createElement('div');d.className='countdown-flash';
+      d.textContent=n;d.style.cssText='left:50%;top:50%;transform:translate(-50%,-50%)';
+      intro.appendChild(d);setTimeout(()=>d.remove(),500);
+    },i*400);
+  });
+  // Auto dismiss after 5s
+  setTimeout(skipIntro, 5000);
+})();
+
 // ── STORAGE ───────────────────────────────────────────────────────────────────
 const SKEY="khunt_shared_v3";
 let G={players:{},scores:{},completedClues:{},teams:{},pendingPhotos:{},hints:{},skips:{},timerEnd:null,timerActive:false};
@@ -260,6 +345,20 @@ setInterval(async()=>{await loadG();if(currentScreen==='s-board')renderBoard();i
 // ── AUDIO ─────────────────────────────────────────────────────────────────────
 let actx=null;
 function ac(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
+
+// Unlock audio on first user tap (required by iOS/Android browsers)
+function unlockAudio(){
+  const c=ac();
+  if(c.state==='suspended')c.resume();
+  const o=c.createOscillator(),g=c.createGain();
+  o.connect(g);g.connect(c.destination);
+  g.gain.setValueAtTime(0,c.currentTime);
+  o.start(c.currentTime);o.stop(c.currentTime+0.01);
+  document.removeEventListener('touchstart',unlockAudio);
+  document.removeEventListener('click',unlockAudio);
+}
+document.addEventListener('touchstart',unlockAudio,{once:true});
+document.addEventListener('click',unlockAudio,{once:true});
 function tn(f,tp,st,d,v=0.22){const c=ac(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=tp;o.frequency.setValueAtTime(f,c.currentTime+st);g.gain.setValueAtTime(0,c.currentTime+st);g.gain.linearRampToValueAtTime(v,c.currentTime+st+.01);g.gain.linearRampToValueAtTime(0,c.currentTime+st+d);o.start(c.currentTime+st);o.stop(c.currentTime+st+d+.05);}
 function sndPts(){[[523,0],[659,.08],[784,.16],[1047,.24],[1319,.32]].forEach(([f,t])=>tn(f,'sine',t,.25));}
 function sndDone(){[[262,0],[330,.06],[392,.12],[523,.18],[659,.24],[784,.3],[1047,.38]].forEach(([f,t])=>tn(f,'sawtooth',t,.2,.18));[[523,0],[784,.1],[1047,.2],[1319,.3]].forEach(([f,t])=>tn(f,'sine',t,.35,.13));}
