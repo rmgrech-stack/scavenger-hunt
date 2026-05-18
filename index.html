@@ -298,6 +298,60 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
 
 <script>
 // ── INTRO ─────────────────────────────────────────────────────────────────────
+// ── INTRO ─────────────────────────────────────────────────────────────────────
+function playIntroJingle(){
+  try{
+    const c=new(window.AudioContext||window.webkitAudioContext)();
+    if(!actx)actx=c;
+    // Dramatic K-pop intro — rising synth melody + bass hit + sparkle
+    const melody=[
+      [261,0,.15],[329,.1,.15],[392,.2,.15],[523,.3,.25],
+      [659,.45,.15],[784,.55,.15],[1047,.65,.3],
+      [1319,.8,.15],[1047,.9,.15],[1319,1.0,.15],[1568,1.1,.5],
+    ];
+    melody.forEach(([f,t,d])=>{
+      const o=c.createOscillator(),g=c.createGain();
+      o.connect(g);g.connect(c.destination);
+      o.type='sawtooth';o.frequency.setValueAtTime(f,c.currentTime+t);
+      g.gain.setValueAtTime(0,c.currentTime+t);
+      g.gain.linearRampToValueAtTime(.18,c.currentTime+t+.01);
+      g.gain.linearRampToValueAtTime(0,c.currentTime+t+d);
+      o.start(c.currentTime+t);o.stop(c.currentTime+t+d+.05);
+    });
+    // Bass hits
+    [[65,0,.3],[87,.3,.2],[98,.65,.3],[130,1.1,.5]].forEach(([f,t,d])=>{
+      const o=c.createOscillator(),g=c.createGain();
+      o.connect(g);g.connect(c.destination);
+      o.type='square';o.frequency.setValueAtTime(f,c.currentTime+t);
+      g.gain.setValueAtTime(0,c.currentTime+t);
+      g.gain.linearRampToValueAtTime(.22,c.currentTime+t+.01);
+      g.gain.linearRampToValueAtTime(0,c.currentTime+t+d);
+      o.start(c.currentTime+t);o.stop(c.currentTime+t+d+.05);
+    });
+    // Sparkle high notes
+    for(let i=0;i<8;i++){
+      const f=1000+Math.random()*1500,t=Math.random()*1.8;
+      const o=c.createOscillator(),g=c.createGain();
+      o.connect(g);g.connect(c.destination);
+      o.type='sine';o.frequency.setValueAtTime(f,c.currentTime+t);
+      g.gain.setValueAtTime(0,c.currentTime+t);
+      g.gain.linearRampToValueAtTime(.08,c.currentTime+t+.01);
+      g.gain.linearRampToValueAtTime(0,c.currentTime+t+.15);
+      o.start(c.currentTime+t);o.stop(c.currentTime+t+.2);
+    }
+    // Final big chord
+    [523,659,784,1047].forEach((f,i)=>{
+      const o=c.createOscillator(),g=c.createGain();
+      o.connect(g);g.connect(c.destination);
+      o.type='sawtooth';o.frequency.setValueAtTime(f,c.currentTime+1.7);
+      g.gain.setValueAtTime(0,c.currentTime+1.7);
+      g.gain.linearRampToValueAtTime(.15,c.currentTime+1.71);
+      g.gain.linearRampToValueAtTime(0,c.currentTime+2.5);
+      o.start(c.currentTime+1.7);o.stop(c.currentTime+2.6);
+    });
+  }catch(e){console.log('Audio not available',e);}
+}
+
 function skipIntro(){
   const el=document.getElementById('intro-screen');
   el.classList.add('fade-out');
@@ -305,6 +359,10 @@ function skipIntro(){
 }
 
 (function runIntro(){
+  // Play intro jingle on first touch (iOS requires gesture)
+  const startJingle=()=>{playIntroJingle();document.removeEventListener('touchstart',startJingle);document.removeEventListener('click',startJingle);};
+  document.addEventListener('touchstart',startJingle,{once:true});
+  document.addEventListener('click',startJingle,{once:true});
   // Floating stars
   const intro=document.getElementById('intro-screen');
   const starEmojis=['✨','⭐','💫','🌟','💜','🎵','💗','🎤'];
