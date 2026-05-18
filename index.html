@@ -26,6 +26,7 @@ input::placeholder{color:rgba(255,255,255,0.35)}
 .btn-hint{background:linear-gradient(135deg,#ffee00,#ff9800);color:#000;font-weight:800}
 .btn-skip{background:linear-gradient(135deg,#ff4081,#a855f7);color:#fff}
 .btn-auto{width:auto;padding:8px 16px}
+.btn-add{background:rgba(168,85,247,0.2);color:#d8b4fe;border:1px solid rgba(168,85,247,0.4);border-radius:10px;padding:8px 14px;font-size:.85rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;margin-top:8px}
 label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10px}
 .sub{color:rgba(255,255,255,0.4);text-align:center;font-size:.88rem;margin:4px 0 12px}
 .badge{display:inline-block;padding:3px 11px;border-radius:20px;font-size:.76rem;font-weight:800}
@@ -65,24 +66,42 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
 .sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px}
 .sync-ok{background:#00e676;box-shadow:0 0 6px #00e676}
 .sync-no{background:#ff4081;box-shadow:0 0 6px #ff4081}
-.clue-card{cursor:pointer}
 .timer-bar{background:linear-gradient(135deg,#0d001f,#001030);border-bottom:1px solid rgba(255,110,199,0.3);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
 .timer-display{font-size:1.6rem;font-weight:900;letter-spacing:2px}
 .timer-ok{color:#00e676;text-shadow:0 0 12px #00e676}
 .timer-warn{color:#ffee00;text-shadow:0 0 12px #ffee00;animation:pulse .8s infinite}
 .timer-danger{color:#ff4081;text-shadow:0 0 16px #ff4081;animation:pulse .4s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-.timer-label{font-size:.75rem;color:rgba(255,255,255,0.4);text-align:center}
+.timer-label{font-size:.75rem;color:rgba(255,255,255,0.4)}
 .game-over-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9990;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
 .game-over-overlay.active{display:flex}
 .venue-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:9995;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
 .venue-overlay.active{display:flex}
 .venue-card{background:linear-gradient(135deg,#1a0030,#000d26);border:2px solid rgba(255,110,199,0.6);border-radius:24px;padding:28px 24px;max-width:380px;width:100%;box-shadow:0 0 60px rgba(255,110,199,0.3)}
 .venue-name{font-size:2rem;font-weight:900;background:linear-gradient(135deg,#ff6ec7,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:12px 0 6px}
-.confetti-piece{position:fixed;width:10px;height:10px;border-radius:2px;animation:confettiFall linear forwards;pointer-events:none;z-index:9996}
+.confetti-piece{position:fixed;border-radius:2px;animation:confettiFall linear forwards;pointer-events:none;z-index:9996}
 @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
-.cost{display:inline-block;background:rgba(255,238,0,0.2);border:1px solid rgba(255,238,0,0.5);border-radius:8px;padding:2px 8px;font-size:.78rem;font-weight:800;color:#ffee00;margin-left:6px}
+.cost{display:inline-block;background:rgba(255,238,0,0.2);border:1px solid rgba(255,238,0,0.5);border-radius:8px;padding:2px 8px;font-size:.78rem;font-weight:800;color:#ffee00;margin-left:4px}
 .cost-red{background:rgba(255,64,129,0.2);border-color:rgba(255,64,129,0.5);color:#ff9ebc}
+.member-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.35);border-radius:20px;padding:4px 12px;margin:4px;font-size:.85rem;font-weight:700}
+.member-tag button{background:none;border:none;color:#ff9ebc;cursor:pointer;font-size:.9rem;padding:0;line-height:1}
+
+/* INTRO */
+#s-intro{background:radial-gradient(ellipse at 50% 40%,#1a0030 0%,#000 100%)}
+.intro-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center;position:relative;overflow:hidden}
+.light{position:absolute;width:3px;height:55%;top:0;transform-origin:top center;animation:sweep 1.4s ease-in-out infinite alternate;border-radius:0 0 3px 3px}
+@keyframes sweep{from{transform:rotate(-18deg);opacity:.5}to{transform:rotate(18deg);opacity:1}}
+.float-star{position:absolute;font-size:1.3rem;animation:floatUp linear infinite;opacity:0}
+@keyframes floatUp{0%{opacity:0;transform:translateY(100vh)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateY(-40px)}}
+.intro-year{font-size:.9rem;font-weight:800;color:rgba(255,255,255,0.4);letter-spacing:6px;text-transform:uppercase;margin-bottom:6px}
+.intro-org{font-size:.82rem;font-weight:800;color:#a855f7;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.intro-main{font-size:1.75rem;font-weight:900;line-height:1.2;margin-bottom:6px}
+.intro-main span{background:linear-gradient(135deg,#ff6ec7,#a855f7,#38bdf8,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.intro-domain{font-size:1rem;font-weight:800;color:#ffee00;text-shadow:0 0 16px rgba(255,238,0,0.6);margin-bottom:4px}
+.intro-sub{font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:20px}
+.tap-btn{background:linear-gradient(135deg,#ff6ec7,#a855f7);border:none;border-radius:30px;padding:16px 40px;font-size:1.1rem;font-weight:900;color:#fff;font-family:'Nunito',sans-serif;cursor:pointer;box-shadow:0 0 30px rgba(255,110,199,0.5);animation:glowPulse 1s infinite alternate;position:relative;z-index:10}
+@keyframes glowPulse{from{box-shadow:0 0 20px rgba(255,110,199,0.4)}to{box-shadow:0 0 50px rgba(255,110,199,0.9)}}
+.intro-bar{position:absolute;bottom:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#ff6ec7,#a855f7,#38bdf8,#ffee00);box-shadow:0 0 8px #ff6ec7}
 </style>
 </head>
 <body>
@@ -111,28 +130,63 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
   <div id="go-leaderboard" style="width:100%;max-width:360px"></div>
 </div>
 
+<!-- INTRO -->
+<div id="s-intro" class="screen active">
+  <div class="intro-wrap" id="intro-wrap">
+    <div class="light" style="left:10%;background:linear-gradient(to bottom,rgba(255,110,199,.9),transparent);animation-delay:0s"></div>
+    <div class="light" style="left:30%;background:linear-gradient(to bottom,rgba(168,85,247,.9),transparent);animation-delay:.2s"></div>
+    <div class="light" style="left:50%;background:linear-gradient(to bottom,rgba(56,189,248,.9),transparent);animation-delay:.1s"></div>
+    <div class="light" style="left:70%;background:linear-gradient(to bottom,rgba(168,85,247,.9),transparent);animation-delay:.25s"></div>
+    <div class="light" style="left:90%;background:linear-gradient(to bottom,rgba(255,110,199,.9),transparent);animation-delay:.05s"></div>
+    <div style="position:relative;z-index:10">
+      <div class="intro-year">2026</div>
+      <div class="intro-org">C&IB Transformation Domain · Sydney</div>
+      <div class="intro-main"><span>✨ Welcome to the ✨</span></div>
+      <div class="intro-main"><span>Corporate & Institutional Banking</span></div>
+      <div class="intro-domain">Transformation Domain</div>
+      <div class="intro-sub">Sydney Scavenger Hunt 🎤</div>
+      <div style="font-size:1.4rem;letter-spacing:8px;margin-bottom:28px">💜✨🎵⭐💗</div>
+      <button class="tap-btn" onclick="startApp()">🎵 TAP TO START 🎵</button>
+    </div>
+    <div class="intro-bar" id="intro-bar"></div>
+  </div>
+</div>
+
 <!-- HOME -->
-<div id="s-home" class="screen active">
+<div id="s-home" class="screen">
   <div class="header">
-    <div><div class="header-title">✨ K-HUNT 2026 ✨</div><div style="font-size:.72rem;color:rgba(255,255,255,0.4)">C&IB Transformation Domain · Sydney</div></div>
+    <div><div class="header-title">✨ K-HUNT 2026</div><div style="font-size:.72rem;color:rgba(255,255,255,0.4)">C&IB Transformation Domain · Sydney</div></div>
     <div style="font-size:1.6rem">🎤</div>
   </div>
-  <div class="page" style="text-align:center;padding-top:16px">
-    <div style="font-size:3rem;margin:8px 0">💿</div>
-    <h1>LET'S GO! 🎵</h1>
-    <p class="sub">Find clues · Smash challenges · Win glory ✨</p>
-    <div style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8rem;color:rgba(255,255,255,0.4);margin-bottom:10px">
-      <span class="sync-dot" id="home-sync-dot"></span><span id="home-sync-txt">Connecting...</span>
+  <div class="page" style="padding-top:16px">
+    <div style="text-align:center;margin-bottom:16px">
+      <div style="font-size:2.5rem">💿</div>
+      <h1>Team Registration</h1>
+      <p class="sub">One phone per team — Captain registers for everyone 🏆</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8rem;color:rgba(255,255,255,0.4)">
+        <span class="sync-dot" id="home-sync-dot"></span><span id="home-sync-txt">Connecting...</span>
+      </div>
     </div>
-    <div class="card" style="text-align:left">
-      <h2>🌟 Join the Hunt</h2>
-      <label>Your Name</label><input id="p-name" placeholder="e.g. Jisoo ✨" maxlength="30">
-      <label>Your Team Name</label><input id="p-team" placeholder="e.g. Team BTS 💜" maxlength="30">
-      <button class="btn btn-p" onclick="joinGame()">🚀 Start Hunt!</button>
+    <div class="card">
+      <h2>👑 Team Captain</h2>
+      <label>Captain's Name</label>
+      <input id="p-name" placeholder="e.g. Ray ✨" maxlength="30">
+      <label>Team Name</label>
+      <input id="p-team" placeholder="e.g. Team BTS 💜" maxlength="30">
+      <div class="divider"></div>
+      <h2>👥 Team Members</h2>
+      <p style="font-size:.85rem;color:rgba(255,255,255,0.5);margin-bottom:8px">Add your teammates' names below</p>
+      <div id="members-list"></div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <input id="member-input" placeholder="Teammate name..." maxlength="30" style="margin-top:0" onkeydown="if(event.key==='Enter')addMember()">
+        <button class="btn-add" onclick="addMember()">+ Add</button>
+      </div>
+      <button class="btn btn-p" style="margin-top:16px" onclick="joinGame()">🚀 Register Team & Start!</button>
     </div>
-    <div class="card" style="text-align:left">
+    <div class="card">
       <h2>🎮 Game Master</h2>
-      <label>GM Password</label><input id="gm-pass" type="password" placeholder="••••••••">
+      <label>GM Password</label>
+      <input id="gm-pass" type="password" placeholder="••••••••">
       <button class="btn btn-s" onclick="gmLogin()">Enter GM Panel 🎛</button>
     </div>
   </div>
@@ -144,16 +198,17 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
     <div class="header-title">✨ K-HUNT</div>
     <div style="display:flex;align-items:center;gap:6px"><span class="sync-dot sync-ok"></span><span style="font-size:.72rem;color:rgba(255,255,255,0.4)">Live</span></div>
   </div>
-  <div id="timer-bar" class="timer-bar">
+  <div class="timer-bar">
     <div><div class="timer-label">TIME LEFT</div><div class="timer-display timer-ok" id="timer-display">--:--</div></div>
-    <div style="text-align:right"><div class="timer-label">YOUR SCORE</div><div class="score-big" id="g-score">0</div></div>
+    <div style="text-align:right"><div class="timer-label">TEAM SCORE</div><div class="score-big" id="g-score">0</div></div>
   </div>
   <div class="page">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin:8px 0 4px">
-      <div><div id="g-name" style="font-weight:800;font-size:1.05rem"></div><div id="g-team" style="font-size:.85rem;color:rgba(255,255,255,0.45)"></div></div>
-      <div style="font-size:.8rem;color:rgba(255,255,255,0.4)" id="g-prog-txt">0 / 15 🎯</div>
+    <div style="margin:8px 0 4px">
+      <div id="g-teamname" style="font-weight:900;font-size:1.1rem"></div>
+      <div id="g-members" style="font-size:.82rem;color:rgba(255,255,255,0.45);margin-top:2px"></div>
     </div>
     <div class="progress"><div class="progress-fill" id="g-prog" style="width:0%"></div></div>
+    <div id="g-prog-txt" style="font-size:.8rem;color:rgba(255,255,255,0.4);margin-bottom:10px">0 / 15 🎯</div>
     <div id="g-next"></div>
     <div class="card" id="g-recent"></div>
     <div class="divider"></div>
@@ -219,16 +274,16 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
     </div>
     <div id="gm-tm" style="display:none">
       <div class="card"><h2>🏆 Team Scores</h2><div id="gm-teams"></div></div>
-      <div class="card"><h2>👥 All Players</h2><div id="gm-players"></div></div>
+      <div class="card"><h2>👥 All Teams & Members</h2><div id="gm-players"></div></div>
     </div>
     <div id="gm-st" style="display:none">
       <div class="card">
         <h2>⚙️ Settings</h2>
         <p style="font-size:.85rem;color:rgba(255,255,255,0.45);margin-bottom:12px">GM password: <strong>hunt2026</strong></p>
         <div style="background:rgba(255,238,0,0.08);border:1px solid rgba(255,238,0,0.3);border-radius:10px;padding:12px;margin-bottom:12px;font-size:.88rem;color:rgba(255,255,255,0.7)">
-          💡 Hint cost: 15 pts &nbsp;|&nbsp; ⏭ Skip cost: 30 pts
+          💡 Hint: 15 pts &nbsp;|&nbsp; ⏭ Skip: 30 pts
         </div>
-        <button class="btn btn-x" onclick="resetAll()">🗑 Reset All Player Data</button>
+        <button class="btn btn-x" onclick="resetAll()">🗑 Reset All Data</button>
       </div>
     </div>
     <button class="btn btn-s" style="margin-top:12px" onclick="showScreen('s-home')">← Exit GM</button>
@@ -257,15 +312,60 @@ function playSound(notes) {
     });
   } catch(e) {}
 }
+function sndIntro() {
+  // Extended K-pop intro — verse, build, drop ~6 seconds
+  playSound([
+    // Opening sparkle
+    [1047,'sine',0,.15,.15],[1319,'sine',.1,.15,.15],[1568,'sine',.2,.15,.15],[2093,'sine',.3,.2,.12],
+    // Melody verse
+    [523,'sawtooth',.4,.18,.18],[659,'sawtooth',.55,.18,.18],[784,'sawtooth',.7,.18,.18],
+    [523,'sawtooth',.85,.18,.18],[659,'sawtooth',1.0,.18,.18],[880,'sawtooth',1.15,.25,.18],
+    // Rising build
+    [784,'sawtooth',1.4,.15,.2],[880,'sawtooth',1.55,.15,.2],[1047,'sawtooth',1.7,.15,.2],
+    [1175,'sawtooth',1.85,.15,.2],[1319,'sawtooth',2.0,.15,.2],[1568,'sawtooth',2.15,.2,.22],
+    // DROP
+    [523,'sawtooth',2.4,.2,.25],[659,'sawtooth',2.55,.2,.25],[784,'sawtooth',2.7,.2,.25],[1047,'sawtooth',2.85,.3,.25],
+    [1319,'sawtooth',3.1,.15,.22],[1047,'sawtooth',3.25,.15,.22],[1319,'sawtooth',3.4,.15,.22],[1568,'sawtooth',3.55,.35,.22],
+    // Outro flourish
+    [1047,'sine',3.9,.15,.18],[1319,'sine',4.0,.15,.18],[1568,'sine',4.1,.15,.18],[2093,'sine',4.2,.4,.15],
+    [1568,'sine',4.5,.15,.12],[1319,'sine',4.6,.15,.12],[1047,'sine',4.7,.5,.18],
+    // Bass line throughout
+    [65,'square',.4,.35,.22],[87,'square',.85,.35,.22],[98,'square',1.4,.35,.22],
+    [65,'square',2.4,.35,.25],[87,'square',2.85,.35,.25],[98,'square',3.4,.35,.25],
+    [65,'square',3.9,.5,.2],[87,'square',4.4,.5,.2],
+    // Final chord
+    [523,'sawtooth',4.9,.6,.2],[659,'sawtooth',4.9,.6,.2],[784,'sawtooth',4.9,.6,.2],[1047,'sawtooth',4.9,.6,.2],
+  ]);
+}
 function sndPts()   { playSound([[523,'sine',0,.2,.25],[659,'sine',.08,.2,.25],[784,'sine',.16,.2,.25],[1047,'sine',.24,.25,.25],[1319,'sine',.32,.3,.2]]); }
-function sndDone()  { playSound([[262,'sawtooth',0,.2,.2],[330,'sawtooth',.06,.2,.2],[392,'sawtooth',.12,.2,.2],[523,'sawtooth',.18,.2,.2],[659,'sawtooth',.24,.2,.2],[784,'sawtooth',.3,.2,.2],[1047,'sawtooth',.38,.35,.18],[523,'sine',0,.35,.12],[784,'sine',.1,.35,.12],[1047,'sine',.2,.35,.12],[1319,'sine',.3,.35,.12]]); }
+function sndDone()  { playSound([[262,'sawtooth',0,.2,.2],[330,'sawtooth',.06,.2,.2],[392,'sawtooth',.12,.2,.2],[523,'sawtooth',.18,.2,.2],[659,'sawtooth',.24,.2,.2],[784,'sawtooth',.3,.2,.2],[1047,'sawtooth',.38,.35,.18],[1319,'sine',.3,.35,.12]]); }
 function sndWrong() { playSound([[440,'sine',0,.15,.25],[370,'sine',.12,.15,.22],[310,'sine',.24,.15,.2],[260,'sine',.36,.3,.18]]); }
 function sndBanger(){ playSound([[523,'sawtooth',0,.15,.2],[659,'sawtooth',.1,.15,.2],[784,'sawtooth',.2,.15,.2],[1047,'sawtooth',.3,.3,.2],[1319,'sawtooth',.55,.3,.18],[1568,'sawtooth',.85,.5,.18],[131,'square',0,.4,.22],[165,'square',.4,.4,.22],[196,'square',.8,.4,.22]]); }
 function sndAlarm() { playSound([[880,'sawtooth',0,.12,.3],[880,'sawtooth',.15,.12,.3],[880,'sawtooth',.3,.12,.3]]); }
 
+// ── INTRO ─────────────────────────────────────────────────────────────────────
+function startApp() {
+  // Animate progress bar and stars
+  const bar = document.getElementById('intro-bar');
+  bar.style.transition = 'width 3s linear'; bar.style.width = '100%';
+  const wrap = document.getElementById('intro-wrap');
+  const em = ['✨','⭐','💫','🌟','💜','🎵','💗','🎤'];
+  for (let i = 0; i < 16; i++) {
+    const d = document.createElement('div'); d.className = 'float-star';
+    d.textContent = em[Math.floor(Math.random()*em.length)];
+    d.style.cssText = `left:${Math.random()*100}%;animation-duration:${2.5+Math.random()*3}s;animation-delay:${Math.random()*1}s`;
+    wrap.appendChild(d);
+  }
+  setTimeout(() => {
+    document.getElementById('s-intro').style.opacity = '0';
+    document.getElementById('s-intro').style.transition = 'opacity .5s';
+    setTimeout(() => { showScreen('s-home'); }, 500);
+  }, 5500);
+}
+
 // ── STORAGE ───────────────────────────────────────────────────────────────────
-const SKEY = "khunt_shared_v3";
-let G = {players:{},scores:{},completedClues:{},teams:{},pendingPhotos:{},hints:{},skips:{},timerEnd:null,timerActive:false};
+const SKEY = "khunt_shared_v4";
+let G = {teams:{},scores:{},completedClues:{},pendingPhotos:{},hints:{},skips:{},timerEnd:null,timerActive:false};
 let synced = false;
 
 async function loadG() {
@@ -275,14 +375,11 @@ async function loadG() {
     else { synced = true; updateSyncUI(true); }
   } catch { updateSyncUI(false); }
 }
-async function saveG() {
-  try { await window.storage.set(SKEY, JSON.stringify(G), true); }
-  catch(e) { console.error(e); }
-}
+async function saveG() { try { await window.storage.set(SKEY, JSON.stringify(G), true); } catch(e) {} }
 function updateSyncUI(ok) {
   document.querySelectorAll('.sync-dot').forEach(d => d.className='sync-dot '+(ok?'sync-ok':'sync-no'));
   const t = document.getElementById('home-sync-txt');
-  if (t) t.textContent = ok ? 'Live sync — all devices connected! 🟢' : 'Connecting...';
+  if (t) t.textContent = ok ? 'Live sync active 🟢' : 'Connecting...';
 }
 setInterval(async () => {
   await loadG();
@@ -293,79 +390,70 @@ setInterval(async () => {
 }, 5000);
 
 // ── TIMER ─────────────────────────────────────────────────────────────────────
-let timerInterval = null, gameOverShown = false;
-
+let timerInterval=null, gameOverShown=false;
 async function startTimer() {
-  const mins = parseInt(document.getElementById('timer-input').value) || 75;
-  G.timerEnd = Date.now() + (mins * 60000);
-  G.timerActive = true;
-  await saveG();
-  toast(`⏱ ${mins} min timer started! Hunt is LIVE! 🚀`);
+  const mins = parseInt(document.getElementById('timer-input').value)||75;
+  G.timerEnd = Date.now()+(mins*60000); G.timerActive = true; await saveG();
+  toast(`⏱ ${mins} min timer started! 🚀`);
   document.getElementById('timer-status').textContent = `Running — ${mins} mins`;
   startLocalTimer();
 }
 async function stopTimer() {
-  G.timerActive = false; G.timerEnd = null; await saveG();
-  clearInterval(timerInterval);
-  document.getElementById('timer-display').textContent = '--:--';
-  document.getElementById('timer-status').textContent = 'Timer stopped';
-  toast('Timer stopped.', 'warn');
+  G.timerActive=false; G.timerEnd=null; await saveG(); clearInterval(timerInterval);
+  document.getElementById('timer-display').textContent='--:--';
+  document.getElementById('timer-status').textContent='Timer stopped';
+  toast('Timer stopped.','warn');
 }
-function startLocalTimer() {
-  clearInterval(timerInterval);
-  timerInterval = setInterval(checkTimer, 1000);
-}
+function startLocalTimer() { clearInterval(timerInterval); timerInterval=setInterval(checkTimer,1000); }
 function checkTimer() {
-  if (!G.timerActive || !G.timerEnd) return;
+  if (!G.timerActive||!G.timerEnd) return;
   const rem = G.timerEnd - Date.now();
-  if (rem <= 0) {
-    clearInterval(timerInterval);
-    updateTimerDisplay(0);
-    if (!gameOverShown) { gameOverShown = true; showVenueReveal("⏰ TIME'S UP! THE AFTER PARTY IS AT..."); setTimeout(showGameOver, 3500); }
-    return;
-  }
+  if (rem<=0) { clearInterval(timerInterval); updateTimerDisplay(0); if(!gameOverShown){gameOverShown=true;showVenueReveal("⏰ TIME'S UP! THE AFTER PARTY IS AT...");setTimeout(showGameOver,3500);} return; }
   updateTimerDisplay(rem);
-  if (rem <= 60000 && rem > 59000) { sndAlarm(); toast('⚠️ 1 MINUTE LEFT! 🏃', 'warn'); }
-  if (rem <= 300000 && rem > 299000) { toast('⚠️ 5 minutes remaining! Hustle!', 'warn'); }
+  if(rem<=60000&&rem>59000){sndAlarm();toast('⚠️ 1 MINUTE LEFT! 🏃','warn');}
+  if(rem<=300000&&rem>299000){toast('⚠️ 5 minutes remaining!','warn');}
 }
 function updateTimerDisplay(ms) {
-  const s = Math.max(0, Math.floor(ms/1000));
-  const str = `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
-  ['timer-display','timer-mini','timer-mini2'].forEach(id => {
-    const el = document.getElementById(id); if (!el) return;
-    el.textContent = str;
-    if (id === 'timer-display') el.className = 'timer-display ' + (s>300?'timer-ok':s>60?'timer-warn':'timer-danger');
-    else el.style.color = s>300?'#00e676':s>60?'#ffee00':'#ff4081';
+  const s=Math.max(0,Math.floor(ms/1000));
+  const str=`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+  ['timer-display','timer-mini','timer-mini2'].forEach(id=>{
+    const el=document.getElementById(id); if(!el)return;
+    el.textContent=str;
+    if(id==='timer-display') el.className='timer-display '+(s>300?'timer-ok':s>60?'timer-warn':'timer-danger');
+    else el.style.color=s>300?'#00e676':s>60?'#ffee00':'#ff4081';
   });
 }
 function showGameOver() {
-  const el = document.getElementById('game-over');
-  const lb = document.getElementById('go-leaderboard');
-  const teams = Object.entries(G.teams).sort((a,b)=>b[1].score-a[1].score).slice(0,3);
-  const crowns = ['👑','🥈','🥉'];
-  lb.innerHTML = teams.map(([n,d],i) => `<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.07);border-radius:12px;padding:12px 16px;margin-bottom:8px"><span>${crowns[i]} <strong>${n}</strong></span><span style="font-size:1.4rem;font-weight:900;color:#ff6ec7">${d.score||0}pts</span></div>`).join('');
-  lb.innerHTML += `<button class="btn btn-p" style="margin-top:12px" onclick="document.getElementById('game-over').classList.remove('active');showBoard()">See Full Leaderboard 🏆</button>`;
-  el.classList.add('active');
-  sndBanger();
+  const el=document.getElementById('game-over'), lb=document.getElementById('go-leaderboard');
+  const teams=Object.entries(G.teams).sort((a,b)=>b[1].score-a[1].score).slice(0,3);
+  lb.innerHTML=teams.map(([n,d],i)=>`<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.07);border-radius:12px;padding:12px 16px;margin-bottom:8px"><span>${['👑','🥈','🥉'][i]} <strong>${n}</strong></span><span style="font-size:1.4rem;font-weight:900;color:#ff6ec7">${d.score||0}pts</span></div>`).join('');
+  lb.innerHTML+=`<button class="btn btn-p" style="margin-top:12px" onclick="document.getElementById('game-over').classList.remove('active');showBoard()">Full Leaderboard 🏆</button>`;
+  el.classList.add('active'); sndBanger();
+}
+function showVenueReveal(title) {
+  const colors=['#ff6ec7','#a855f7','#38bdf8','#ffee00','#00e676','#ff4081'];
+  for(let i=0;i<80;i++){setTimeout(()=>{const d=document.createElement('div');d.className='confetti-piece';d.style.cssText=`left:${Math.random()*100}%;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${2+Math.random()*2}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px`;document.body.appendChild(d);setTimeout(()=>d.remove(),4500);},i*30);}
+  if(title) document.getElementById('venue-title').textContent=title;
+  document.getElementById('venue-reveal').classList.add('active'); sndBanger();
 }
 
-// ── VENUE REVEAL ──────────────────────────────────────────────────────────────
-function showVenueReveal(title) {
-  const colors = ['#ff6ec7','#a855f7','#38bdf8','#ffee00','#00e676','#ff4081'];
-  for (let i = 0; i < 80; i++) {
-    setTimeout(() => {
-      const d = document.createElement('div'); d.className = 'confetti-piece';
-      d.style.cssText = `left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${2+Math.random()*2}s;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px`;
-      document.body.appendChild(d); setTimeout(() => d.remove(), 4000);
-    }, i * 30);
-  }
-  if (title) document.getElementById('venue-title').textContent = title;
-  document.getElementById('venue-reveal').classList.add('active');
-  sndBanger();
+// ── MEMBER MANAGEMENT ─────────────────────────────────────────────────────────
+let members = [];
+function addMember() {
+  const inp = document.getElementById('member-input');
+  const name = inp.value.trim(); if(!name) return;
+  if(members.includes(name)){toast('Already added!','warn');return;}
+  members.push(name); inp.value=''; renderMembers();
+}
+function removeMember(name) { members=members.filter(m=>m!==name); renderMembers(); }
+function renderMembers() {
+  document.getElementById('members-list').innerHTML = members.length===0
+    ? '<p style="font-size:.85rem;color:rgba(255,255,255,0.3);margin-top:6px">No teammates added yet</p>'
+    : members.map(m=>`<span class="member-tag">👤 ${m}<button onclick="removeMember('${m}')">✕</button></span>`).join('');
 }
 
 // ── CLUES ─────────────────────────────────────────────────────────────────────
-const CLUES = [
+const CLUES=[
   {id:1,type:"qr",pts:10,title:"Welcome, Star! ⭐",desc:"You found QR #1! The K-Hunt has begun. Register your crew and let's party! 🎉",hint:"Found at the main entrance.",extraHint:"Look at the very first door you walked through to enter the building."},
   {id:2,type:"photo",pts:20,title:"Something Pink 💗",desc:"Find and photograph something PINK anywhere in or around the building!",hint:"Check signage, flowers, stationery, or outside.",extraHint:"Try the reception desk area or any nearby florist/café.",pp:"Does this photo contain something clearly pink in colour? Answer YES or NO then briefly explain."},
   {id:3,type:"riddle",pts:15,title:"The Watering Hole 💧",desc:"I'm always running but never walk, I have a mouth but never talk. Where am I?",hint:"Think about where people refuel during the day.",extraHint:"It's the room with the kettle, microwave and fridge.",ans:"kitchen"},
@@ -382,48 +470,57 @@ const CLUES = [
   {id:14,type:"riddle",pts:15,title:"Time Check ⏰",desc:"I tick but I'm not a bomb, I hang on the wall, I tell everyone when to go home. What am I?",hint:"Found in most offices and meeting rooms.",extraHint:"Every meeting room has one — look above the door or on the main wall.",ans:"clock"},
   {id:15,type:"selfie",pts:30,title:"🏆 Victory Slay!",desc:"YOU DID IT! Take the most legendary team victory photo ever. Make it ICONIC! 👑✨",hint:"Go all out — this is your K-pop debut stage!",extraHint:"Gather EVERYONE, find the best backdrop, and make it a banger!",pp:"Does this photo show people celebrating or posing for a group photo? Answer YES or NO then briefly explain."},
 ];
-const HINT_COST=15, SKIP_COST=30;
+const HINT_COST=15,SKIP_COST=30;
 const TI={qr:"📱",photo:"📸",riddle:"🧩",selfie:"🤳"};
 const TL={qr:"QR Code",photo:"Photo Challenge",riddle:"Riddle",selfie:"Location Selfie"};
 const TC={qr:"b-qr",photo:"b-photo",riddle:"b-riddle",selfie:"b-selfie"};
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
-let player=null, currentClueId=null, currentScreen='s-home', scannedClueId=null;
-function pk(p){ return (p.name+'_'+p.team).toLowerCase().replace(/\s+/g,'_'); }
+let player=null, currentScreen='s-intro', scannedClueId=null;
+function teamKey(t){ return t.toLowerCase().replace(/\s+/g,'_'); }
 
 // ── UI HELPERS ────────────────────────────────────────────────────────────────
-function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); currentScreen=id; window.scrollTo(0,0); }
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');s.style.opacity='';s.style.transition='';}); document.getElementById(id).classList.add('active'); currentScreen=id; window.scrollTo(0,0); }
 function toast(msg,type='ok'){ const d=document.createElement('div'); d.className=`toast toast-${type}`; d.textContent=msg; document.getElementById('toaster').appendChild(d); setTimeout(()=>d.remove(),3500); }
-function burst(){ const em=['✨','⭐','💫','🌟','💜','🎵','💗','🎉']; for(let i=0;i<8;i++){setTimeout(()=>{const d=document.createElement('div');d.className='burst';d.textContent=em[Math.floor(Math.random()*em.length)];d.style.cssText=`left:${15+Math.random()*70}%;top:${20+Math.random()*50}%`;document.body.appendChild(d);setTimeout(()=>d.remove(),1000);},i*80);} }
+function burst(){ const em=['✨','⭐','💫','🌟','💜','🎵','💗','🎉']; for(let i=0;i<8;i++){setTimeout(()=>{const d=document.createElement('div');d.className='burst';d.textContent=em[Math.floor(Math.random()*em.length)];d.style.cssText=`left:${15+Math.random()*70}%;top:${20+Math.random()*50}%`;document.body.appendChild(d);setTimeout(()=>d.remove(),1000);},i*80);}}
 
 // ── JOIN ──────────────────────────────────────────────────────────────────────
 async function joinGame(){
   const name=document.getElementById('p-name').value.trim();
   const team=document.getElementById('p-team').value.trim();
-  if(!name||!team){toast('Enter your name and team! 💫','err');return;}
-  // Unlock audio on join tap
-  try{ if(!actx) actx=new(window.AudioContext||window.webkitAudioContext)(); actx.resume(); }catch(e){}
-  player={name,team}; const key=pk(player);
+  if(!name||!team){toast('Enter captain name and team name! 💫','err');return;}
+  if(members.length===0){toast('Add at least one teammate! 👥','err');return;}
+  // ── Unlock audio RIGHT HERE inside button tap ──
+  try {
+    actx = new (window.AudioContext || window.webkitAudioContext)();
+    await actx.resume();
+    // Play silent buffer to fully unlock iOS audio engine
+    const buf = actx.createBuffer(1, 1, 22050);
+    const src = actx.createBufferSource();
+    src.buffer = buf; src.connect(actx.destination); src.start(0);
+  } catch(e) { console.warn('Audio unlock failed', e); }
+  player={name,team,members:[...members]};
+  const tkey=teamKey(team);
   await loadG();
-  if(!G.players[key]) G.players[key]={name,team};
-  if(!G.completedClues[key]) G.completedClues[key]=[];
-  if(!G.scores[key]) G.scores[key]=0;
-  if(!G.teams[team]) G.teams[team]={score:0,members:[]};
-  if(!G.teams[team].members.includes(key)) G.teams[team].members.push(key);
-  if(!G.hints) G.hints={}; if(!G.skips) G.skips={};
+  if(!G.teams[tkey]) G.teams[tkey]={name:team,score:0,captain:name,members:[name,...members]};
+  if(!G.scores[tkey]) G.scores[tkey]=0;
+  if(!G.completedClues[tkey]) G.completedClues[tkey]=[];
+  if(!G.hints) G.hints={};
+  if(!G.skips) G.skips={};
   await saveG();
   sndPts(); burst();
   if(G.timerActive&&G.timerEnd) startLocalTimer();
   renderGame(); showScreen('s-game');
 }
-function gmLogin(){ if(document.getElementById('gm-pass').value==='hunt2026'){showScreen('s-gm');gmTab('ov',document.querySelector('.tab'));}else{toast('Wrong password! 🙅','err');sndWrong();} }
+function gmLogin(){ if(document.getElementById('gm-pass').value==='hunt2026'){loadG().then(()=>{showScreen('s-gm');gmTab('ov',document.querySelector('.tab'));});}else{toast('Wrong password! 🙅','err');sndWrong();}}
 
 // ── GAME ──────────────────────────────────────────────────────────────────────
 function renderGame(){
   if(!player)return;
-  const key=pk(player), done=G.completedClues[key]||[], score=G.scores[key]||0;
-  document.getElementById('g-name').textContent='✨ '+player.name;
-  document.getElementById('g-team').textContent='💜 '+player.team;
+  const tkey=teamKey(player.team);
+  const done=G.completedClues[tkey]||[], score=G.scores[tkey]||0;
+  document.getElementById('g-teamname').textContent='💜 '+player.team;
+  document.getElementById('g-members').textContent='👑 '+player.name+' · 👥 '+player.members.join(', ');
   document.getElementById('g-score').textContent=score;
   document.getElementById('g-prog').style.width=Math.round(done.length/CLUES.length*100)+'%';
   document.getElementById('g-prog-txt').textContent=done.length+' / '+CLUES.length+' 🎯';
@@ -438,32 +535,30 @@ function renderGame(){
 
 // ── ALL CLUES ─────────────────────────────────────────────────────────────────
 function showAllClues(){
-  const key=pk(player), done=G.completedClues[key]||[];
+  const tkey=teamKey(player.team), done=G.completedClues[tkey]||[];
   document.getElementById('all-clues-list').innerHTML=CLUES.map(c=>{
     const isDone=done.includes(c.id);
-    return`<div class="card clue-card" onclick="openClue(${c.id})"><div style="display:flex;justify-content:space-between"><span class="clue-num">Clue #${c.id}</span>${isDone?'<span style="color:#69ffb8;font-weight:800;font-size:.88rem">✓ Slayed!</span>':`<span style="color:rgba(255,255,255,0.35);font-size:.85rem">+${c.pts} pts</span>`}</div><div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span class="badge ${TC[c.type]}">${TI[c.type]} ${TL[c.type]}</span><span style="font-weight:800">${c.title}</span></div></div>`;
+    return`<div class="card" style="cursor:pointer" onclick="openClue(${c.id})"><div style="display:flex;justify-content:space-between"><span class="clue-num">Clue #${c.id}</span>${isDone?'<span style="color:#69ffb8;font-weight:800;font-size:.88rem">✓ Slayed!</span>':`<span style="color:rgba(255,255,255,0.35);font-size:.85rem">+${c.pts} pts</span>`}</div><div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span class="badge ${TC[c.type]}">${TI[c.type]} ${TL[c.type]}</span><span style="font-weight:800">${c.title}</span></div></div>`;
   }).join('');
   showScreen('s-allclues');
 }
 
 // ── CLUE DETAIL ───────────────────────────────────────────────────────────────
 function openClue(id){
-  currentClueId=id;
-  const clue=CLUES.find(c=>c.id===id), key=pk(player);
-  const done=(G.completedClues[key]||[]).includes(id);
-  const score=G.scores[key]||0;
-  const hKey=key+'_'+id;
-  const hintBought=(G.hints||{})[hKey];
-  const skipped=(G.skips||{})[hKey];
+  const clue=CLUES.find(c=>c.id===id), tkey=teamKey(player.team);
+  const done=(G.completedClues[tkey]||[]).includes(id);
+  const score=G.scores[tkey]||0;
+  const hKey=tkey+'_'+id;
+  const hintBought=(G.hints||{})[hKey], skipped=(G.skips||{})[hKey];
   let input='';
   if(done||skipped){
-    input=done?`<div class="verdict-p">✅ Already slayed this one! 💜</div>`:`<div class="verdict-w">⏭ You skipped this clue (-${SKIP_COST} pts)</div>`;
+    input=done?`<div class="verdict-p">✅ Already slayed this one! 💜</div>`:`<div class="verdict-w">⏭ Your team skipped this clue (-${SKIP_COST} pts)</div>`;
   }else{
     const canHint=score>=HINT_COST&&!hintBought, canSkip=score>=SKIP_COST;
     const buyBtns=`<div style="display:flex;gap:8px;margin-top:10px"><button class="btn btn-hint" style="flex:1;padding:10px;margin-top:0;font-size:.85rem;${!canHint?'opacity:.4;pointer-events:none':''}" onclick="buyHint(${id})">💡 Hint<span class="cost">-${HINT_COST}pts</span></button><button class="btn btn-skip" style="flex:1;padding:10px;margin-top:0;font-size:.85rem;${!canSkip?'opacity:.4;pointer-events:none':''}" onclick="skipClue(${id})">⏭ Skip<span class="cost cost-red">-${SKIP_COST}pts</span></button></div>`;
     if(clue.type==='qr'){
       input=scannedClueId===id
-        ?`<button class="btn btn-ok" onclick="completeClue(${id})">✅ I Found It!</button>${buyBtns}`
+        ?`<button class="btn btn-ok" onclick="completeClue(${id})">✅ We Found It!</button>${buyBtns}`
         :`<div class="verdict-w">🔒 Scan the QR code at the location to unlock this clue!</div>${buyBtns}`;
     }else if(clue.type==='riddle'){
       input=`<label>Your Answer ✍️</label><input id="riddle-ans" placeholder="Type your answer..."><button class="btn btn-p" onclick="submitRiddle(${id})">Submit 🎯</button><div id="riddle-result"></div>${buyBtns}`;
@@ -472,33 +567,33 @@ function openClue(id){
     }
   }
   const extraHintHtml=hintBought&&clue.extraHint?`<div class="extra-hint">🌟 <strong>Extra Hint:</strong> ${clue.extraHint}</div>`:'';
-  document.getElementById('clue-detail').innerHTML=`<div class="card"><div class="clue-num">Clue #${clue.id} of 15 · ${clue.pts} pts</div><span class="badge ${TC[clue.type]}">${TI[clue.type]} ${TL[clue.type]}</span><h2 style="margin-top:10px">${clue.title}</h2><div class="clue-text">${clue.desc}</div><div class="hint-box">💡 <strong>Hint:</strong> ${clue.hint}</div>${extraHintHtml}<div style="font-size:.8rem;color:rgba(255,255,255,0.4);margin-top:6px">Your score: <strong style="color:#ff6ec7">${score} pts</strong></div>${input}</div>`;
+  document.getElementById('clue-detail').innerHTML=`<div class="card"><div class="clue-num">Clue #${clue.id} of 15 · ${clue.pts} pts</div><span class="badge ${TC[clue.type]}">${TI[clue.type]} ${TL[clue.type]}</span><h2 style="margin-top:10px">${clue.title}</h2><div class="clue-text">${clue.desc}</div><div class="hint-box">💡 <strong>Hint:</strong> ${clue.hint}</div>${extraHintHtml}<div style="font-size:.8rem;color:rgba(255,255,255,0.4);margin-top:6px">Team score: <strong style="color:#ff6ec7">${score} pts</strong></div>${input}</div>`;
   showScreen('s-clue');
 }
 
-function previewPhoto(input){ const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{const img=document.getElementById('photo-prev');img.src=e.target.result;img.style.display='block';const btn=document.getElementById('photo-btn');btn.style.display='block';btn.dataset.url=e.target.result;};r.readAsDataURL(f); }
+function previewPhoto(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{const img=document.getElementById('photo-prev');img.src=e.target.result;img.style.display='block';const btn=document.getElementById('photo-btn');btn.style.display='block';btn.dataset.url=e.target.result;};r.readAsDataURL(f);}
 
 async function buyHint(id){
-  const key=pk(player);
-  if((G.scores[key]||0)<HINT_COST){toast('Not enough points! 😅','err');return;}
+  const tkey=teamKey(player.team);
+  if((G.scores[tkey]||0)<HINT_COST){toast('Not enough points! 😅','err');return;}
   await loadG();
-  G.scores[key]=(G.scores[key]||0)-HINT_COST;
-  if(G.teams[player.team])G.teams[player.team].score=Math.max(0,(G.teams[player.team].score||0)-HINT_COST);
+  G.scores[tkey]=(G.scores[tkey]||0)-HINT_COST;
+  G.teams[tkey].score=G.scores[tkey];
   if(!G.hints)G.hints={};
-  G.hints[key+'_'+id]=true;
+  G.hints[tkey+'_'+id]=true;
   await saveG(); sndWrong(); toast(`💡 Extra hint unlocked! -${HINT_COST} pts`,'warn'); openClue(id);
 }
 
 async function skipClue(id){
   if(!confirm(`Skip this clue for -${SKIP_COST} points?`))return;
-  const key=pk(player);
+  const tkey=teamKey(player.team);
   await loadG();
-  if((G.scores[key]||0)<SKIP_COST){toast('Not enough points to skip! 😅','err');return;}
-  G.scores[key]=(G.scores[key]||0)-SKIP_COST;
-  if(G.teams[player.team])G.teams[player.team].score=Math.max(0,(G.teams[player.team].score||0)-SKIP_COST);
+  if((G.scores[tkey]||0)<SKIP_COST){toast('Not enough points! 😅','err');return;}
+  G.scores[tkey]=(G.scores[tkey]||0)-SKIP_COST;
+  G.teams[tkey].score=G.scores[tkey];
   if(!G.skips)G.skips={};
-  G.skips[key+'_'+id]=true;
-  await saveG(); sndWrong(); toast(`⏭ Clue skipped. -${SKIP_COST} pts`,'warn');
+  G.skips[tkey+'_'+id]=true;
+  await saveG(); sndWrong(); toast(`⏭ Skipped. -${SKIP_COST} pts`,'warn');
   showScreen('s-game'); renderGame();
 }
 
@@ -512,21 +607,21 @@ function submitRiddle(id){
 
 async function submitPhoto(id){
   const clue=CLUES.find(c=>c.id===id);
-  const btn=document.getElementById('photo-btn'), dataUrl=btn.dataset.url, res=document.getElementById('photo-result');
-  btn.disabled=true; btn.textContent='AI is judging... ✨';
+  const btn=document.getElementById('photo-btn'),dataUrl=btn.dataset.url,res=document.getElementById('photo-result');
+  btn.disabled=true;btn.textContent='AI is judging... ✨';
   res.innerHTML=`<div class="spinner"></div><p style="text-align:center;color:rgba(255,255,255,0.5);font-size:.9rem">Claude is reviewing… 🔍</p>`;
   try{
-    const b64=dataUrl.split(',')[1], mt=dataUrl.split(';')[0].split(':')[1];
+    const b64=dataUrl.split(',')[1],mt=dataUrl.split(';')[0].split(':')[1];
     const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:mt,data:b64}},{type:'text',text:clue.pp+' Be lenient — if close, say YES.'}]}]})});
     const data=await resp.json();
     const reply=data.content?.find(b=>b.type==='text')?.text||'';
     const pass=/^YES[,.\s—]/i.test(reply)||/\bYES\b/i.test(reply.substring(0,10));
-    if(pass){res.innerHTML=`<div class="verdict-p">✅ Photo approved! Slay! 💜<br><span style="font-weight:400;font-size:.85rem">${reply.substring(0,110)}</span></div>`;sndDone();burst();setTimeout(()=>completeClue(id),1400);}
+    if(pass){res.innerHTML=`<div class="verdict-p">✅ Photo approved! 💜<br><span style="font-weight:400;font-size:.85rem">${reply.substring(0,110)}</span></div>`;sndDone();burst();setTimeout(()=>completeClue(id),1400);}
     else{res.innerHTML=`<div class="verdict-f">❌ Not quite! ${reply.substring(0,110)}<br><button class="btn btn-p" style="margin-top:8px" onclick="document.getElementById('photo-btn').disabled=false;document.getElementById('photo-btn').textContent='Submit for AI Review ✨';document.getElementById('photo-result').innerHTML='';document.getElementById('photo-prev').style.display='none';">Try Again 📸</button></div>`;sndWrong();}
   }catch{
     if(!G.pendingPhotos)G.pendingPhotos={};
     const arr=Object.values(G.pendingPhotos);
-    arr.push({playerKey:pk(player),clueId:id,clueTitle:clue.title,ts:Date.now()});
+    arr.push({teamKey:teamKey(player.team),teamName:player.team,clueId:id,clueTitle:clue.title,ts:Date.now()});
     G.pendingPhotos=arr.reduce((o,p,i)=>{o[i]=p;return o;},{});
     await saveG();
     res.innerHTML=`<div class="verdict-w">📬 Submitted for GM review! 💜</div>`;
@@ -535,29 +630,27 @@ async function submitPhoto(id){
 }
 
 async function completeClue(id){
-  const clue=CLUES.find(c=>c.id===id), key=pk(player);
+  const clue=CLUES.find(c=>c.id===id),tkey=teamKey(player.team);
   await loadG();
-  if(!G.completedClues[key])G.completedClues[key]=[];
-  if(G.completedClues[key].includes(id))return;
-  G.completedClues[key].push(id);
-  G.scores[key]=(G.scores[key]||0)+clue.pts;
-  if(G.teams[player.team])G.teams[player.team].score=(G.teams[player.team].score||0)+clue.pts;
+  if(!G.completedClues[tkey])G.completedClues[tkey]=[];
+  if(G.completedClues[tkey].includes(id))return;
+  G.completedClues[tkey].push(id);
+  G.scores[tkey]=(G.scores[tkey]||0)+clue.pts;
+  G.teams[tkey].score=G.scores[tkey];
   await saveG();
-  const isLast=G.completedClues[key].length===CLUES.length;
-  if(isLast){toast(`🏆 HUNT COMPLETE! ${G.scores[key]} pts! LEGENDARY! 👑`);setTimeout(()=>showVenueReveal('🏆 YOU FINISHED FIRST! THE AFTER PARTY IS AT...'),800);}
+  const isLast=G.completedClues[tkey].length===CLUES.length;
+  if(isLast){toast(`🏆 HUNT COMPLETE! ${G.scores[tkey]} pts! LEGENDARY! 👑`);setTimeout(()=>showVenueReveal('🏆 FIRST PLACE! THE AFTER PARTY IS AT...'),800);}
   else{sndPts();burst();toast(`🎵 +${clue.pts} pts! "${clue.title}" SLAYED! ✨`);}
   setTimeout(()=>{showScreen('s-game');renderGame();},1600);
 }
 
 // ── LEADERBOARD ───────────────────────────────────────────────────────────────
-function showBoard(){ renderBoard(); showScreen('s-board'); }
+function showBoard(){renderBoard();showScreen('s-board');}
 function renderBoard(){
   const teams=Object.entries(G.teams).sort((a,b)=>b[1].score-a[1].score);
   const crowns=['👑','🥈','🥉'];
   let html=`<div style="font-size:.8rem;color:rgba(255,255,255,0.4);font-weight:800;margin-bottom:8px">TEAM STANDINGS 🏆</div>`;
-  html+=teams.length===0?`<p style="color:rgba(255,255,255,0.3)">No teams yet!</p>`:teams.map(([n,d],i)=>`<div class="row"><div><span style="font-size:1.1rem">${crowns[i]||'🎵'}</span> <strong>${n}</strong><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">${d.members?.length||0} member(s)</div></div><div class="score-big">${d.score||0}</div></div>`).join('');
-  html+=`<div style="font-size:.8rem;color:rgba(255,255,255,0.4);font-weight:800;margin:14px 0 6px">INDIVIDUAL STARS ⭐</div>`;
-  html+=Object.entries(G.scores).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([key,sc])=>{const p=G.players[key];return p?`<div class="row"><div><strong>${p.name}</strong><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">${p.team}</div></div><div style="font-weight:800;background:linear-gradient(135deg,#ff6ec7,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent">${sc} pts</div></div>`:''}).join('');
+  html+=teams.length===0?`<p style="color:rgba(255,255,255,0.3)">No teams yet!</p>`:teams.map(([k,d],i)=>`<div class="row"><div><span style="font-size:1.1rem">${crowns[i]||'🎵'}</span> <strong>${d.name}</strong><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">👑 ${d.captain} · ${d.members?.length||0} members · ${(G.completedClues[k]||[]).length}/15 clues</div></div><div class="score-big">${d.score||0}</div></div>`).join('');
   document.getElementById('board-content').innerHTML=html;
 }
 
@@ -566,55 +659,55 @@ function gmTab(tab,el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   if(el)el.classList.add('active');
   ['ov','qr','tm','st'].forEach(t=>document.getElementById('gm-'+t).style.display=t===tab?'block':'none');
-  if(tab==='ov')renderGMOv(); if(tab==='qr')renderGMQR(); if(tab==='tm')renderGMTeams();
+  if(tab==='ov')renderGMOv();if(tab==='qr')renderGMQR();if(tab==='tm')renderGMTeams();
 }
 function renderGMOv(){
-  const tp=Object.keys(G.players).length, tt=Object.keys(G.teams).length, tc=Object.values(G.completedClues).reduce((a,c)=>a+c.length,0);
-  const hints=Object.values(G.hints||{}).filter(Boolean).length, skips=Object.values(G.skips||{}).filter(Boolean).length;
-  document.getElementById('gm-stats').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;margin-bottom:10px"><div><div style="font-size:1.6rem;font-weight:900;color:#ff6ec7">${tp}</div><div style="font-size:.78rem;color:rgba(255,255,255,0.4)">Players</div></div><div><div style="font-size:1.6rem;font-weight:900;color:#a855f7">${tt}</div><div style="font-size:.78rem;color:rgba(255,255,255,0.4)">Teams</div></div><div><div style="font-size:1.6rem;font-weight:900;color:#38bdf8">${tc}</div><div style="font-size:.78rem;color:rgba(255,255,255,0.4)">Clues Done</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center"><div style="background:rgba(255,238,0,0.1);border-radius:10px;padding:8px"><div style="font-size:1.4rem;font-weight:900;color:#ffee00">${hints}</div><div style="font-size:.78rem;color:rgba(255,255,255,0.4)">Hints Bought</div></div><div style="background:rgba(255,64,129,0.1);border-radius:10px;padding:8px"><div style="font-size:1.4rem;font-weight:900;color:#ff9ebc">${skips}</div><div style="font-size:.78rem;color:rgba(255,255,255,0.4)">Clues Skipped</div></div></div>`;
+  const tt=Object.keys(G.teams).length,tc=Object.values(G.completedClues).reduce((a,c)=>a+c.length,0);
+  const hints=Object.values(G.hints||{}).filter(Boolean).length,skips=Object.values(G.skips||{}).filter(Boolean).length;
+  document.getElementById('gm-stats').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center;margin-bottom:10px"><div><div style="font-size:1.6rem;font-weight:900;color:#ff6ec7">${tt}</div><div style="font-size:.78rem;color:rgba(255,255,255,0.4)">Teams</div></div><div><div style="font-size:1.6rem;font-weight:900;color:#38bdf8">${tc}</div><div style="font-size:.78rem;color:rgba(255,255,255,0.4)">Clues Done</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center"><div style="background:rgba(255,238,0,0.1);border-radius:10px;padding:8px"><div style="font-size:1.4rem;font-weight:900;color:#ffee00">${hints}</div><div style="font-size:.78rem;color:rgba(255,255,255,0.4)">Hints Bought</div></div><div style="background:rgba(255,64,129,0.1);border-radius:10px;padding:8px"><div style="font-size:1.4rem;font-weight:900;color:#ff9ebc">${skips}</div><div style="font-size:.78rem;color:rgba(255,255,255,0.4)">Skips Used</div></div></div>`;
   if(G.timerActive&&G.timerEnd){const rem=Math.max(0,Math.floor((G.timerEnd-Date.now())/1000));document.getElementById('timer-status').textContent=`Running — ${String(Math.floor(rem/60)).padStart(2,'0')}:${String(rem%60).padStart(2,'0')} remaining`;}
   const pend=Object.values(G.pendingPhotos||{}).filter(p=>!p.approved&&!p.rejected);
-  document.getElementById('gm-pending').innerHTML=pend.length===0?'<p style="color:rgba(255,255,255,0.3);font-size:.9rem">No pending photos 👌</p>':pend.map((p,i)=>`<div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;margin-bottom:8px"><div style="font-size:.85rem;color:rgba(255,255,255,0.5)">${G.players[p.playerKey]?.name||p.playerKey} · ${p.clueTitle}</div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-ok" style="flex:1;padding:8px;margin-top:0" onclick="approvePhoto(${i})">✅ Approve</button><button class="btn btn-x" style="flex:1;padding:8px;margin-top:0" onclick="rejectPhoto(${i})">❌ Reject</button></div></div>`).join('');
+  document.getElementById('gm-pending').innerHTML=pend.length===0?'<p style="color:rgba(255,255,255,0.3);font-size:.9rem">No pending photos 👌</p>':pend.map((p,i)=>`<div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;margin-bottom:8px"><div style="font-size:.85rem;color:rgba(255,255,255,0.5)">${p.teamName||p.teamKey} · ${p.clueTitle}</div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-ok" style="flex:1;padding:8px;margin-top:0" onclick="approvePhoto(${i})">✅ Approve</button><button class="btn btn-x" style="flex:1;padding:8px;margin-top:0" onclick="rejectPhoto(${i})">❌ Reject</button></div></div>`).join('');
 }
 async function approvePhoto(i){
-  const pend=Object.values(G.pendingPhotos||{}), p=pend[i]; if(!p)return;
-  const clue=CLUES.find(c=>c.id===p.clueId);
-  if(clue&&!(G.completedClues[p.playerKey]||[]).includes(p.clueId)){
-    if(!G.completedClues[p.playerKey])G.completedClues[p.playerKey]=[];
-    G.completedClues[p.playerKey].push(p.clueId);
-    G.scores[p.playerKey]=(G.scores[p.playerKey]||0)+clue.pts;
-    const team=G.players[p.playerKey]?.team;
-    if(team&&G.teams[team])G.teams[team].score=(G.teams[team].score||0)+clue.pts;
+  const pend=Object.values(G.pendingPhotos||{}),p=pend[i];if(!p)return;
+  const clue=CLUES.find(c=>c.id===p.clueId),tkey=p.teamKey;
+  if(clue&&!(G.completedClues[tkey]||[]).includes(p.clueId)){
+    if(!G.completedClues[tkey])G.completedClues[tkey]=[];
+    G.completedClues[tkey].push(p.clueId);
+    G.scores[tkey]=(G.scores[tkey]||0)+clue.pts;
+    if(G.teams[tkey])G.teams[tkey].score=G.scores[tkey];
   }
-  pend.splice(i,1); G.pendingPhotos=pend.reduce((o,p,j)=>{o[j]=p;return o;},{});
-  await saveG(); toast('Photo approved! 💜'); renderGMOv();
+  pend.splice(i,1);G.pendingPhotos=pend.reduce((o,p,j)=>{o[j]=p;return o;},{});
+  await saveG();toast('Photo approved! 💜');renderGMOv();
 }
 async function rejectPhoto(i){
-  const pend=Object.values(G.pendingPhotos||{}); pend.splice(i,1);
+  const pend=Object.values(G.pendingPhotos||{});pend.splice(i,1);
   G.pendingPhotos=pend.reduce((o,p,j)=>{o[j]=p;return o;},{});
-  await saveG(); toast('Photo rejected.','err'); renderGMOv();
+  await saveG();toast('Photo rejected.','err');renderGMOv();
 }
 function renderGMQR(){
   const base=window.location.href.split('?')[0];
   document.getElementById('gm-qr-list').innerHTML=CLUES.map(c=>`<details class="gm-detail"><summary>${TI[c.type]} #${c.id} — ${c.title}</summary><div style="margin-top:8px;font-size:.9rem;color:rgba(255,255,255,0.55)">${c.desc}</div><div class="qr-url">🔗 ${base}?clue=${c.id}</div><div style="font-size:.8rem;color:rgba(255,255,255,0.3);margin-top:4px">+${c.pts} pts · ${c.hint}</div></details>`).join('');
 }
 function renderGMTeams(){
-  document.getElementById('gm-teams').innerHTML=Object.entries(G.teams).sort((a,b)=>b[1].score-a[1].score).map(([n,d])=>`<div class="row"><strong>${n}</strong><span style="color:#ff6ec7;font-weight:800">${d.score||0} pts</span></div>`).join('')||'<p style="color:rgba(255,255,255,0.3)">No teams yet.</p>';
-  document.getElementById('gm-players').innerHTML=Object.entries(G.players).map(([key,p])=>{const h=Object.keys(G.hints||{}).filter(k=>k.startsWith(key+'_')).length,s=Object.keys(G.skips||{}).filter(k=>k.startsWith(key+'_')).length;return`<div class="row"><div><strong>${p.name}</strong><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">${p.team} · 💡${h} · ⏭${s}</div></div><div style="text-align:right"><div style="color:#ff6ec7;font-weight:800">${G.scores[key]||0} pts</div><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">${(G.completedClues[key]||[]).length}/15</div></div></div>`;}).join('')||'<p style="color:rgba(255,255,255,0.3)">No players yet.</p>';
+  document.getElementById('gm-teams').innerHTML=Object.entries(G.teams).sort((a,b)=>b[1].score-a[1].score).map(([k,d])=>`<div class="row"><div><strong>${d.name}</strong><div style="font-size:.8rem;color:rgba(255,255,255,0.4)">👑 ${d.captain} · ${(G.completedClues[k]||[]).length}/15 clues</div></div><span style="color:#ff6ec7;font-weight:800">${d.score||0} pts</span></div>`).join('')||'<p style="color:rgba(255,255,255,0.3)">No teams yet.</p>';
+  document.getElementById('gm-players').innerHTML=Object.entries(G.teams).map(([k,d])=>`<div class="card" style="margin-bottom:8px"><div style="font-weight:800;color:#ff6ec7;margin-bottom:6px">💜 ${d.name}</div><div style="font-size:.88rem;color:rgba(255,255,255,0.6)">👑 Captain: ${d.captain}</div><div style="font-size:.85rem;color:rgba(255,255,255,0.5);margin-top:4px">👥 ${(d.members||[]).filter(m=>m!==d.captain).join(', ')||'No teammates listed'}</div></div>`).join('')||'<p style="color:rgba(255,255,255,0.3)">No teams yet.</p>';
 }
 async function resetAll(){
-  if(!confirm('Delete ALL player data?'))return;
-  G={players:{},scores:{},completedClues:{},teams:{},pendingPhotos:{},hints:{},skips:{},timerEnd:null,timerActive:false};
-  await saveG(); gameOverShown=false; clearInterval(timerInterval); toast('Reset! Fresh start! ✨');
+  if(!confirm('Delete ALL team data?'))return;
+  G={teams:{},scores:{},completedClues:{},pendingPhotos:{},hints:{},skips:{},timerEnd:null,timerActive:false};
+  await saveG();gameOverShown=false;clearInterval(timerInterval);members=[];renderMembers();toast('Reset! Fresh start! ✨');
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 loadG().then(()=>{
   const p=new URLSearchParams(window.location.search);
   const clueParam=p.get('clue');
-  if(clueParam){ scannedClueId=parseInt(clueParam); toast('📱 QR scanned! Enter your name & team ✨'); }
+  if(clueParam){scannedClueId=parseInt(clueParam);}
   if(G.timerActive&&G.timerEnd&&G.timerEnd>Date.now()) startLocalTimer();
 });
+renderMembers();
 </script>
 </body>
 </html>
