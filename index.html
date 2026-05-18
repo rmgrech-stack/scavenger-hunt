@@ -79,35 +79,6 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
 .game-over-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9990;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
 .game-over-overlay.active{display:flex}
 
-/* INTRO SCREEN */
-#intro-screen{position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;transition:opacity .6s ease}
-#intro-screen.fade-out{opacity:0;pointer-events:none}
-.intro-bg{position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(ellipse at 50% 50%,#1a0030 0%,#000 70%);z-index:0}
-.stage-light{position:absolute;width:3px;height:60%;background:linear-gradient(to bottom,rgba(255,110,199,0.8),transparent);transform-origin:top center;animation:sweepLight 1.2s ease-in-out infinite alternate}
-.stage-light:nth-child(1){left:15%;top:0;animation-delay:0s;background:linear-gradient(to bottom,rgba(255,110,199,0.9),transparent)}
-.stage-light:nth-child(2){left:35%;top:0;animation-delay:.15s;background:linear-gradient(to bottom,rgba(168,85,247,0.9),transparent)}
-.stage-light:nth-child(3){left:50%;top:0;animation-delay:.05s;background:linear-gradient(to bottom,rgba(56,189,248,0.9),transparent)}
-.stage-light:nth-child(4){left:65%;top:0;animation-delay:.2s;background:linear-gradient(to bottom,rgba(168,85,247,0.9),transparent)}
-.stage-light:nth-child(5){left:85%;top:0;animation-delay:.1s;background:linear-gradient(to bottom,rgba(255,110,199,0.9),transparent)}
-@keyframes sweepLight{0%{transform:rotate(-15deg);opacity:.6}100%{transform:rotate(15deg);opacity:1}}
-.intro-content{position:relative;z-index:10;padding:20px}
-.intro-year{font-size:1rem;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:6px;text-transform:uppercase;animation:fadeSlideUp .4s ease forwards;opacity:0;animation-delay:.2s}
-.intro-domain{font-size:.85rem;font-weight:800;color:#a855f7;letter-spacing:3px;text-transform:uppercase;animation:fadeSlideUp .4s ease forwards;opacity:0;animation-delay:.5s;margin-bottom:12px}
-.intro-title{font-size:1.9rem;font-weight:900;line-height:1.15;animation:fadeSlideUp .5s ease forwards;opacity:0;animation-delay:.7s;margin-bottom:16px}
-.intro-title span{background:linear-gradient(135deg,#ff6ec7,#a855f7,#38bdf8,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,110,199,0.8))}
-.intro-glitch{animation:glitch 3s infinite;display:inline-block}
-@keyframes glitch{0%,90%,100%{transform:translate(0);filter:none}91%{transform:translate(-2px,1px);filter:hue-rotate(90deg)}93%{transform:translate(2px,-1px);filter:hue-rotate(-90deg)}95%{transform:translate(-1px,2px);filter:hue-rotate(180deg)}97%{transform:translate(1px,-2px);filter:none}}
-.intro-subtitle{font-size:1rem;color:rgba(255,255,255,0.7);font-weight:700;animation:fadeSlideUp .4s ease forwards;opacity:0;animation-delay:1s;margin-bottom:20px}
-.intro-emoji-row{font-size:1.6rem;animation:fadeSlideUp .4s ease forwards;opacity:0;animation-delay:1.2s;letter-spacing:6px}
-.intro-bar{width:0%;height:3px;background:linear-gradient(90deg,#ff6ec7,#a855f7,#38bdf8,#ffee00);border-radius:2px;animation:loadBar 3.5s ease forwards;animation-delay:.5s;box-shadow:0 0 10px #ff6ec7;position:absolute;bottom:60px;left:0}
-@keyframes loadBar{to{width:100%}}
-.intro-skip{position:absolute;bottom:20px;right:20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);border-radius:20px;padding:6px 14px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif}
-.floating-star{position:absolute;font-size:1.2rem;animation:floatStar linear infinite;opacity:0}
-@keyframes floatStar{0%{opacity:0;transform:translateY(100vh) rotate(0deg)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateY(-20px) rotate(360deg)}}
-@keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.countdown-flash{position:absolute;font-size:8rem;font-weight:900;color:rgba(255,110,199,0.15);animation:countFlash .5s ease forwards;z-index:1}
-@keyframes countFlash{0%{opacity:0;transform:scale(2)}50%{opacity:1}100%{opacity:0;transform:scale(0.5)}}
-
 /* VENUE REVEAL */
 .venue-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:9995;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
 .venue-overlay.active{display:flex}
