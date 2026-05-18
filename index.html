@@ -99,7 +99,7 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
 .intro-main span{background:linear-gradient(135deg,#ff6ec7,#a855f7,#38bdf8,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .intro-domain{font-size:1rem;font-weight:800;color:#ffee00;text-shadow:0 0 16px rgba(255,238,0,0.6);margin-bottom:4px}
 .intro-sub{font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:20px}
-.tap-btn{background:linear-gradient(135deg,#ff6ec7,#a855f7);border:none;border-radius:30px;padding:16px 40px;font-size:1.1rem;font-weight:900;color:#fff;font-family:'Nunito',sans-serif;cursor:pointer;box-shadow:0 0 30px rgba(255,110,199,0.5);animation:glowPulse 1s infinite alternate;position:relative;z-index:10}
+.tap-btn{background:transparent;border:2px solid rgba(255,110,199,0.8);border-radius:4px;padding:16px 36px;font-size:1.1rem;font-weight:900;color:#fff;font-family:'Nunito',sans-serif;cursor:pointer;letter-spacing:2px;animation:glowPulse 1.2s infinite alternate;position:relative;z-index:10;text-transform:uppercase}
 @keyframes glowPulse{from{box-shadow:0 0 20px rgba(255,110,199,0.4)}to{box-shadow:0 0 50px rgba(255,110,199,0.9)}}
 .intro-bar{position:absolute;bottom:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#ff6ec7,#a855f7,#38bdf8,#ffee00);box-shadow:0 0 8px #ff6ec7}
 </style>
@@ -138,16 +138,18 @@ label{font-size:.88rem;color:rgba(255,255,255,0.55);display:block;margin-top:10p
     <div class="light" style="left:50%;background:linear-gradient(to bottom,rgba(56,189,248,.9),transparent);animation-delay:.1s"></div>
     <div class="light" style="left:70%;background:linear-gradient(to bottom,rgba(168,85,247,.9),transparent);animation-delay:.25s"></div>
     <div class="light" style="left:90%;background:linear-gradient(to bottom,rgba(255,110,199,.9),transparent);animation-delay:.05s"></div>
-    <div style="position:relative;z-index:10">
-      <div class="intro-year">2026</div>
-      <div class="intro-org">C&IB Transformation Domain · Sydney</div>
-      <div class="intro-main"><span>✨ Welcome to the ✨</span></div>
-      <div class="intro-main"><span>Corporate & Institutional Banking</span></div>
-      <div class="intro-domain">Transformation Domain</div>
-      <div class="intro-sub">Sydney Scavenger Hunt 🎤</div>
-      <div style="font-size:1.4rem;letter-spacing:8px;margin-bottom:28px">💜✨🎵⭐💗</div>
-      <button class="tap-btn" onclick="startApp()">🎵 TAP TO START 🎵</button>
+    <div style="position:relative;z-index:10;width:100%;max-width:420px;text-align:left;padding:0 8px">
+      <div style="font-size:.85rem;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:3px;text-transform:uppercase;margin-bottom:32px">NAB C&IB &nbsp;•&nbsp; Sydney 2026</div>
+      <div style="font-size:3rem;font-weight:900;line-height:1.05;margin-bottom:24px">
+        <div style="background:linear-gradient(135deg,#ff6ec7,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fadeWord .4s ease forwards;opacity:0;animation-delay:.2s">Explore.</div>
+        <div style="background:linear-gradient(135deg,#a855f7,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fadeWord .4s ease forwards;opacity:0;animation-delay:.6s">Connect.</div>
+        <div style="background:linear-gradient(135deg,#38bdf8,#ffee00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fadeWord .4s ease forwards;opacity:0;animation-delay:1s">Discover.</div>
+      </div>
+      <div style="font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:8px;animation:fadeWord .4s ease forwards;opacity:0;animation-delay:1.4s">Sydney Office Scavenger Hunt</div>
+      <div style="font-size:1rem;color:rgba(255,255,255,0.55);font-style:italic;margin-bottom:36px;animation:fadeWord .4s ease forwards;opacity:0;animation-delay:1.8s">"Unlock clues across the NAB workplace and the city."</div>
+      <button class="tap-btn" style="animation:fadeWord .4s ease forwards;opacity:0;animation-delay:2.2s" onclick="startApp()">[ Start Hunt ]</button>
     </div>
+    <style>@keyframes fadeWord{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}</style>
     <div class="intro-bar" id="intro-bar"></div>
   </div>
 </div>
